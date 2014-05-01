@@ -11,6 +11,10 @@ define(['underscore', 'Backbone', 'text!views/next/NextView.tpl'],
 
         var NextView = Backbone.View.extend({
 
+			initialize:function() {
+				FastClick.attach(document.body);
+			},
+			
             events:{
                 'click #btnBack':'btnBack_clickHandler'
             },

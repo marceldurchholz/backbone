@@ -24,7 +24,10 @@ require.config({
         jqm:'libs/jquery.mobile/jquery.mobile-1.2.0',
         // jQuery Mobile plugin for Backbone views navigation
         jqmNavigator:'libs/jquery.mobile/jqmNavigator',
-		fastclick:'libs/jquery.mobile/fastclick'
+		
+		fastclick:'libs/jquery.mobile/fastclick',
+		transit:'libs/jquery.mobile/transit'
+		
     },
     shim:{
         Backbone:{
@@ -35,7 +38,7 @@ require.config({
             exports:'_'
         },
         jqm:{
-            deps:['jquery', 'jqmNavigator', 'fastclick']
+            deps:['jquery', 'jqmNavigator', 'fastclick', 'transit']
         }
     }
 });

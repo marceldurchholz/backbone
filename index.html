@@ -4,8 +4,17 @@
 	<base href="">
 	<title>Backbone</title>
 	<meta name="description" content="Backbone" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<link rel="apple-touch-icon" href="icon.png" />
 	
+	<script type="text/javascript">
+		window.onerror = function(message, url, lineNumber) {
+			alert("Error: "+message+" in "+url+" at line "+lineNumber);
+		}
+	</script>
+
     <!-- jQuery Mobile styles -->
     <link rel="stylesheet" href="scripts/libs/jquery.mobile/jquery.mobile-1.2.0.css"/>
 
@@ -17,6 +26,10 @@
 		/* Disable certain interactions on touch devices */
 		body { 
 			-webkit-touch-callout: none; -webkit-text-size-adjust: none; -webkit-user-select: none; -webkit-highlight: none; -webkit-tap-highlight-color: rgba(0,0,0,0); 
+		}
+		.ui-content > * {
+			-webkit-transform: translate3d(0,0,0);
+			background-color:#206090;
 		}
     </style>
 
