@@ -3,9 +3,9 @@
 // require this script before your document is done loading
 ;(function () {
   
-  var isDroid = navigator.userAgent.match(/Android/)
-  var isiOS = navigator.userAgent.match(/(iPhone|iPod|iPad)/)
-  var isiPhone = ((navigator.platform.indexOf("iPhone") != -1) || (navigator.platform.indexOf("iPod") != -1) || (navigator.platform.indexOf("iPad") != -1) )
+  var isDroid = navigator.userAgent.match(/Android/);
+  var isiOS = navigator.userAgent.match(/(iPhone|iPod|iPad)/);
+  var isiPhone = ((navigator.platform.indexOf("iPhone") != -1) || (navigator.platform.indexOf("iPod") != -1) || (navigator.platform.indexOf("iPad") != -1) );
   /*
   var droidScripts = [
     "script/cordova-android.js",

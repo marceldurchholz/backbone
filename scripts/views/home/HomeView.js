@@ -10,11 +10,6 @@ define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/h
     function ($, _, Backbone, NextView, HomeViewTemplate) {
         var HomeView = Backbone.View.extend({
 
-			initialize: function() {
-				alert('bla');
-				FastClick.attach(document.body);
-			},
-			
             events:{
                 'click #btnNextView':'btnNextView_clickHandler'
             },

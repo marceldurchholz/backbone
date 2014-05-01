@@ -1,5 +1,3 @@
-alert('first loading fastclick.js');
-
 /**
  * @preserve FastClick: polyfill to remove click delays on browsers with touch UIs.
  *
@@ -25,8 +23,6 @@ function FastClick(layer, options) {
 	'use strict';
 	var oldOnClick;
 
-	alert('second loading fastclick.js');
-	
 	options = options || {};
 
 	/**
