@@ -29,9 +29,16 @@
 
     <!-- Fix for scrolling on iOS prior to iOS 6 -->
     <style type="text/css">
-        .scrollable > * {
-            -webkit-transform: translateZ(0px);
-        }
+		/* Disable certain interactions on touch devices */
+		body { 
+			-webkit-touch-callout: none; -webkit-text-size-adjust: none; -webkit-user-select: none; -webkit-highlight: none; -webkit-tap-highlight-color: rgba(0,0,0,0); 
+		}
+		.ui-content {
+			-webkit-overflow-scrolling: touch !important;
+		}
+		.ui-content * {
+			-webkit-transform: translate3d(0,0,0);
+		}
     </style>
 
     <!-- Referencing iOS specific PhoneGap JS -->
@@ -54,11 +61,6 @@
 	</script>
     <script data-main="scripts/main" src="scripts/libs/require/require.js"></script>
 	
-	<style type="text/css">
-		/* Disable certain interactions on touch devices */
-		body { -webkit-touch-callout: none; -webkit-text-size-adjust: none; -webkit-user-select: none; -webkit-highlight: none; -webkit-tap-highlight-color: rgba(0,0,0,0); }
-	</style> 
-
 </head>
 <body>
 <div id="container"/>
