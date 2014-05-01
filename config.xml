@@ -81,6 +81,7 @@
 	<preference name="PaginationMode" value="unpaginated"/>
 	
     <icon src="icon.png" />
+	
 	<access origin="*" subdomains="true"/>
 
 </widget>
