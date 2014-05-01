@@ -1,5 +1,3 @@
-// alert('loading main.js');
-
 /**
  * Created by Piotr Walczyszyn (@pwalczyszyn)
  *
@@ -24,11 +22,9 @@ require.config({
         jqm:'libs/jquery.mobile/jquery.mobile-1.2.0',
         // jQuery Mobile plugin for Backbone views navigation
         jqmNavigator:'libs/jquery.mobile/jqmNavigator',
-		
 		fastclick:'libs/jquery.mobile/fastclick',
 		transit:'libs/jquery.mobile/transit',
 		myfunctions:'libs/jquery.mobile/myfunctions'
-		
     },
     shim:{
         Backbone:{
@@ -44,19 +40,15 @@ require.config({
     }
 });
 
-require(['domReady', 'views/home/HomeView', 'jqm'],
-    function (domReady, HomeView) {
+require(['domReady', 'views/home/HomeView', 'routers/MobileRouter', 'jqm'],
+    function (domReady, HomeView, MobileRouter) {
 
         // domReady is RequireJS plugin that triggers when DOM is ready
         domReady(function () {
 
-			// alert('doing function domReady.js');
-			
             function onDeviceReady(desktop) {
-                // Hiding splash screen when app is loaded
-				// alert('desktop is...');
-				// alert(desktop);
                 if (desktop !== true) {
+					// Hiding splash screen when app is loaded
                     // cordova.exec(null, null, 'SplashScreen', 'hide', []);
 					if (navigator.userAgent.match(/(iPad|iPhone)/)) {
 						StatusBar.hide();
@@ -73,16 +65,18 @@ require(['domReady', 'views/home/HomeView', 'jqm'],
                 $.mobile.defaultPageTransition = 'slide';
 
                 // Pushing MainView
-                $.mobile.jqmNavigator.pushView(new HomeView());
+                // $.mobile.jqmNavigator.pushView(new HomeView());
+				
+				/* new integrated router */
+				new MobileRouter();
+				
             }
 
             if (navigator.userAgent.match(/(iPad|iPhone|Android)/)) {
                 // This is running on a device so waiting for deviceready event
-				// alert('devicer ready');
                 document.addEventListener('deviceready', onDeviceReady, false);
             } else {
                 // On desktop don't have to wait for anything
-				// alert('is desktop');
                 onDeviceReady(true);
             }
 

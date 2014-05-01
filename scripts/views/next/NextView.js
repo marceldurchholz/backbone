@@ -6,7 +6,7 @@
  * Time: 9:53 AM
  */
 
-define(['underscore', 'Backbone', 'text!views/next/NextView.tpl'],
+define(['underscore', 'Backbone', 'text!views/next/NextView.html'],
     function (_, Backbone, NextViewTemplate) {
 
         var NextView = Backbone.View.extend({
