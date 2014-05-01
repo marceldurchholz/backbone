@@ -26,7 +26,19 @@
     }
 }(this, function ($) {
 
-    $(document).bind("mobileinit", function () {
+	/*
+	$(document).bind('pagebeforeshow', function(){       
+		$(document).on('click', function(e) {
+			if(e.handled !== true) {
+				// This will prevent event triggering more then once
+				alert('Clicked');
+				e.handled = true;
+			}
+		}); 
+	});
+	*/
+
+     $(document).bind("mobileinit", function () {
 
         // We want to handle link clicks from Backbone
         $.mobile.linkBindingEnabled = false;
