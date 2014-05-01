@@ -1,4 +1,4 @@
-alert('loading main.js');
+// alert('loading main.js');
 
 /**
  * Created by Piotr Walczyszyn (@pwalczyszyn)
@@ -45,14 +45,20 @@ require(['domReady', 'views/home/HomeView', 'jqm'],
         // domReady is RequireJS plugin that triggers when DOM is ready
         domReady(function () {
 
-			alert('doing function domReady.js');
+			// alert('doing function domReady.js');
 			
             function onDeviceReady(desktop) {
                 // Hiding splash screen when app is loaded
-				alert('desktop is...');
-				alert(desktop);
-                if (desktop !== true)
-                    cordova.exec(null, null, 'SplashScreen', 'hide', []);
+				// alert('desktop is...');
+				// alert(desktop);
+                if (desktop !== true) {
+                    // cordova.exec(null, null, 'SplashScreen', 'hide', []);
+					if (navigator.userAgent.match(/(iPad|iPhone)/)) {
+						StatusBar.hide();
+						document.body.style.marginTop = "0px";
+						$("#body").css('top', "0px");
+					}
+				}
 
                 // Setting jQM pageContainer to #container div, this solves some jQM flickers & jumps
                 // I covered it here: http://outof.me/fixing-flickers-jumps-of-jquery-mobile-transitions-in-phonegap-apps/
@@ -67,11 +73,11 @@ require(['domReady', 'views/home/HomeView', 'jqm'],
 
             if (navigator.userAgent.match(/(iPad|iPhone|Android)/)) {
                 // This is running on a device so waiting for deviceready event
-				alert('devicer ready');
+				// alert('devicer ready');
                 document.addEventListener('deviceready', onDeviceReady, false);
             } else {
                 // On desktop don't have to wait for anything
-				alert('is desktop');
+				// alert('is desktop');
                 onDeviceReady(true);
             }
 

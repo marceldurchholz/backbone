@@ -1,4 +1,4 @@
-alert('loading cordova-loader.js');
+// alert('loading cordova-loader.js');
 
 // require this script before your document is done loading
 ;(function () {
