@@ -1,3 +1,5 @@
+alert('first loading fastclick.js');
+
 /**
  * @preserve FastClick: polyfill to remove click delays on browsers with touch UIs.
  *
@@ -18,10 +20,13 @@
  * @param {Element} layer The layer to listen on
  * @param {Object} options The options to override the defaults
  */
+ 
 function FastClick(layer, options) {
 	'use strict';
 	var oldOnClick;
 
+	alert('second loading fastclick.js');
+	
 	options = options || {};
 
 	/**
@@ -164,7 +169,6 @@ function FastClick(layer, options) {
 		layer.onclick = null;
 	}
 }
-
 
 /**
  * Android requires exceptions.
