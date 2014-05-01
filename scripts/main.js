@@ -59,7 +59,6 @@ require(['domReady', 'views/home/HomeView', 'jqm'],
 						document.body.style.marginTop = "0px";
 						$("#body").css('top', "0px");
 					}
-					FastClick.attach(document.body);
 				}
 
                 // Setting jQM pageContainer to #container div, this solves some jQM flickers & jumps

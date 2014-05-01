@@ -14,6 +14,10 @@ define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/h
                 'click #btnNextView':'btnNextView_clickHandler'
             },
 
+			initialize:function() {
+				FastClick.attach(document.body);
+			},
+			
             render:function () {
                 this.$el.html(_.template(HomeViewTemplate));
                 return this;
