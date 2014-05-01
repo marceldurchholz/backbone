@@ -98,6 +98,7 @@ function FastClick(layer, options) {
 	if (FastClick.notNeeded(layer)) {
 		return;
 	}
+	
 
 	// Some old versions of Android don't have Function.prototype.bind
 	function bind(method, context) {
@@ -156,6 +157,8 @@ function FastClick(layer, options) {
 	// adding it as listener.
 	if (typeof layer.onclick === 'function') {
 
+		alert('clicked');
+	
 		// Android browser on at least 3.2 requires a new reference to the function in layer.onclick
 		// - the old one won't work if passed to addEventListener directly.
 		oldOnClick = layer.onclick;
