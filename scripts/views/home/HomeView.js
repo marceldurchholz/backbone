@@ -10,14 +10,14 @@ define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/h
     function ($, _, Backbone, NextView, HomeViewTemplate) {
         var HomeView = Backbone.View.extend({
 
-            events:{
-                'click #btnNextView':'btnNextView_clickHandler'
-            },
-
 			initialize:function() {
 				FastClick.attach(document.body);
 			},
 			
+            events:{
+                'click #btnNextView':'btnNextView_clickHandler'
+            },
+
             render:function () {
                 this.$el.html(_.template(HomeViewTemplate));
                 return this;
