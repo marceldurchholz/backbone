@@ -26,7 +26,8 @@ require.config({
         jqmNavigator:'libs/jquery.mobile/jqmNavigator',
 		
 		fastclick:'libs/jquery.mobile/fastclick',
-		transit:'libs/jquery.mobile/transit'
+		transit:'libs/jquery.mobile/transit',
+		myfunctions:'libs/jquery.mobile/myfunctions'
 		
     },
     shim:{
@@ -38,7 +39,7 @@ require.config({
             exports:'_'
         },
         jqm:{
-            deps:['jquery', 'jqmNavigator', 'fastclick', 'transit']
+            deps:['jquery', 'jqmNavigator', 'fastclick', 'transit', 'myfunctions']
         }
     }
 });
