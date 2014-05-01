@@ -157,7 +157,7 @@ function FastClick(layer, options) {
 	// adding it as listener.
 	if (typeof layer.onclick === 'function') {
 
-		alert('clicked');
+		// alert('clicked');
 	
 		// Android browser on at least 3.2 requires a new reference to the function in layer.onclick
 		// - the old one won't work if passed to addEventListener directly.
