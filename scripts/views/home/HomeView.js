@@ -11,6 +11,7 @@ define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/h
 
             render:function () {
                 this.$el.html(_.template(HomeViewTemplate));
+				console.log($.mobile);
                 return this;
             },
 

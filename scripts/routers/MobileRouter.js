@@ -5,8 +5,43 @@ define(['domReady', 'views/test/TestView', 'views/home/HomeView', 'views/next/Ne
 		var MobileRouter = Backbone.Router.extend({
 
 			initialize: function() {
+			
+				var _thisRouter = this;
+				// $(document).bind('pageinit', function(event){
+				$(document).off( "pageinit" ).on( "pageinit", function( event ) {
+					alert( 'This page was just enhanced by jQuery Mobile!' );
+					$('a').off( "click" ).on( "click", function( e ) {
+					// $('a').click(function(e){
+						e.preventDefault();
+						var href = $(this).attr('href');
+						console.log(href);
+						if (href=='undefined') return(false);
+						
+						var href = href.replace("#", "");
+						console.log(href);
+						// var route = _thisRouter.routes
+						console.log(_thisRouter.routes);
+						var route = _thisRouter.routes[href];
+						if (href!='') {
+							console.log(route);
+							console.log(_thisRouter[route]);
+							_thisRouter[route]();
+							alert('Click! '+href);
+							// return(false);
+						}
+						// return(false);
+					});
+					return(false);
+				});
+				
                 Backbone.history.start();
+		
 				$(document).ready(function() {
+					$('#body').off( "swiperight", "#container").on( "swiperight", "#container", function( e ) {
+						alert('aaa');
+						$.mobile.back();
+					});
+					alert('document.ready');
 					$('.sidr_left').sidr({
 						name: 'sidr-left',
 						source: function(name) {
@@ -36,9 +71,9 @@ define(['domReady', 'views/test/TestView', 'views/home/HomeView', 'views/next/Ne
 				// alert('nextRouter');
             },
             loginRouter: function() {
+				alert('loginRouter');
 				$.mobile.jqmNavigator.pushView(new LoginViewTemplate());
 				// this.changePage(LoginView, {});
-				// alert('loginRouter');
             },
             testRouter: function() {
 				$.mobile.jqmNavigator.pushView(new TestViewTemplate());

@@ -14,7 +14,6 @@ define(['underscore', 'Backbone', 'text!views/test/TestView.html', 'views/test/T
 				this.render();
 			},
             render:function () {
-                
 				this.$el.html(_.template(TestViewTemplate));
 				this.nestedView = new TestNestedView({}).render();
 				console.log(this.nestedView.$el.html());

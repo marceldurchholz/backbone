@@ -2473,6 +2473,10 @@ try {
 		}
 	}
 	
+	$(window).bind('hashchange', function(){
+		alert('hashchanged');
+		$.sidr('close', 'sidr-left');
+	});
 	/*
 	function bindSwipeBack() {
 		$('#body').off( "swiperight", "#page-content").on( "swiperight", "#page-content", function( e ) {
@@ -2494,11 +2498,19 @@ try {
 	
 	/*
 	window.addEventListener('load', function () {
-		new FastClick(document.body);
+		$('a').click(function(e){
+			alert('Click!');
+			e.preventDefault();
+		});
 	}, false);
-	*/
-
-	/*
+	
+	$(window).bind('hashchange', function(){
+		$('a').click(function(e){
+			alert('Click!');
+			e.preventDefault();
+		});
+	});
+	
 	$(window).bind('hashchange', function(){
 		showModal();
 		if (navigator.userAgent.match(/(iPad|iPhone)/)) {
@@ -2535,7 +2547,6 @@ try {
 		});
 		// $('#popupBasic').remove();
 	});
-	*/
 	
 	$('body').off('click','#closewelcomepopupbtn').on('click','#closewelcomepopupbtn',function(e) { 
 		e.preventDefault();
@@ -3060,6 +3071,7 @@ try {
 			// console.log(value);
 		});
 	};
+	*/
 
 	function showModal() {
 		// if ($('.modalWindow')) return(false);

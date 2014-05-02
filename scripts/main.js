@@ -17,16 +17,20 @@ require.config({
         // Backbone.js library
         Backbone:'libs/backbone/backbone',
         // jQuery
-        jquery:'libs/jquery/jquery-1.8.2',
+        // jquery:'libs/jquery/jquery-1.8.2',
+        jquery:'libs/jquery/jquery-2.0.3',
         // jQuery Mobile framework
-        jqm:'libs/jquery.mobile/jquery.mobile-1.2.0',
+        // jqm:'libs/jquery.mobile/jquery.mobile-1.2.0',
+        // jqm:'libs/jquery.mobile/jquery.mobile-1.3.2',
+		jqm:'libs/jquery.mobile/jquery.mobile-1.4.2',
         // jQuery Mobile plugin for Backbone views navigation
         jqmNavigator:'libs/jquery.mobile/jqmNavigator',
 		fastclick:'libs/jquery.mobile/fastclick',
 		transit:'libs/jquery.mobile/transit',
-		touchwipe:'libs/jquery.mobile/touchwipe/touchwipe',
+		// touchwipe:'libs/jquery.mobile/touchwipe/touchwipe',
 		myfunctions:'libs/jquery.mobile/myfunctions',
-		sidr:'libs/jquery.mobile/sidr/sidr'
+		sidr:'libs/jquery.mobile/sidr/sidr',
+		preventLinks:'libs/jquery.mobile/preventLinks/preventLinks'
     },
     shim:{
         Backbone:{
@@ -37,7 +41,7 @@ require.config({
             exports:'_'
         },
         jqm:{
-            deps:['jquery', 'jqmNavigator', 'myfunctions', 'transit', 'touchwipe', 'sidr', 'fastclick']
+            deps:['jquery', 'jqmNavigator', 'fastclick', 'myfunctions', 'transit', 'sidr', 'preventLinks']
         }
     }
 });
@@ -51,12 +55,12 @@ require(['domReady', 'routers/MobileRouter', 'jqm'],
             function onDeviceReady(desktop) {
                 if (desktop !== true) {
 					// Hiding splash screen when app is loaded
-                    // cordova.exec(null, null, 'SplashScreen', 'hide', []);
+                    cordova.exec(null, null, 'SplashScreen', 'hide', []);
 					if (navigator.userAgent.match(/(iPad|iPhone)/)) {
 						StatusBar.hide();
 						document.body.style.marginTop = "0px";
 						$("#body").css('top', "0px");
-						alert('FastClick.attach');
+						// alert('FastClick.attach');
 						// console.log(document.body.innerHTML);
 						FastClick.attach(document.body);
 					}
