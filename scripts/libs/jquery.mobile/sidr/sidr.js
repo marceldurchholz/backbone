@@ -93,7 +93,7 @@
 
         // Left or right?
         if(side === 'left') {
-          bodyAnimation = {left: menuWidth + 'px'};
+          bodyAnimation = {left: menuWidth + 'px', width: $body.width()-menuWidth + 'px'};
           menuAnimation = {left: '0px'};
         }
         else {
@@ -146,7 +146,7 @@
 
         // Right or left menu?
         if(side === 'left') {
-          bodyAnimation = {left: 0};
+          bodyAnimation = {left: 0, width: $body.width()+menuWidth + 'px'};
           menuAnimation = {left: '-' + menuWidth + 'px'};
         }
         else {
