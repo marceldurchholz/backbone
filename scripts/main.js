@@ -24,7 +24,9 @@ require.config({
         jqmNavigator:'libs/jquery.mobile/jqmNavigator',
 		fastclick:'libs/jquery.mobile/fastclick',
 		transit:'libs/jquery.mobile/transit',
-		myfunctions:'libs/jquery.mobile/myfunctions'
+		touchwipe:'libs/jquery.mobile/touchwipe/touchwipe',
+		myfunctions:'libs/jquery.mobile/myfunctions',
+		sidr:'libs/jquery.mobile/sidr/sidr'
     },
     shim:{
         Backbone:{
@@ -35,13 +37,13 @@ require.config({
             exports:'_'
         },
         jqm:{
-            deps:['jquery', 'jqmNavigator', 'fastclick', 'transit', 'myfunctions']
+            deps:['jquery', 'jqmNavigator', 'myfunctions', 'transit', 'touchwipe', 'sidr', 'fastclick']
         }
     }
 });
 
-require(['domReady', 'views/home/HomeView', 'routers/MobileRouter', 'jqm'],
-    function (domReady, HomeView, MobileRouter) {
+require(['domReady', 'routers/MobileRouter', 'jqm'],
+    function (domReady, MobileRouter) {
 
         // domReady is RequireJS plugin that triggers when DOM is ready
         domReady(function () {
@@ -54,6 +56,9 @@ require(['domReady', 'views/home/HomeView', 'routers/MobileRouter', 'jqm'],
 						StatusBar.hide();
 						document.body.style.marginTop = "0px";
 						$("#body").css('top', "0px");
+						alert('FastClick.attach');
+						// console.log(document.body.innerHTML);
+						FastClick.attach(document.body);
 					}
 				}
 

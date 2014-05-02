@@ -1,17 +1,8 @@
-/**
- * Created by Piotr Walczyszyn (outof.me | @pwalczyszyn)
- *
- * User: pwalczys
- * Date: 2/16/12
- * Time: 9:53 AM
- */
-
 define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/home/HomeView.html'],
-    function ($, _, Backbone, NextView, HomeViewTemplate) {
+    function ($, _, Backbone, NextViewTemplate, HomeViewTemplate) {
         var HomeView = Backbone.View.extend({
 
 			initialize:function() {
-				FastClick.attach(document.body);
 			},
 			
             events:{
@@ -24,7 +15,7 @@ define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/h
             },
 
             btnNextView_clickHandler:function (event) {
-                $.mobile.jqmNavigator.pushView(new NextView);
+                $.mobile.jqmNavigator.pushView(new NextViewTemplate);
             }
 
         });

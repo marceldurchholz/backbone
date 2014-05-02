@@ -2363,6 +2363,7 @@ try {
 		});	
 	}
 
+	/*
 	var app = {
 		initialize: function() {
 			
@@ -2395,20 +2396,15 @@ try {
 				  }
 			);
 		},
-		/*
 		onResume: function() {
-			// alert('app resumed');
-			// dpd.users.me(function(user) {
-			dpd('users').get(window.system.uid, function(me, err) {
-				if (user) { }
-				else {
-					console.log('You are not logged in!');
-					window.location.href = "#noaccess";
-				}
-			});
-
+			// dpd('users').get(window.system.uid, function(me, err) {
+			// 	if (user) { }
+			// 	else {
+			// 		console.log('You are not logged in!');
+			// 		window.location.href = "#noaccess";
+			// 	}
+			// });
 		},
-		*/
 		fetchWorking: function() {
 			var setTimeoutWatcher = setTimeout(function foo() {
 				if ( _thisApp.dfd.state() === "pending" ) {
@@ -2468,6 +2464,7 @@ try {
 			// _thisApp.dfd.resolve(true);		
 		}
 	};
+	*/
 
 	function clearIntervals() {
 		if (window._thisViewCardStart) {
@@ -2476,20 +2473,32 @@ try {
 		}
 	}
 	
+	/*
 	function bindSwipeBack() {
 		$('#body').off( "swiperight", "#page-content").on( "swiperight", "#page-content", function( e ) {
 			e.preventDefault();
-			// alert('swiped on body');
+			alert('swiped on body');
 			history.back();
 			return(false);
 		});
 	}
 	bindSwipeBack();
 
+	function NewbindSwipeBack() {
+		$('#body').off( "swiperight", "#container").on( "swiperight", "#container", function( e ) {
+			alert('aaa');
+		});
+	}
+	NewbindSwipeBack();
+	*/
+	
+	/*
 	window.addEventListener('load', function () {
 		new FastClick(document.body);
 	}, false);
+	*/
 
+	/*
 	$(window).bind('hashchange', function(){
 		showModal();
 		if (navigator.userAgent.match(/(iPad|iPhone)/)) {
@@ -2507,6 +2516,7 @@ try {
 			menuSwitched(false);
 		});
 	});
+	*/
 
 	/*
 	$('body').off('click','#captureVideoLinkButton').on('click','#captureVideoLinkButton',function(e) { 

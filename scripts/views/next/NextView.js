@@ -1,20 +1,8 @@
-/**
- * Created by Piotr Walczyszyn (outof.me | @pwalczyszyn)
- *
- * User: pwalczys
- * Date: 2/16/12
- * Time: 9:53 AM
- */
-
 define(['underscore', 'Backbone', 'text!views/next/NextView.html'],
     function (_, Backbone, NextViewTemplate) {
 
         var NextView = Backbone.View.extend({
 
-			initialize:function() {
-				FastClick.attach(document.body);
-			},
-			
             events:{
                 'click #btnBack':'btnBack_clickHandler'
             },
