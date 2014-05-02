@@ -15,9 +15,6 @@ define(['underscore', 'Backbone', 'text!views/test/TestNestedView.html'],
             },
 			initialize: function() {
                 $(this.el).undelegate('a', 'click');
-				$(document).off( "pagehide" ).on( "pagehide", function( event ) {
-					$.sidr('close', 'sidr-left');
-				});
 			},
 			render: function() {
 				var htmlContent = "testcontent";
