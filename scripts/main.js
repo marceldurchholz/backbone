@@ -30,7 +30,9 @@ require.config({
 		// touchwipe:'libs/jquery.mobile/touchwipe/touchwipe',
 		myfunctions:'libs/jquery.mobile/myfunctions',
 		sidr:'libs/jquery.mobile/sidr/sidr',
-		preventLinks:'libs/jquery.mobile/preventLinks/preventLinks'
+		preventLinks:'libs/jquery.mobile/preventLinks/preventLinks',
+		deployd: "http://dominik-lohmann.de:5000/dpd",
+
     },
     shim:{
         Backbone:{
@@ -41,7 +43,7 @@ require.config({
             exports:'_'
         },
         jqm:{
-            deps:['jquery', 'jqmNavigator', 'fastclick', 'myfunctions', 'transit', 'sidr', 'preventLinks']
+            deps:['jquery', 'jqmNavigator', 'fastclick', 'myfunctions', 'transit', 'sidr', 'preventLinks', 'deployd']
         }
     }
 });

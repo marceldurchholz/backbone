@@ -1,11 +1,22 @@
-define(['underscore', 'Backbone', 'text!views/test/TestView.html', 'views/test/TestNestedView', 'text!views/test/TestNestedView.html'],
-    function (_, Backbone, TestViewTemplate, TestNestedView, TestNestedViewTemplate) {
+define(['underscore', 'Backbone', 'collections/sidemenusCollection', 'text!views/test/TestView.html', 'views/test/TestNestedView', 'text!views/test/TestNestedView.html'],
+    function (_, Backbone, sidemenusCollection, TestViewTemplate, TestNestedView, TestNestedViewTemplate) {
 
         var TestView = Backbone.View.extend({
 
 			el: "#sidr-left",
+            events:{
+                'click a':'a_clickHandler'
+            },
+            a_clickHandler:function (event) {
+				event.preventDefault();
+				// $.mobile.jqmNavigator.pushView(new TestNestedView);
+				$.sidr('close', 'sidr-left');
+				// console.log(this.$el);
+				return(false);
+            },
 			
 			initialize:function() {
+                $(this.el).undelegate('a', 'click');
 				this.fetch();
 			},
 			fetch:function(){

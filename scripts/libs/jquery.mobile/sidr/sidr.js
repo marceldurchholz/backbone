@@ -243,7 +243,7 @@
     }
 
     // Adding styles and options
-    $sideMenu
+	$sideMenu
       .addClass('sidr')
       .addClass(settings.side)
       .data({

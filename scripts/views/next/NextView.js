@@ -4,12 +4,14 @@ define(['underscore', 'Backbone', 'text!views/next/NextView.html'],
         var NextView = Backbone.View.extend({
 
             events:{
-                // 'click #btnBack':'btnBack_clickHandler'
+                'click a':'a_clickHandler'
             },
-
+            a_clickHandler:function (event) {
+				window.myrouter.checkLink(event);
+            },
             render:function () {
                 this.$el.html(_.template(NextViewTemplate));
-                return this;
+				return this;
             }
 
             /*

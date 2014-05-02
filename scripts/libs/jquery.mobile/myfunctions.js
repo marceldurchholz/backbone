@@ -2496,7 +2496,77 @@ try {
 		$('#container').off( "swipeleft" ).on( "swipeleft" , function( e ) {
 			$.mobile.jqmNavigator.popView();
 		});
+		$(document).off( "click", "#sendLoginBtn").on( "click", "#sendLoginBtn", function( e ) {
+			e.preventDefault();
+			var username = $('#username').val().toLowerCase();
+			var password = $('#password').val();
+			alert(username);
+			if (checkString(username)!=true || password=='') {
+				doAlert('Bitte überprüfen Sie die eingegebenen Daten.','Eingaben unvollständig oder nicht korrekt!');
+				// hideModal();
+				return(false);
+			}
+			dpd.users.login({username: username, password: password}, function(user, error) {
+			// dpd.users.post({username: username, password: password}, function(user, error) {
+				console.log(user);
+				console.log(error);
+				// return(false);
+				
+				if (error) {
+					doAlert('Eine Anmeldung mit diesen Zugangsdaten konnte nicht durchgeführt werden. Zur Registrierung klicken Sie auf "Neuen Zugang anlegen".','Fehler bei der Anmeldung!');
+					// hideModal();
+				} else {
+					if (user==null) { 
+						doAlert('Bitte versuchen Sie es erneut.','Fehler bei der Anmeldung!');
+						// hideModal();
+						return(false);
+					}
+					else {
+						window.system.uid = user.uid;
+						// dpd('users').get(window.system.uid, function(me, err) {
+						dpd.users.me(function(me) {
+							window.me = me;
+							$('#showMenu').show();
+							$('#showPageOptionsIcon').show();
+							if (window.me.logincount==undefined) logincount=0;
+							var logincount = window.me.logincount+1;
+							dpd.users.put(window.me.id, {"logincount":window.me.logincount}, function(result, err) { 
+								if(err) { 
+									// hideModal();
+								}
+								// window.dao.rememberUserData(username, password, '1');
+								// window.location.href="#dashboard";
+								// window.myrouter.gotoRoute(href.substring(1));
+								var href = "#dashboard";
+								window.myrouter.gotoRoute(href.substring(1));
+							});
+						});
+					}
+				}
+			});
+		});
 	});
+	
+/*
+	$(document).off( "pagehide" ).on( "pagehide", function( e ) {
+		$.sidr('close', 'sidr-left');
+	});
+
+	$(document).ready(function() {
+		alert('document ready');
+		
+		$('#sidr-left').off( "swipeleft" ).on( "swipeleft" , function( e ) {
+			$.sidr('close', 'sidr-left');
+		});
+		$(document).off( "swiperight" ).on( "swiperight" , function( e ) {
+			$.sidr('open', 'sidr-left');
+		});
+		$('#container').off( "swipeleft" ).on( "swipeleft" , function( e ) {
+			$.mobile.jqmNavigator.popView();
+		});
+		
+	});
+*/
 	
 	/*
 	function bindSwipeBack() {
