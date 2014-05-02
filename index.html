@@ -45,6 +45,20 @@
 			-webkit-transform: translate3d(0,0,0);
 			b/ackground-color:#206090;
 		}
+		.ui-content {
+			o/verflow-y: scroll !important;
+			-webkit-overflow-scrolling: touch !important;
+			background: url(./images/quadbg001.jpg) no-repeat center center fixed; 
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}
+
+		/* iOS specific fix, don't use it on Android devices */
+		.ui-content > * {
+			-webkit-transform: translateZ(0px) !important;
+		}
     </style>
 	
     <!-- Sidr styles -->

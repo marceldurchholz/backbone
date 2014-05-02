@@ -4,19 +4,21 @@ define(['underscore', 'Backbone', 'text!views/next/NextView.html'],
         var NextView = Backbone.View.extend({
 
             events:{
-                'click #btnBack':'btnBack_clickHandler'
+                // 'click #btnBack':'btnBack_clickHandler'
             },
 
             render:function () {
                 this.$el.html(_.template(NextViewTemplate));
                 return this;
-            },
+            }
 
-            btnBack_clickHandler:function (event) {
+            /*
+			btnBack_clickHandler:function (event) {
 				event.preventDefault();
                 $.mobile.jqmNavigator.popView();
 				return(false);
             }
+			*/
 
         });
 

@@ -2478,6 +2478,26 @@ try {
 		// $.sidr('close', 'sidr-left');
 		return(false);
 	});
+	
+	$(document).ready(function() {
+		$(document).off( "click", "#btnBack").on( "click", "#btnBack", function( e ) {
+			e.preventDefault();
+			$.mobile.jqmNavigator.popView();
+		});
+		$(document).off( "pagehide" ).on( "pagehide", function( event ) {
+			$.sidr('close', 'sidr-left');
+		});
+		$('#sidr-left').off( "swipeleft" ).on( "swipeleft" , function( e ) {
+			$.sidr('close', 'sidr-left');
+		});
+		$(document).off( "swiperight" ).on( "swiperight" , function( e ) {
+			$.sidr('open', 'sidr-left');
+		});
+		$('#container').off( "swipeleft" ).on( "swipeleft" , function( e ) {
+			$.mobile.jqmNavigator.popView();
+		});
+	});
+	
 	/*
 	function bindSwipeBack() {
 		$('#body').off( "swiperight", "#page-content").on( "swiperight", "#page-content", function( e ) {

@@ -1,23 +1,11 @@
 define(['underscore', 'Backbone', 'text!views/login/LoginPage.html'],
-    function (_, Backbone, LoginPage) {
+    function (_, Backbone, LoginPageTemplate) {
 
         var loginView = Backbone.View.extend({
 
-			initialize:function() {
-				FastClick.attach(document.body);
-			},
-			
-            events:{
-                'click #btnBack':'btnBack_clickHandler'
-            },
-
             render:function () {
-                this.$el.html(_.template(LoginPage));
+                this.$el.html(_.template(LoginPageTemplate));
                 return this;
-            },
-
-            btnBack_clickHandler:function (event) {
-                $.mobile.jqmNavigator.popView();
             }
 
         });

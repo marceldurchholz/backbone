@@ -12,50 +12,24 @@ define(['domReady', 'views/test/TestView', 'views/home/HomeView', 'views/next/Ne
 					$('.sidr_left').sidr({
 						name: 'sidr-left',
 						source: function(name) {
-							// return '<h1>' + name + ' menu</h1><p>Yes! You can use a callback too ;)</p>';
 							return new TestView({}).$el.html();
 						}
 					});
-					
 					return(false);
 				});
 				
                 // Backbone.history.start();
 				// Backbone.history.start({ pushState: false });
-
 				Backbone.history.start({
 					pushState: false,
 					hashChange: false
 				});
 		
+				/*
+				// extend in myfinctions.js !!!
 				$(document).ready(function() {
-					$(document).off( "pagehide" ).on( "pagehide", function( event ) {
-						$.sidr('close', 'sidr-left');
-					});
-					$('#sidr-left').off( "swipeleft" ).on( "swipeleft" , function( e ) {
-						$.sidr('close', 'sidr-left');
-					});
-					$(document).off( "swiperight" ).on( "swiperight" , function( e ) {
-						$.sidr('open', 'sidr-left');
-					});
-					$('#container').off( "swipeleft" ).on( "swipeleft" , function( e ) {
-						// $.sidr('close', 'sidr-left');
-						// alert('go back');
-						// Backbone.history.back();
-						// $.mobile.back();
-						$.mobile.jqmNavigator.popView();
-					});
-					/*
-					$(document).off( "aswiperight", "#container").on( "aswiperight", "#container", function( e ) {
-						// Backbone.history.back();
-						// window.myrouter.gotoRoute('next');
-						// alert('aaa');
-						// $.mobile.back();
-					});
-					*/
-					// alert('document.ready');
 				});
-				// console.log(document.body.innerHTML);
+				*/
             },
 
 			gotoRoute: function(route) {
