@@ -93,7 +93,9 @@
 
         // Left or right?
         if(side === 'left') {
-          bodyAnimation = {left: menuWidth + 'px', width: $body.width()-menuWidth + 'px'};
+          // bodyAnimation = {left: menuWidth + 'px', width: $body.width()-menuWidth + 'px'};
+		  bodyAnimation = {left: menuWidth + 'px'};
+		  containerAnimation = {width: $body.width()-menuWidth + 'px'};
           menuAnimation = {left: '0px'};
         }
         else {
@@ -114,7 +116,12 @@
             position: 'absolute'
           }).animate(bodyAnimation, speed, function() {
             $(this).addClass(bodyClass);
+			$('#container').css("width",$body.width());
+			$('#body').css("width",$body.width()-menuWidth).css("overflow-x","hidden");
           });
+          // $('#container').animate(containerAnimation, speed, function() {
+            // $(this).addClass(bodyClass);
+          // });
         }
         else {
           setTimeout(function() {
@@ -146,7 +153,8 @@
 
         // Right or left menu?
         if(side === 'left') {
-          bodyAnimation = {left: 0, width: $body.width()+menuWidth + 'px'};
+          // bodyAnimation = {left: 0, width: $body.width()+menuWidth + 'px'};
+		  bodyAnimation = {left: 0, width: $body.width() + 'px'};
           menuAnimation = {left: '-' + menuWidth + 'px'};
         }
         else {
