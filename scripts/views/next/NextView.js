@@ -13,7 +13,9 @@ define(['underscore', 'Backbone', 'text!views/next/NextView.html'],
             },
 
             btnBack_clickHandler:function (event) {
+				event.preventDefault();
                 $.mobile.jqmNavigator.popView();
+				return(false);
             }
 
         });

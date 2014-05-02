@@ -7,53 +7,45 @@ define(['domReady', 'views/test/TestView', 'views/home/HomeView', 'views/next/Ne
 			initialize: function() {
 			
 				var _thisRouter = this;
-				// $(document).bind('pageinit', function(event){
-				$(document).off( "pageinit" ).on( "pageinit", function( event ) {
-					alert( 'This page was just enhanced by jQuery Mobile!' );
-					$('a').off( "click" ).on( "click", function( e ) {
-					// $('a').click(function(e){
-						e.preventDefault();
-						var href = $(this).attr('href');
-						console.log(href);
-						if (href=='undefined') return(false);
-						
-						var href = href.replace("#", "");
-						console.log(href);
-						// var route = _thisRouter.routes
-						console.log(_thisRouter.routes);
-						var route = _thisRouter.routes[href];
-						if (href!='') {
-							console.log(route);
-							console.log(_thisRouter[route]);
-							_thisRouter[route]();
-							alert('Click! '+href);
-							// return(false);
-						}
-						// return(false);
-					});
-					return(false);
-				});
-				
-                Backbone.history.start();
-		
-				$(document).ready(function() {
-					$('#body').off( "swiperight", "#container").on( "swiperight", "#container", function( e ) {
-						alert('aaa');
-						$.mobile.back();
-					});
-					alert('document.ready');
+				$(document).off( "pageinit" ).on( "pageinit", function( event ) {				
+					// alert( 'This page was just enhanced by jQuery Mobile!' );
 					$('.sidr_left').sidr({
 						name: 'sidr-left',
 						source: function(name) {
-							// var bla = "bla empty";
-							// return '<h1>'+bla+' >> ' + name + ' menu</h1><p>Yes! You can use a callback too ;)</p>';
+							// return '<h1>' + name + ' menu</h1><p>Yes! You can use a callback too ;)</p>';
 							return new TestView({}).$el.html();
 						}
 					});
+					
+					return(false);
+				});
+				
+                // Backbone.history.start();
+				Backbone.history.start({ pushState: false });
+		
+				$(document).ready(function() {
+					$(document).off( "swiperight", "#container").on( "swiperight", "#container", function( e ) {
+						// Backbone.history.back();
+						// window.myrouter.gotoRoute('next');
+						alert('aaa');
+						// $.mobile.back();
+					});
+					// alert('document.ready');
 				});
 				// console.log(document.body.innerHTML);
             },
 
+			gotoRoute: function(route) {
+				console.log(route);
+				if (route!='' && route!='#') {
+					var router = this.routes[route];
+					console.log(router);
+					if (router!=undefined) {
+						this[router]();
+					}
+				}
+			},
+			
             // All of your Backbone Routes (add more)
             routes: {
                 "": "homeRouter",
@@ -71,7 +63,7 @@ define(['domReady', 'views/test/TestView', 'views/home/HomeView', 'views/next/Ne
 				// alert('nextRouter');
             },
             loginRouter: function() {
-				alert('loginRouter');
+				// alert('loginRouter');
 				$.mobile.jqmNavigator.pushView(new LoginViewTemplate());
 				// this.changePage(LoginView, {});
             },
@@ -79,6 +71,8 @@ define(['domReady', 'views/test/TestView', 'views/home/HomeView', 'views/next/Ne
 				$.mobile.jqmNavigator.pushView(new TestViewTemplate());
             }
         });
+		
+		window.myrouter = MobileRouter;
 		
 		return MobileRouter;
 

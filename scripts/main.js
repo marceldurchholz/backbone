@@ -77,7 +77,8 @@ require(['domReady', 'routers/MobileRouter', 'jqm'],
                 // $.mobile.jqmNavigator.pushView(new HomeView());
 				
 				/* new integrated router */
-				new MobileRouter();
+				// new MobileRouter();
+				window.myrouter = new MobileRouter();
 				
             }
 

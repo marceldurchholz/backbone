@@ -2474,8 +2474,9 @@ try {
 	}
 	
 	$(window).bind('hashchange', function(){
-		alert('hashchanged');
-		$.sidr('close', 'sidr-left');
+		alert('ATTENTION !!!! hashchanged >> stopping JS');
+		// $.sidr('close', 'sidr-left');
+		return(false);
 	});
 	/*
 	function bindSwipeBack() {
