@@ -3,6 +3,8 @@ define(['underscore', 'Backbone', 'text!views/dashboard/DashboardView.html'],
 
         var DashboardView = Backbone.View.extend({
 
+			template: _.template(DashboardViewTemplate),
+			
             events:{
                 'click a':'a_clickHandler'
             },
@@ -21,7 +23,10 @@ define(['underscore', 'Backbone', 'text!views/dashboard/DashboardView.html'],
 			},
             render:function () {
 				console.log('rendering');
-                this.$el.html(_.template(DashboardViewTemplate));
+                // this.$el.html(_.template(DashboardViewTemplate));
+				this.$el.html(this.template({
+					me: window.me
+				}));
 				return this;
             }
 

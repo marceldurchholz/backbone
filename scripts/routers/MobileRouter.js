@@ -1,6 +1,8 @@
-define(['domReady', 'views/test/TestView', 'views/home/HomeView', 'views/next/NextView', 'views/login/LoginView', 'views/test/TestView', 'views/dashboard/DashboardView', 'jqm'],
+alert('mobile router');
+
+define(['domReady', 'views/test/TestView', 'views/home/HomeView', 'views/next/NextView', 'views/login/LoginView', 'views/test/TestView', 'views/dashboard/DashboardView', 'views/noaccess/NoaccessView', 'jqm'],
         
-    function(domReady, TestView, HomeViewTemplate, NextViewTemplate, LoginViewTemplate, TestViewTemplate, DashboardViewTemplate) {
+    function(domReady, TestView, HomeViewTemplate, NextViewTemplate, LoginViewTemplate, TestViewTemplate, DashboardViewTemplate, NoaccessView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
@@ -73,10 +75,48 @@ define(['domReady', 'views/test/TestView', 'views/home/HomeView', 'views/next/Ne
 			gotoRoute: function(route) {
 				console.log(route);
 				if (route!='' && route!='#') {
+					// is a potential route
 					var router = this.routes[route];
 					console.log(router);
 					if (router!=undefined) {
-						this[router]();
+						// is an existing route
+						/*
+						console.log(window.me);
+						console.log(window.me.id);
+						console.log(window.me.length);
+						*/
+						// if (window.me.length==0 || window.me.length=='undefined' || window.me.length==undefined) { // 'undefined' || window.me.id=='' || window.me.id=='undefined'
+						// console.log(window.me.roles);
+						// if (window.me.roles && window.me.roles!='undefined' && window.me.roles.length>0) {
+							// console.log(window.me.roles);
+							// if (window.me.roles && !(window.me && window.me.roles.indexOf("provider") !== -1)) {
+								// cancel("You must be a provider to create a blog post", 401);
+								/*
+								dpd.users.me(function(me,err) {
+									console.log('You must be a provider to create a blog post');
+									alert('dashboardRouter access');
+									// window.myrouter.gotoRoute(href.substring(1));
+									router = "noaccessRouter";
+								});
+								*/
+							// }
+							// else {
+							// }
+						// }
+						var show = checkRole('provider');
+						console.log(show);
+						
+						if (route!='dashboard') {
+							show = true;
+						}
+						if (show==true) {
+							console.log('sdkjfhskjf');
+							console.log('now moving to router: '+router);
+							this[router]();
+						}
+						else {
+							this.noaccessRouter();
+						}
 					}
 					else {
 						console.log(route);
@@ -92,7 +132,9 @@ define(['domReady', 'views/test/TestView', 'views/home/HomeView', 'views/next/Ne
 				"login" : "loginRouter",
 				"test" : "testRouter",
 				"dashboard" : "dashboardRouter",
+				"noaccess" : "noaccessRouter",
             },
+			
 			homeRouter: function() {
 				$.mobile.jqmNavigator.pushView(new HomeViewTemplate());
 				// alert('homeRouter');
@@ -108,6 +150,9 @@ define(['domReady', 'views/test/TestView', 'views/home/HomeView', 'views/next/Ne
             },
             dashboardRouter: function() {
 				$.mobile.jqmNavigator.pushView(new DashboardViewTemplate());
+            },
+            noaccessRouter: function() {
+				$.mobile.jqmNavigator.pushView(new NoaccessView());
             },
             testRouter: function() {
 				$.mobile.jqmNavigator.pushView(new TestViewTemplate());

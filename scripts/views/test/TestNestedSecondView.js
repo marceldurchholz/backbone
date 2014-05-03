@@ -1,11 +1,11 @@
-define(['underscore', 'Backbone', 'text!views/test/TestNestedView.html', 'views/test/TestNestedSecondView'],
-    function (_, Backbone, TestNestedTemplate, TestNestedSecondView) {
+define(['underscore', 'Backbone', 'text!views/test/TestNestedSecondView.html'],
+    function (_, Backbone, TestNestedSecondTemplate) {
 
-		var TestNestedView = Backbone.View.extend({
+		var TestNestedSecondView = Backbone.View.extend({
 
 			tagName: 'li',
 			className: 'list-menu-item',
-			template: _.template(TestNestedTemplate),
+			template: _.template(TestNestedSecondTemplate),
             
 			events:{
                 'click a':'a_clickHandler'
@@ -16,22 +16,22 @@ define(['underscore', 'Backbone', 'text!views/test/TestNestedView.html', 'views/
 				return(false);
             },
 			initialize: function() {
-				console.log('initializing TestNestedView');
+				console.log('initializing TestNestedSecondView');
 				$(this.el).undelegate('a', 'click');
 				this.fetch();
 			},
 			fetch: function() {
-				console.log('fetching TestNestedView');
+				console.log('fetching TestNestedSecondView');
 			},
 			render: function() {
-				console.log('rendering/appending list item in TestNestedView');
+				console.log('rendering/appending list item in TestNestedSecondView');
 				var $el = $(this.el), self = this;
 				$el.append(this.template);
 				return this;
 			}
 		});
 
-        return TestNestedView;
+        return TestNestedSecondView;
 
     }
 

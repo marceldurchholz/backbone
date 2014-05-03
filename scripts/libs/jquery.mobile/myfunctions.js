@@ -1,3 +1,5 @@
+	alert('functions');
+
 try {
 
 	var rootURL = "";
@@ -2487,15 +2489,28 @@ try {
 		$(document).off( "pagehide" ).on( "pagehide", function( event ) {
 			$.sidr('close', 'sidr-left');
 		});
-		$('#sidr-left').off( "swipeleft" ).on( "swipeleft" , function( e ) {
+		$(document).off( "swipeleft" ).on( "swipeleft" , function( e ) {
 			$.sidr('close', 'sidr-left');
 		});
 		$(document).off( "swiperight" ).on( "swiperight" , function( e ) {
 			$.sidr('open', 'sidr-left');
 		});
+		/*
 		$('#container').off( "swipeleft" ).on( "swipeleft" , function( e ) {
 			$.mobile.jqmNavigator.popView();
 		});
+		*/
+		
+		$(document).off( "click", "#sendLogoutBtn").on( "click", "#sendLogoutBtn", function( e ) {
+			e.preventDefault();
+			dpd.users.logout(function(err) {
+				if(err) console.log(err);
+				window.me = new Object();
+				var href = "#home";
+				window.myrouter.gotoRoute(href.substring(1));
+			});
+		});
+
 		$(document).off( "click", "#sendLoginBtn").on( "click", "#sendLoginBtn", function( e ) {
 			e.preventDefault();
 			var username = $('#username').val().toLowerCase();
@@ -3024,6 +3039,7 @@ try {
 		}
 	}
 
+	*/
 	function checkRole(role) {
 		var show = false;
 		// if ($.inArray('user', window.me.roles) > -1) show = true;
@@ -3084,6 +3100,7 @@ try {
 		return(show);
 	}
 	
+	/*
 	$('#footervideolink').on("vclick", function (e) {
 		// report('footer clicked');
 		if (footervideoStatus != true) {
