@@ -80,6 +80,7 @@ require(['domReady', 'routers/MobileRouter', 'jqm'],
 				
 				/* new integrated router */
 				// new MobileRouter();
+				
 				window.myrouter = new MobileRouter();
 				
             }

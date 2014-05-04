@@ -6,7 +6,7 @@ define(['underscore', 'Backbone', 'views/test/TestViewLi'],
 			tagName: 'ul',
 			className: 'nav nav-list lists-nav',
 			// template: _.template(TestNestedTemplate),
-            
+			
 			events:{
                 'click a':'a_clickHandler'
             },
@@ -16,34 +16,20 @@ define(['underscore', 'Backbone', 'views/test/TestViewLi'],
 				return(false);
             },
 			initialize: function() {
-				console.log('initializing UL');
+				// console.log('initializing UL');
 				$(this.el).undelegate('a', 'click');
 			},
 			fetch: function() {
-				console.log('fetching UL');
+				// console.log('fetching UL');
 			},
 			render: function() {
 				console.log('rendering/appending list item in UL');
 				var $el = $(this.el);
-				var parentitemB;
-				// parentitem = new TestViewTemplate({ model: list });
-				// parentitemB = new TestViewLi({collection:this.collection});
-				// $el.append(parentitemB.render().el);
-				
-				console.log(this.collection);
-				parentitemB = new TestViewLi({collection:this.collection});
-				this.$el.html(parentitemB.render().el);
-				
-				console.log(this.$el);
+				var item = new TestViewLi(
+					{collection:this.collection}
+				);
+				$el.html(item.render().el);
 				return this;
-				/*
-				var $el = $(this.el);
-				var self = this;
-				// $el.append(this.template);
-				console.log($el);
-				$(this.el).append = 'buffdataaa';
-				return this;
-				*/
 			}
 		});
 

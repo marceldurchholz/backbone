@@ -16,29 +16,19 @@ define(['underscore', 'Backbone', 'views/test/TestViewHref'],
 				return(false);
             },
 			initialize: function() {
-				console.log('initializing LI');
+				// console.log('initializing LI');
 				$(this.el).undelegate('a', 'click');
 			},
 			fetch: function() {
-				console.log('fetching LI');
+				// console.log('fetching LI');
 			},
 			render: function() {
 				console.log('rendering/appending list item in LI');
-				console.log(this.collection);
-				
 				var $el = $(this.el);
 				this.collection.each(function(list) {
-					var item, sidebarItem;
-					item = new TestViewHref({ model: list });
+					var item = new TestViewHref({ model: list });
 					$el.append(item.render().el);
 				});
-				
-				var parentitemB;
-				// var $el = $(this.el);
-				// var self = this;
-				// $el.append(this.template);
-				// console.log($el);
-				// $(this.el).append = 'buffdataaa';
 				return(this);
 			}
 		});

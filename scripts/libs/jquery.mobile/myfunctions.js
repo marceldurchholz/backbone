@@ -1,4 +1,4 @@
-	alert('functions');
+// alert('functions');
 
 try {
 

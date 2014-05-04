@@ -1,14 +1,29 @@
-alert('mobile router');
+// alert('mobile router');
 
-define(['domReady', 'views/test/TestView', 'views/home/HomeView', 'views/next/NextView', 'views/login/LoginView', 'views/test/TestView', 'views/dashboard/DashboardView', 'views/noaccess/NoaccessView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/home/HomeView', 'views/next/NextView', 'views/login/LoginView', 'views/test/TestView', 'views/dashboard/DashboardView', 'views/noaccess/NoaccessView', 'jqm'],
         
-    function(domReady, TestView, HomeViewTemplate, NextViewTemplate, LoginViewTemplate, TestViewTemplate, DashboardViewTemplate, NoaccessView) {
+    function(domReady, sidemenusCollection, TestView, HomeViewTemplate, NextViewTemplate, LoginViewTemplate, TestViewTemplate, DashboardViewTemplate, NoaccessView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
+			collection: new sidemenusCollection(),
+			
 			initialize: function() {
 			
 				var _thisRouter = this;
+				
+				this.collection.fetch();
+				// this.collection.on("add", this.sidemenusAll, this);
+				// this.collection.on("remove", this.sidemenusAll, this);
+				this.collection.on("reset", this.start, this);
+				// this.start();
+            },
+			start: function(e,o) {
+				console.log(e);
+				console.log(o);
+				
+				// return(false);
+
 				// $('div[data-role="page"]').on('pagehide', function (event, ui) {
 				
 				/*
@@ -57,61 +72,38 @@ define(['domReady', 'views/test/TestView', 'views/home/HomeView', 'views/next/Ne
 				$(document).ready(function() {
 				});
 				*/
-            },
+			},
 
 			checkLink: function(event) {
 				if (event.preventDefault) event.preventDefault();
-				console.log('clicked on a href');
+				// console.log('clicked on a href');
 				var href = $(event.currentTarget).attr('href');
 				console.log(href);
 				if (href!='#' && href!='undefined' && href!='' && href!=undefined) {
-					console.log(href);
 					window.myrouter.gotoRoute(href.substring(1));
 					return(false);
 				}
 				else {
 				}
 			},
+			
 			gotoRoute: function(route) {
-				console.log(route);
 				if (route!='' && route!='#') {
 					// is a potential route
 					var router = this.routes[route];
-					console.log(router);
 					if (router!=undefined) {
-						// is an existing route
-						/*
-						console.log(window.me);
-						console.log(window.me.id);
-						console.log(window.me.length);
-						*/
-						// if (window.me.length==0 || window.me.length=='undefined' || window.me.length==undefined) { // 'undefined' || window.me.id=='' || window.me.id=='undefined'
-						// console.log(window.me.roles);
-						// if (window.me.roles && window.me.roles!='undefined' && window.me.roles.length>0) {
-							// console.log(window.me.roles);
-							// if (window.me.roles && !(window.me && window.me.roles.indexOf("provider") !== -1)) {
-								// cancel("You must be a provider to create a blog post", 401);
-								/*
-								dpd.users.me(function(me,err) {
-									console.log('You must be a provider to create a blog post');
-									alert('dashboardRouter access');
-									// window.myrouter.gotoRoute(href.substring(1));
-									router = "noaccessRouter";
-								});
-								*/
-							// }
-							// else {
-							// }
-						// }
-						var show = checkRole('provider');
-						console.log(show);
-						
-						if (route!='dashboard') {
+						var checkroute = 'dashboard';
+						var model = this.collection.find(
+							function(model) {
+								return (model.get('userfriendly')).toLowerCase() == checkroute;
+							}
+						);
+						var roles = model.get('roles');
+						var show = checkRoles(roles);
+						if (route!=checkroute) {
 							show = true;
 						}
 						if (show==true) {
-							console.log('sdkjfhskjf');
-							console.log('now moving to router: '+router);
 							this[router]();
 						}
 						else {
@@ -120,6 +112,7 @@ define(['domReady', 'views/test/TestView', 'views/home/HomeView', 'views/next/Ne
 					}
 					else {
 						console.log(route);
+						$.sidr('close', 'sidr-left');
 					}
 				}
 			},
@@ -159,7 +152,7 @@ define(['domReady', 'views/test/TestView', 'views/home/HomeView', 'views/next/Ne
             }
         });
 		
-		window.myrouter = MobileRouter;
+		// window.myrouter = MobileRouter;
 		
 		return MobileRouter;
 
