@@ -11,7 +11,7 @@ define(["jquery", "underscore", "Backbone"],
     // Creates a new Backbone Collection class object
 	var SidemenusCollection = Backbone.Collection.extend({
 	
-		url: 'http://dominik-lohmann.de:5000/sidemenu/?{"navoffline":"true","$sort":"seq"}',
+		url: 'http://dominik-lohmann.de:5000/sidemenu/?{"navmobile":"true","$sort":"seq"}',
 		model: SidemenuModel,
 			
 		initialize: function() {
@@ -24,7 +24,7 @@ define(["jquery", "underscore", "Backbone"],
 		},
 
 		sync: function(method, model, options) {
-			console.log('* syncing');
+			// console.log('* syncing');
 			Backbone.sync.call(model, method, model, options);
 		},
 		parse: function(responseObject,response) {

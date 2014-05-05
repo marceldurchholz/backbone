@@ -73,8 +73,6 @@
                     containerViews.pageContainer.append(view.el);
                     // Rendering the view
                     view.render();
-					
-					alert('pushing');
 
                     if (!$.mobile.firstPage) {
                         // Adding data-role with page value

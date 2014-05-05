@@ -2476,6 +2476,7 @@ try {
 	}
 	
 	$(document).ready(function() {
+		console.log('document ready');
 		$(document).off( "click", "#btnBack").on( "click", "#btnBack", function( e ) {
 			e.preventDefault();
 			$.mobile.jqmNavigator.popView();
@@ -2497,8 +2498,8 @@ try {
 			// We check if there is no open panel on the page because otherwise
 			// a swipe to close the left panel would also open the right panel (and v.v.).
 			// We do this by checking the data that the framework stores on the page element (panel: open).
-			console.log(e);
-			console.log($.mobile.activePage.jqmData( "panel_left" ));
+			// console.log(e);
+			// console.log($.mobile.activePage.jqmData( "panel_left" ));
 			if ( $.mobile.activePage.jqmData( "panel_left" ) !== "open" ) {
 				if ( e.type === "swipeleft"  ) {
 					$( "#panel_right" ).panel( "open" );
@@ -2528,7 +2529,7 @@ try {
 			var username = $('#username').val().toLowerCase();
 			var password = $('#password').val();
 			// alert(username+ ' / ' +password);
-			doAlert('Sie werden danach automatisch weitergeleitet...','Login wird geprüft');
+			// doAlert('Sie werden danach automatisch weitergeleitet...','Login wird geprüft');
 			if (checkString(username)!=true || password=='') {
 				doAlert('Bitte überprüfen Sie die eingegebenen Daten.','Eingaben unvollständig oder nicht korrekt!');
 				// hideModal();
@@ -2566,7 +2567,10 @@ try {
 								// window.location.href="#dashboard";
 								// window.myrouter.gotoRoute(href.substring(1));
 								var href = "#dashboard";
+								// console.log(result);
+								console.log('redirecting to: '+href);
 								window.myrouter.gotoRoute(href);
+								// window.location.hash = href;
 							});
 						});
 					}

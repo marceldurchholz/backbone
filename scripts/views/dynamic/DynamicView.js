@@ -1,7 +1,7 @@
-define(['underscore', 'Backbone', 'text!views/noaccess/NoaccessView.html'],
-    function (_, Backbone, NoaccessViewTemplate) {
+define(['underscore', 'Backbone', 'text!views/dynamic/DynamicView.html'],
+    function (_, Backbone, DynamicViewTemplate) {
 
-        var NoaccessViewVar = Backbone.View.extend({
+        var DynamicViewVar = Backbone.View.extend({
 
 			events:{
                 'click a':'a_clickHandler',
@@ -17,11 +17,11 @@ define(['underscore', 'Backbone', 'text!views/noaccess/NoaccessView.html'],
 				$(this.el).undelegate('a', 'click');
 			},
             render:function () {
-                this.$el.html(_.template(NoaccessViewTemplate));
+                this.$el.html(_.template(DynamicViewTemplate));
 				return this;
             }
 
         });
 
-        return NoaccessViewVar;
+        return DynamicViewVar;
     });

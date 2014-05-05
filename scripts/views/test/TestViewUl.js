@@ -34,7 +34,6 @@ define(['underscore', 'Backbone', 'views/test/TestViewLi', 'text!views/test/Test
 					}
 				},{variable: 'item'});
 				$el.append(this.template(contentObject));
-				
 				return this;
 			}
 		});

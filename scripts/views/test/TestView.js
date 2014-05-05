@@ -1,12 +1,12 @@
-define(['underscore', 'Backbone', 'collections/sidemenusCollection', 'text!views/test/TestView.html', 'views/test/TestViewUl'],
-    function (_, Backbone, sidemenusCollection, TestViewUlTemplate, TestView) {
+define(['underscore', 'Backbone', 'collections/sidemenusCollection', 'views/test/TestViewUl', 'text!views/test/TestView.html'],
+    function (_, Backbone, sidemenusCollection, TestViewUl, TestViewTemplate) {
 
         var TestViewVar = Backbone.View.extend({
 
 			el: "#panel_left",
 			// tagName: '',
 			// className: '',
-			template: _.template(TestViewUlTemplate),
+			template: _.template(TestViewTemplate),
 			collection: new sidemenusCollection(),
 			
 			events:{
@@ -19,28 +19,28 @@ define(['underscore', 'Backbone', 'collections/sidemenusCollection', 'text!views
             button_clickHandler:function (event) {
 				window.myrouter.checkLink(event);
             },
-			initialize:function() {
+			initialize: function() {
 				$(this.el).undelegate('a', 'click');
 				this.collection.fetch();
 				// this.collection.on("add", this.sidemenusAll, this);
 				// this.collection.on("remove", this.sidemenusAll, this);
 				this.collection.on("reset", this.render, this);
 			},
-			fetch:function(a,b) {
+			fetch: function(a,b) {
                 // this.render();
 			},
-            render:function () {
-				console.log('rendering TestView');
+            render: function () {
+				var _this = this;
 				var $el = $(this.el);
 				$el.panel();
+				var sidebarHTML = (new TestViewUl({collection:this.collection}).render().el).outerHTML;
 				var contentObject = new Object({
 					item: {
-						'sidebarHTML':(new TestView({collection:this.collection}).render().el).outerHTML
+						'sidebarHTML':sidebarHTML
 					}
 				},{variable: 'item'});
 				$el.html(this.template(contentObject));
 				$el.trigger("create");
-				// $(function() { $( "body>[data-role='panel']" ).trigger( "updatelayout" ); });
 				return this;
             }
 
