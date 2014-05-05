@@ -2475,12 +2475,6 @@ try {
 		}
 	}
 	
-	$(window).bind('hashchange', function(){
-		alert('ATTENTION !!!! hashchanged >> stopping JS');
-		// $.sidr('close', 'sidr-left');
-		return(false);
-	});
-	
 	$(document).ready(function() {
 		$(document).off( "click", "#btnBack").on( "click", "#btnBack", function( e ) {
 			e.preventDefault();
@@ -3065,7 +3059,7 @@ try {
 		// if (role=='provider' || role=='seeker') show = true;
 		// else 
 		// else 
-		if (role=='' || role==undefined) show = true;
+		if (role=='' || role==undefined || role=='public') show = true;
 		else if (window.me.roles!=undefined) {
 			$.each( window.me.roles, function( key, value ) {
 				if (role==value) {

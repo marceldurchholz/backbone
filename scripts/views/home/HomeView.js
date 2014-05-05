@@ -12,7 +12,8 @@ define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/h
 				window.myrouter.checkLink(event);
             },
             button_clickHandler:function (event) {
-				window.myrouter.checkLink(event);
+				alert('button handler');
+				// window.myrouter.checkLink(event);
             },
             btnNextView_clickHandler:function (event) {
                 $.mobile.jqmNavigator.pushView(new NextViewTemplate);
@@ -20,6 +21,7 @@ define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/h
 
 			initialize:function() {
 				$(this.el).undelegate('a', 'click');
+				// $(this.el).undelegate('button', 'click');
 				console.log(this.options);
 			},
 			

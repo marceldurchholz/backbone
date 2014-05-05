@@ -17,6 +17,16 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				// this.collection.on("remove", this.sidemenusAll, this);
 				this.collection.on("reset", this.start, this);
 				// this.start();
+				console.log('initializing MobileRouter');
+				$(window).bind('hashchange', function(){
+					console.log('ATTENTION !!!! hashchanged to: '+window.location.hash);
+					
+					// _thisRouter[router]();
+					_thisRouter.gotoRoute(window.location.hash);
+					// console.log(_thisRouter.collection);
+					// $.sidr('close', 'sidr-left');
+					// return(false);
+				});
             },
 			start: function(e,o) {
 				console.log(e);
@@ -39,7 +49,8 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				*/
 				
 				$(document).off( "pageinit" ).on( "pageinit", function( event ) {				
-					// alert( 'This page was just enhanced by jQuery Mobile!' );
+					// console.log($.mobile.jqmNavigator._getPageContainerViews({}));
+					alert( 'Reloading Navi' );
 					// $(this.el).remove();
 					new TestView({});
 					// new TestView({}).$el.html();
@@ -53,15 +64,17 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					*/
 					// $(function() { $( "body>[data-role='panel']" ).trigger( "create" ).trigger( "updatelayout" ).panel(); });
 					
-					return(false);
+					// return(false);
 				});
 				
                 // Backbone.history.start();
 				// Backbone.history.start({ pushState: false });
 				Backbone.history.start({
-					pushState: false,
-					hashChange: false
+					pushState: false
+					, hashChange: false
+					// , silent: true
 				});
+
 		
 				/*
 				// extend in myfinctions.js !!!
@@ -72,6 +85,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 
 			checkLink: function(event) {
 				console.log('checkLink');
+				var _thisRouter = this;
 				var href = $(event.currentTarget).attr('href');
 				var is_ajax = $(event.currentTarget).attr('data-ajax');
 				if (is_ajax=='true') {
@@ -80,11 +94,14 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				else if (href!='#' && href!='undefined' && href!='' && href!=undefined) {
 					console.log(href+' has no >> data-ajax=true');
 					if (event.preventDefault) event.preventDefault();
-					window.myrouter.gotoRoute(href);
+					_thisRouter.gotoRoute(href);
 					return(false);
 				}
 				else {
-					console.log(href);
+					console.log('undefinierte aktion in MobileRouter.js');
+					// console.log(event);
+					// _thisRouter.gotoRoute(event);
+					return(false);
 				}
 			},
 			
@@ -95,19 +112,31 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					// is a potential route
 					var router = this.routes[route.substring(1)];
 					if (router!=undefined) {
-						var checkroute = 'dashboard';
+						var checkroute = route.substring(1); // 'login';
+						console.log('checking route: '+checkroute);
+						// console.log(this.collection);
 						var model = this.collection.find(
 							function(model) {
-								return (model.get('userfriendly')).toLowerCase() == checkroute;
+								return (model.get('urloffline')).toLowerCase() == checkroute;
 							}
 						);
-						var roles = model.get('roles');
-						var show = checkRoles(roles);
-						console.log('show');
-						console.log(show);
-						if (route.substring(1)!=checkroute) {
-							show = true;
+						// console.log(model);
+						if (!model) {
+							alert('requested urloffline not existing');
+							this.noaccessRouter();
+							return(false);							
 						}
+						// console.log(model.get('roles'));
+						var roles = model.get('roles');
+						// console.log(roles);
+						var show = checkRoles(roles);
+						// console.log('show');
+						// console.log(show);
+						// alert(show);
+						// return(false);
+						// if (checkroute!=route.substring(1)) {
+						// 	show = true;
+						// }
 						if (show==true) {
 							this[router]();
 						}
@@ -116,7 +145,10 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 						}
 					}
 					else {
-						console.log(route.substring(1));
+						// console.log(route.substring(1));
+						alert('requested route not setted');
+						this.noaccessRouter();
+						return(false);							
 						// $.sidr('close', 'sidr-left');
 						// $( "#panel_left" ).panel( "close" );
 					}
@@ -125,16 +157,38 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 			
             // All of your Backbone Routes (add more)
             routes: {
-                "": "homeRouter",
-				"home": "homeRouter",
+				"": "initRouter",
+                "home": "homeRouter",
                 "next": "nextRouter",
 				"login" : "loginRouter",
 				"test" : "testRouter",
 				"dashboard" : "dashboardRouter",
 				"noaccess" : "noaccessRouter",
+				'*path':  'defaultPathRouter',
+				// '*actions':  'defaultActionsRouter'
             },
-			
+			defaultActionsRouter: function() {
+				alert('default actions Router');
+			},
+			defaultPathRouter: function() {
+				alert('default path Router');
+				console.log('route not setted in MobileRouter.js');
+			},
+			initRouter: function() {
+				alert('initRouter');
+				// $.mobile.jqmNavigator.pushView(new HomeViewTemplate());
+				window.location.hash = '#home';
+			},
 			homeRouter: function() {
+				console.log($.mobile.jqmNavigator._getPageContainerViews({}));
+				console.log(Backbone.history.fragment);
+				/*
+				var model = this.collection.find(
+					function(model) {
+						return (model.get('userfriendly')).toLowerCase() == checkroute;
+					}
+				);
+				*/
 				$.mobile.jqmNavigator.pushView(new HomeViewTemplate({
 						'header_vars':new Object({title:"this is my page title"}, {subtitle:"and now a subtitle"}),
 						// 'footer_vars':new Object({copyright:"MCD 2014"}, {version:"1.0.1 beta"})
@@ -142,16 +196,22 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				// alert('homeRouter');
             },
 			nextRouter: function() {
+				alert('calling nextRouter from MobileRouter');
+				// console.log($.mobile.jqmNavigator._getPageContainerViews({}));
+				// console.log(Backbone.history.fragment);
 				$.mobile.jqmNavigator.pushView(new NextViewTemplate());
+				// $.mobile.jqmNavigator.pushView(new NextViewTemplate());
 				// alert('nextRouter');
             },
             loginRouter: function() {
+				alert('calling loginRouter from MobileRouter');
 				// alert('loginRouter');
 				$.mobile.jqmNavigator.pushView(new LoginViewTemplate());
 				// this.changePage(LoginView, {});
             },
             dashboardRouter: function() {
-				$.mobile.jqmNavigator.pushView(new DashboardViewTemplate());
+				// $.mobile.jqmNavigator.pushView(new DashboardViewTemplate());
+				this.gotoRoute('#dashboard');
             },
             noaccessRouter: function() {
 				$.mobile.jqmNavigator.pushView(new NoaccessView());
@@ -160,8 +220,6 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				$.mobile.jqmNavigator.pushView(new TestViewTemplate());
             }
         });
-		
-		// window.myrouter = MobileRouter;
 		
 		return MobileRouter;
 
