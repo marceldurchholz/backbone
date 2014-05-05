@@ -10,12 +10,14 @@ define(['underscore', 'Backbone', 'collections/sidemenusCollection', 'text!views
 			collection: new sidemenusCollection(),
 			
 			events:{
-                'click a':'a_clickHandler'
+                'click a':'a_clickHandler',
+                'click button':'button_clickHandler',
             },
             a_clickHandler:function (event) {
-				event.preventDefault();
-				window.myrouter.gotoRoute($(event.currentTarget).attr('href').substring(1));
-				return(false);
+				window.myrouter.checkLink(event);
+            },
+            button_clickHandler:function (event) {
+				window.myrouter.checkLink(event);
             },
 			initialize:function() {
 				$(this.el).undelegate('a', 'click');
@@ -36,8 +38,9 @@ define(['underscore', 'Backbone', 'collections/sidemenusCollection', 'text!views
 						'sidebarHTML':(new TestView({collection:this.collection}).render().el).outerHTML
 					}
 				},{variable: 'item'});
-				$el.append(this.template(contentObject));
+				$el.html(this.template(contentObject));
 				$el.trigger("create");
+				// $(function() { $( "body>[data-role='panel']" ).trigger( "updatelayout" ); });
 				return this;
             }
 

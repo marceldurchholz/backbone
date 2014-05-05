@@ -41,7 +41,8 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				$(document).off( "pageinit" ).on( "pageinit", function( event ) {				
 					// alert( 'This page was just enhanced by jQuery Mobile!' );
 					// $(this.el).remove();
-					new TestView({}).$el.html();
+					new TestView({});
+					// new TestView({}).$el.html();
 					/*
 					$('.sidr_left').sidr({
 						name: 'sidr-left',
@@ -70,16 +71,16 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 			},
 
 			checkLink: function(event) {
-				if (event.preventDefault) event.preventDefault();
-				console.log('clicked on a href');
+				console.log('checkLink');
 				var href = $(event.currentTarget).attr('href');
 				var is_ajax = $(event.currentTarget).attr('data-ajax');
 				if (is_ajax=='true') {
 					console.log(href+' has >> data-ajax=true');
 				}
 				else if (href!='#' && href!='undefined' && href!='' && href!=undefined) {
-					console.log(href);
-					window.myrouter.gotoRoute(href.substring(1));
+					console.log(href+' has no >> data-ajax=true');
+					if (event.preventDefault) event.preventDefault();
+					window.myrouter.gotoRoute(href);
 					return(false);
 				}
 				else {
@@ -88,11 +89,11 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 			},
 			
 			gotoRoute: function(route) {
-				console.log('clicked on a href');
+				console.log('gotoRoute');
 				console.log(route);
 				if (route!='' && route!='#') {
 					// is a potential route
-					var router = this.routes[route];
+					var router = this.routes[route.substring(1)];
 					if (router!=undefined) {
 						var checkroute = 'dashboard';
 						var model = this.collection.find(
@@ -102,7 +103,9 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 						);
 						var roles = model.get('roles');
 						var show = checkRoles(roles);
-						if (route!=checkroute) {
+						console.log('show');
+						console.log(show);
+						if (route.substring(1)!=checkroute) {
 							show = true;
 						}
 						if (show==true) {
@@ -113,8 +116,9 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 						}
 					}
 					else {
-						console.log(route);
+						console.log(route.substring(1));
 						// $.sidr('close', 'sidr-left');
+						// $( "#panel_left" ).panel( "close" );
 					}
 				}
 			},
@@ -131,7 +135,10 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
             },
 			
 			homeRouter: function() {
-				$.mobile.jqmNavigator.pushView(new HomeViewTemplate());
+				$.mobile.jqmNavigator.pushView(new HomeViewTemplate({
+						'header_vars':new Object({title:"this is my page title"}, {subtitle:"and now a subtitle"}),
+						// 'footer_vars':new Object({copyright:"MCD 2014"}, {version:"1.0.1 beta"})
+				}, {variable:'page_vars'}));
 				// alert('homeRouter');
             },
 			nextRouter: function() {

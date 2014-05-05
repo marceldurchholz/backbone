@@ -19,10 +19,13 @@ define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/h
             },
 
 			initialize:function() {
+				$(this.el).undelegate('a', 'click');
+				console.log(this.options);
 			},
 			
             render:function () {
-                this.$el.html(this.template,{});
+				var _this = this;
+				this.$el.html(this.template(this.options));
 				// $(function() { $( "body>[data-role='panel']" ).trigger( "create" ).trigger( "updatelayout" ).panel(); });
 				return this;
             }

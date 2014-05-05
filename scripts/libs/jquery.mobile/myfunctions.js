@@ -2486,6 +2486,7 @@ try {
 			e.preventDefault();
 			$.mobile.jqmNavigator.popView();
 		});
+		/*
 		$(document).off( "pagehide" ).on( "pagehide", function( event ) {
 			$.sidr('close', 'sidr-left');
 		});
@@ -2494,6 +2495,23 @@ try {
 		});
 		$(document).off( "swiperight" ).on( "swiperight" , function( e ) {
 			$.sidr('open', 'sidr-left');
+		});
+		*/
+		$( "#panel_left" ).panel();
+		$( "#panel_right" ).panel();
+		$(document).off( "swipeleft swiperight" ).on( "swipeleft swiperight", '.ui-page-active', function( e ) {
+			// We check if there is no open panel on the page because otherwise
+			// a swipe to close the left panel would also open the right panel (and v.v.).
+			// We do this by checking the data that the framework stores on the page element (panel: open).
+			console.log(e);
+			console.log($.mobile.activePage.jqmData( "panel_left" ));
+			if ( $.mobile.activePage.jqmData( "panel_left" ) !== "open" ) {
+				if ( e.type === "swipeleft"  ) {
+					$( "#panel_right" ).panel( "open" );
+				} else if ( e.type === "swiperight" ) {
+					$( "#panel_left" ).panel( "open" );
+				}
+			}
 		});
 		/*
 		$('#container').off( "swipeleft" ).on( "swipeleft" , function( e ) {
@@ -2507,7 +2525,7 @@ try {
 				if(err) console.log(err);
 				window.me = new Object();
 				var href = "#home";
-				window.myrouter.gotoRoute(href.substring(1));
+				window.myrouter.gotoRoute(href);
 			});
 		});
 
@@ -2515,7 +2533,8 @@ try {
 			e.preventDefault();
 			var username = $('#username').val().toLowerCase();
 			var password = $('#password').val();
-			alert(username);
+			// alert(username+ ' / ' +password);
+			doAlert('Sie werden danach automatisch weitergeleitet...','Login wird geprüft');
 			if (checkString(username)!=true || password=='') {
 				doAlert('Bitte überprüfen Sie die eingegebenen Daten.','Eingaben unvollständig oder nicht korrekt!');
 				// hideModal();
@@ -2541,8 +2560,8 @@ try {
 						// dpd('users').get(window.system.uid, function(me, err) {
 						dpd.users.me(function(me) {
 							window.me = me;
-							$('#showMenu').show();
-							$('#showPageOptionsIcon').show();
+							// $('#showMenu').show();
+							// $('#showPageOptionsIcon').show();
 							if (window.me.logincount==undefined) logincount=0;
 							var logincount = window.me.logincount+1;
 							dpd.users.put(window.me.id, {"logincount":window.me.logincount}, function(result, err) { 
@@ -2553,7 +2572,7 @@ try {
 								// window.location.href="#dashboard";
 								// window.myrouter.gotoRoute(href.substring(1));
 								var href = "#dashboard";
-								window.myrouter.gotoRoute(href.substring(1));
+								window.myrouter.gotoRoute(href);
 							});
 						});
 					}

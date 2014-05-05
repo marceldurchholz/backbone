@@ -10,12 +10,14 @@ define(['underscore', 'Backbone', 'views/test/TestViewHref', 'text!views/test/Te
 			
 			
 			events:{
-                // 'click a':'a_clickHandler'
+                'click a':'a_clickHandler',
+                'click button':'button_clickHandler',
             },
             a_clickHandler:function (event) {
-				event.preventDefault();
-				window.myrouter.gotoRoute($(event.currentTarget).attr('href').substring(1));
-				return(false);
+				window.myrouter.checkLink(event);
+            },
+            button_clickHandler:function (event) {
+				window.myrouter.checkLink(event);
             },
 			initialize: function() {
 				$(this.el).undelegate('a', 'click');
@@ -36,8 +38,12 @@ define(['underscore', 'Backbone', 'views/test/TestViewHref', 'text!views/test/Te
 					},{variable: 'item'});
 					$el.append(contentObject.item.liHTML);
 				});
-				$el.prepend('<li data-icon="delete"><a href="#" data-rel="close">Close menu</a></li>');
-				$el.attr('data-role','listview').listview();
+				console.log(this);
+
+				
+				// $el.prepend('<li data-icon="delete"><a href="#panel_left" data-rel="close"><img class="ui-li-icon ui-corner-none">Close menu</a>');
+				$el.prepend('<li data-mini="true" data-icon="arrow-l"><a data-ajax="true" class="ui-btn ui-btn-icon-left ui-icon-carat-l" href="#panel_left" data-rel="close">Menü schließen</a></li>');
+				$el.attr('data-role','listview').listview().listview("refresh");
 				return this;
 			}
 		});
