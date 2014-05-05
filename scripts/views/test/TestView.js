@@ -1,12 +1,14 @@
 define(['underscore', 'Backbone', 'collections/sidemenusCollection', 'text!views/test/TestView.html', 'views/test/TestViewUl'],
-    function (_, Backbone, sidemenusCollection, TestViewTemplate, TestViewUl) {
+    function (_, Backbone, sidemenusCollection, TestViewUlTemplate, TestView) {
 
         var TestViewVar = Backbone.View.extend({
 
-			el: "#sidr-left",
-			// template: _.template(TestViewTemplate),
-
+			el: "#panel_left",
+			// tagName: '',
+			// className: '',
+			template: _.template(TestViewUlTemplate),
 			collection: new sidemenusCollection(),
+			
 			events:{
                 'click a':'a_clickHandler'
             },
@@ -28,12 +30,15 @@ define(['underscore', 'Backbone', 'collections/sidemenusCollection', 'text!views
             render:function () {
 				console.log('rendering TestView');
 				var $el = $(this.el);
-				var item = new TestViewUl({collection:this.collection}).render().el;
-				var sidemenusHtmlContent = _.template(TestViewTemplate, {
-					outerHTML: item.outerHTML
+				$el.panel();
+				var contentObject = new Object({
+					item: {
+						'sidebarHTML':(new TestView({collection:this.collection}).render().el).outerHTML
+					}
 				},{variable: 'item'});
-				$el.html(sidemenusHtmlContent);
-                return this;
+				$el.append(this.template(contentObject));
+				$el.trigger("create");
+				return this;
             }
 
         });

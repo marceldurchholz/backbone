@@ -1,14 +1,16 @@
-define(['underscore', 'Backbone', 'views/test/TestViewHref'],
-    function (_, Backbone, TestViewHref) {
+define(['underscore', 'Backbone', 'views/test/TestViewHref', 'text!views/test/TestViewHref.html'],
+    function (_, Backbone, TestViewHref, TestViewHrefTemplate) {
 
 		var TestViewLiVar = Backbone.View.extend({
 
-			tagName: 'li',
-			className: 'list-menu-item',
-			// template: _.template(TestNestedTemplate),
-            
+			// el: "",
+			tagName: 'ul',
+			className: 'NO_UL_CLASS',
+			template: _.template(TestViewHrefTemplate),
+			
+			
 			events:{
-                'click a':'a_clickHandler'
+                // 'click a':'a_clickHandler'
             },
             a_clickHandler:function (event) {
 				event.preventDefault();
@@ -16,20 +18,27 @@ define(['underscore', 'Backbone', 'views/test/TestViewHref'],
 				return(false);
             },
 			initialize: function() {
-				// console.log('initializing LI');
 				$(this.el).undelegate('a', 'click');
 			},
 			fetch: function() {
-				// console.log('fetching LI');
+				// console.log('fetching UL');
 			},
 			render: function() {
-				console.log('rendering/appending list item in LI');
 				var $el = $(this.el);
-				this.collection.each(function(list) {
-					var item = new TestViewHref({ model: list });
-					$el.append(item.render().el);
+				_this = this;
+				this.collection.each(function(row) {				
+					var _row = row;
+					$el.data('listId', _row.get('id'));
+					var contentObject = new Object({
+						item: {
+							'liHTML':(new TestViewHref({model:_row}).render().el).outerHTML
+						}
+					},{variable: 'item'});
+					$el.append(contentObject.item.liHTML);
 				});
-				return(this);
+				$el.prepend('<li data-icon="delete"><a href="#" data-rel="close">Close menu</a></li>');
+				$el.attr('data-role','listview').listview();
+				return this;
 			}
 		});
 

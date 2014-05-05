@@ -2,6 +2,7 @@ define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/h
     function ($, _, Backbone, NextViewTemplate, HomeViewTemplate) {
         var HomeView = Backbone.View.extend({
 
+			template: _.template(HomeViewTemplate),
             events:{
                 'click a':'a_clickHandler',
                 'click button':'button_clickHandler',
@@ -21,7 +22,8 @@ define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/h
 			},
 			
             render:function () {
-                this.$el.html(_.template(HomeViewTemplate));
+                this.$el.html(this.template,{});
+				// $(function() { $( "body>[data-role='panel']" ).trigger( "create" ).trigger( "updatelayout" ).panel(); });
 				return this;
             }
 

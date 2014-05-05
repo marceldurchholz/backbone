@@ -18,7 +18,7 @@ define(["jquery", "underscore", "Backbone"],
 			// nottting...
 		},
 		fetch: function(options) {
-			console.log('* fetching');
+			// console.log('* fetching');
 			var responseObjectSidemenu = Backbone.Collection.prototype.fetch.call(this, options);
 			return responseObjectSidemenu;
 		},
@@ -28,8 +28,8 @@ define(["jquery", "underscore", "Backbone"],
 			Backbone.sync.call(model, method, model, options);
 		},
 		parse: function(responseObject,response) {
-			console.log('* parsing');
-			console.log(this);
+			// console.log('* parsing');
+			// console.log(this);
 			// console.log(responseObject);
 			// console.log(response);
 			

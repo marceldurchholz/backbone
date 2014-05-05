@@ -1,14 +1,16 @@
-define(['underscore', 'Backbone', 'text!views/test/TestViewHrefTemplate.html'],
+define(['underscore', 'Backbone', 'text!views/test/TestViewHref.html'],
     function (_, Backbone, TestViewHrefTemplate) {
 
 		var TestViewHrefVar = Backbone.View.extend({
 
-			tagName: 'span',
-			className: 'my-span',
+			// el: "",
+			tagName: 'li',
+			className: 'NO_LI_CLASS',
 			template: _.template(TestViewHrefTemplate),
+			
             
 			events:{
-                'click a':'a_clickHandler'
+                // 'click a':'a_clickHandler'
             },
             a_clickHandler:function (event) {
 				event.preventDefault();
@@ -16,18 +18,16 @@ define(['underscore', 'Backbone', 'text!views/test/TestViewHrefTemplate.html'],
 				return(false);
             },
 			initialize: function() {
-				// console.log('initializing HREF');
 				$(this.el).undelegate('a', 'click');
 			},
 			fetch: function() {
-				// console.log('fetching HREF');
+				// console.log('fetching LI');
 			},
 			render: function() {
-				console.log('rendering/appending list item in HREF');
+				var _this = this;
 				var $el = $(this.el);
-				$el.data('listId', this.model.get('id'));
-				$el.html(this.template({
-					sideitem: this.model.toJSON() 
+				$el.append(_this.template({
+					sideitem: this.model.toJSON()
 				}));
 				return(this);
 			}

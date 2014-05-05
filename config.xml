@@ -37,14 +37,16 @@
 	<gap:plugin name="org.apache.cordova.core.camera" />
 	<gap:plugin name="org.apache.cordova.core.dialogs" />
 	<gap:plugin name="org.apache.cordova.core.network-information" />
-	<gap:plugin name="org.apache.cordova.core.media" />
-	<gap:plugin name="org.apache.cordova.core.media-capture" />
 	<gap:plugin name="org.apache.cordova.core.console" />
 	<gap:plugin name="org.apache.cordova.core.splashscreen" />
+	<!-- 
+	<gap:plugin name="org.apache.cordova.core.media" />
+	<gap:plugin name="org.apache.cordova.core.media-capture" />
 	<gap:plugin name="org.apache.cordova.file" />
     <gap:plugin name="org.apache.cordova.file-transfer" />	
 	<gap:plugin name="cc.fovea.plugins.inapppurchase" />
 	<gap:plugin name="nl.x-services.plugins.insomnia" />
+	-->
 	<gap:plugin name="org.apache.cordova.core.inappbrowser" />
 	
     <preference name="orientation"                value="portrait" />        <!-- all: default means both landscape and portrait are enabled -->

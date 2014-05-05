@@ -1,14 +1,16 @@
-define(['underscore', 'Backbone', 'views/test/TestViewLi'],
-    function (_, Backbone, TestViewLi) {
+define(['underscore', 'Backbone', 'views/test/TestViewLi', 'text!views/test/TestViewUl.html'],
+    function (_, Backbone, TestViewLi, TestViewUlTemplate) {
 
 		var TestViewUlVar = Backbone.View.extend({
 
-			tagName: 'ul',
-			className: 'nav nav-list lists-nav',
-			// template: _.template(TestNestedTemplate),
+			// el: "",
+			tagName: 'div',
+			className: 'NO_SIDEBAR_CLASS',
+			template: _.template(TestViewUlTemplate),
+			
 			
 			events:{
-                'click a':'a_clickHandler'
+                // 'click a':'a_clickHandler'
             },
             a_clickHandler:function (event) {
 				event.preventDefault();
@@ -16,19 +18,21 @@ define(['underscore', 'Backbone', 'views/test/TestViewLi'],
 				return(false);
             },
 			initialize: function() {
-				// console.log('initializing UL');
 				$(this.el).undelegate('a', 'click');
 			},
 			fetch: function() {
 				// console.log('fetching UL');
 			},
 			render: function() {
-				console.log('rendering/appending list item in UL');
+				var _this = this;
 				var $el = $(this.el);
-				var item = new TestViewLi(
-					{collection:this.collection}
-				);
-				$el.html(item.render().el);
+				var contentObject = new Object({
+					item: {
+						'ulHTML':(new TestViewLi({collection:this.collection}).render().el).outerHTML
+					}
+				},{variable: 'item'});
+				$el.append(this.template(contentObject));
+				
 				return this;
 			}
 		});

@@ -36,27 +36,22 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					console.log(event);
 					$(event.currentTarget).remove();
 				});
-				$(document).off( "pageinit" ).on( "pageinit", function( event ) {				
-					alert( 'pageinit' );
-					$(this.el).remove();
-					$('.sidr_left').sidr({
-						name: 'sidr-left',
-						source: function(name) {
-							return new TestView({}).$el.html();
-						}
-					});
-					return(false);
-				});
 				*/
 				
 				$(document).off( "pageinit" ).on( "pageinit", function( event ) {				
 					// alert( 'This page was just enhanced by jQuery Mobile!' );
+					// $(this.el).remove();
+					new TestView({}).$el.html();
+					/*
 					$('.sidr_left').sidr({
 						name: 'sidr-left',
 						source: function(name) {
 							return new TestView({}).$el.html();
 						}
 					});
+					*/
+					// $(function() { $( "body>[data-role='panel']" ).trigger( "create" ).trigger( "updatelayout" ).panel(); });
+					
 					return(false);
 				});
 				
@@ -76,18 +71,25 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 
 			checkLink: function(event) {
 				if (event.preventDefault) event.preventDefault();
-				// console.log('clicked on a href');
+				console.log('clicked on a href');
 				var href = $(event.currentTarget).attr('href');
-				console.log(href);
-				if (href!='#' && href!='undefined' && href!='' && href!=undefined) {
+				var is_ajax = $(event.currentTarget).attr('data-ajax');
+				if (is_ajax=='true') {
+					console.log(href+' has >> data-ajax=true');
+				}
+				else if (href!='#' && href!='undefined' && href!='' && href!=undefined) {
+					console.log(href);
 					window.myrouter.gotoRoute(href.substring(1));
 					return(false);
 				}
 				else {
+					console.log(href);
 				}
 			},
 			
 			gotoRoute: function(route) {
+				console.log('clicked on a href');
+				console.log(route);
 				if (route!='' && route!='#') {
 					// is a potential route
 					var router = this.routes[route];
@@ -112,7 +114,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					}
 					else {
 						console.log(route);
-						$.sidr('close', 'sidr-left');
+						// $.sidr('close', 'sidr-left');
 					}
 				}
 			},

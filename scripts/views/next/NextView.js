@@ -1,12 +1,16 @@
 define(['underscore', 'Backbone', 'text!views/next/NextView.html'],
     function (_, Backbone, NextViewTemplate) {
 
-        var NextView = Backbone.View.extend({
+        var NextViewVar = Backbone.View.extend({
 
             events:{
-                'click a':'a_clickHandler'
+                'click a':'a_clickHandler',
+                'click button':'button_clickHandler'
             },
             a_clickHandler:function (event) {
+				window.myrouter.checkLink(event);
+            },
+            button_clickHandler:function (event) {
 				window.myrouter.checkLink(event);
             },
             render:function () {
@@ -14,15 +18,7 @@ define(['underscore', 'Backbone', 'text!views/next/NextView.html'],
 				return this;
             }
 
-            /*
-			btnBack_clickHandler:function (event) {
-				event.preventDefault();
-                $.mobile.jqmNavigator.popView();
-				return(false);
-            }
-			*/
-
         });
 
-        return NextView;
+        return NextViewVar;
     });
