@@ -761,10 +761,36 @@ try {
 	}
 
 	function checkFileExists(fileName){
+		// fileName = 'file:///cordova/frameworks/backbone/views/support/supportView.html';
 		var http = new XMLHttpRequest();
 		http.open('HEAD', fileName, false);
 		http.send(null);
 		return (http.status != 404);
+	}
+	
+	function old_checkFileExists(fileUrl) {
+		var xmlHttpReq = false;
+		var self = this;
+		// Mozilla/Safari
+		if (window.XMLHttpRequest) {
+			self.xmlHttpReq = new XMLHttpRequest();
+		}
+		// IE
+		else if (window.ActiveXObject) {
+			self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		self.xmlHttpReq.open('HEAD', fileUrl, true);
+		self.xmlHttpReq.onreadystatechange = function() {
+			if (self.xmlHttpReq.readyState == 4) {
+				if (self.xmlHttpReq.status == 200) {
+					// alert('the file exists');
+				} else if (self.xmlHttpReq.status == 404) {
+					// alert('the file does not exist');
+				}
+			}
+		}
+		self.xmlHttpReq.send();
 	}
 
 	function printObject(o) {

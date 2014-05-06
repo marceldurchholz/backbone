@@ -185,8 +185,10 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 							else _this.noaccessRouter();
 						}
 						else {
-							alert('router function not existing');
-							_this.dynamicRouter();
+							// alert('router function not existing');
+							console.log('hash eventually not pulled via navmobile=true (router function not created/existing)');
+							_this.noaccessRouter();
+							// _this.dynamicRouter();
 							return(false);
 						}
 					}
@@ -196,20 +198,28 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 			},
 			execRouterByRoute: function(route,model){
 				var _this = this;
+				var hash = route.substring(1); 
+				var viewName = hash+'View';
 				console.log('execRouterByRoute '+route);
 				var pageObject = new Object({
 					'header_vars':new Object({title:model.get('userfriendly')}, {subtitle:model.get('slogan')}),
 					'footer_vars':new Object({copyright:model.get('companyname')}, {kdnr:model.get('kdnr')}),
 					'me':window.me,
 					'collection':_this.collection,
+					'model':model,
+					'viewName':viewName,
+					'route':route,
+					'hash':hash
 				}, {variable:'page_vars'});
-				var hash = route.substring(1); 
-				var viewName = hash+'View';
 				try {
 					$.mobile.jqmNavigator.pushView((new (eval(viewName))(pageObject)));
 				} catch (e) {
-					console.log('execRouterByRoute dynamicView');
-					$.mobile.jqmNavigator.pushView((new dynamicView(pageObject)));
+					console.log('switching to dynamicView (files not found)');
+					// pageObject.template = route;
+					// pageObject.collection = _this.collection;
+					// new dynamicView({collection:_this.collection});
+					// pushView.template = 'dynamicView';
+					$.mobile.jqmNavigator.pushView(new dynamicView(pageObject));
 				} finally {
 					// $.mobile.jqmNavigator.pushView((new (eval(viewName))(pageObject)));
 				}

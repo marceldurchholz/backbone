@@ -21,7 +21,7 @@ define(['underscore', 'Backbone', 'text!views/test/TestViewHref.html'],
 			},
 			render: function() {
 				var _this = this;
-				var $el = $(this.el);
+				var $el = this.$el;
 				$el.append(_this.template({
 					sideitem: this.model.toJSON()
 				}));
