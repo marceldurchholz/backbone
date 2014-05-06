@@ -103,39 +103,38 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 			
 			gotoRoute: function(route) {
 				var _this = this;
-				this.collection.fetch({ 
+				_this.collection.fetch({ 
 					success: function(response){
 					_this.collection = response;
-				}});
-				
-				// console.log('gotoRoute: '+route);
-				// alert(route);
-				// if (route!='') this.recreateSidemenu();
-				if (route!='' && route!='#') {
-					var router = this.routes[route.substring(1)];
-					if (router!=undefined) {
-						var checkroute = route.substring(1);
-						var model = this.collection.find(
-							function(model) {
-								return (model.get('urloffline')).toLowerCase() == checkroute;
+					// console.log('gotoRoute: '+route);
+					// alert(route);
+					// if (route!='') this.recreateSidemenu();
+					if (route!='' && route!='#') {
+						var router = _this.routes[route.substring(1)];
+						if (router!=undefined) {
+							var checkroute = route.substring(1);
+							var model = _this.collection.find(
+								function(model) {
+									return (model.get('urloffline')).toLowerCase() == checkroute;
+								}
+							);
+							if (!model) {
+								console.log('requested navmobile not existing');
+								_this.noaccessRouter();
+								return(false);							
 							}
-						);
-						if (!model) {
-							console.log('requested navmobile not existing');
-							this.noaccessRouter();
-							return(false);							
+							var show = checkRoles(model.get('roles'));
+							if (show==true) _this.execRouterByRoute(route,model);
+							else _this.noaccessRouter();
 						}
-						var show = checkRoles(model.get('roles'));
-						if (show==true) this.execRouterByRoute(route);
-						else this.noaccessRouter();
+						else {
+							_this.dynamicRouter();
+							return(false);
+						}
 					}
 					else {
-						this.dynamicRouter();
-						return(false);
 					}
-				}
-				else {
-				}
+				}});
 			},
 			callFunc: function(funcName,val) {
 				// console.log(new Object(funcName))
@@ -147,11 +146,12 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				// var bla = new Object();
 				// return();
 			},
-			execRouterByRoute: function(route){
+			execRouterByRoute: function(route,model){
 				console.log('setted route '+route);
 				var pageObject = new Object({
-					'header_vars':new Object({title:"this is my page title"}, {subtitle:"and now a subtitle"}),
-					'footer_vars':new Object({copyright:"MCD 2014"}, {version:"1.0.1 beta"})
+					'header_vars':new Object({title:model.get('userfriendly')}, {subtitle:model.get('slogan')}),
+					'footer_vars':new Object({copyright:model.get('companyname')}, {kdnr:model.get('kdnr')}),
+					'me':window.me,
 				}, {variable:'page_vars'});
 				// var notsettedRouter = 'notsettedRouter';
 				// switch
@@ -161,7 +161,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					  try {
 						$.mobile.jqmNavigator.pushView((new (eval(viewName))(pageObject)));
 					  } catch (e) {
-						$.mobile.jqmNavigator.pushView((new noaccessView(pageObject)));
+						$.mobile.jqmNavigator.pushView((new dynamicView(pageObject)));
 					  } finally {
 						// $.mobile.jqmNavigator.pushView((new (eval(viewName))(pageObject)));
 					  }

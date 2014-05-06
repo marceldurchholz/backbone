@@ -26,7 +26,6 @@ define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/h
             render:function () {
 				var _this = this;
 				this.$el.html(this.template(this.options));
-				// $(function() { $( "body>[data-role='panel']" ).trigger( "create" ).trigger( "updatelayout" ).panel(); });
 				return this;
             }
 

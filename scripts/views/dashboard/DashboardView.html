@@ -1,6 +1,6 @@
 <div data-role="header" data-position="fixed">
     <a data-ajax="true" href="#panel_left" data-icon="grid" data-iconpos="left">Menü</a>
-    <h1>Dashboard View</h1>
+    <h1><%= header_vars.title %></h1>
     <a data-ajax="true" href="#panel_right" data-icon="gear" data-iconpos="notext">Prefs</a>
 </div>
 
@@ -9,7 +9,6 @@
 		me.id: <%= me.id %><br>
 	</p>
 
-	<p>
-		<a id="sendLogoutBtn" class="sendLogoutBtn" data-role="button"><span>Logout</span></a>
-	</p>
+	<a id="sendLogoutBtn" class="sendLogoutBtn" data-role="button"><span>Abmelden</span></a>
+
 </div>

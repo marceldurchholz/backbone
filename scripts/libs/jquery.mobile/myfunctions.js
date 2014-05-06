@@ -2501,7 +2501,7 @@ try {
 			dpd.users.logout(function(err) {
 				if(err) console.log(err);
 				window.me = new Object();
-				var href = "#home";
+				var href = "#login";
 				window.myrouter.gotoRoute(href);
 			});
 		});
