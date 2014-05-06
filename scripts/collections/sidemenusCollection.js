@@ -1,62 +1,42 @@
 define(["jquery", "underscore", "Backbone"],
-
   function($, _, Backbone) {
-
 	var SidemenuModel = Backbone.Model.extend({
 		defaults: {
-		  // name: "Harry Potter"
+		  urloffline: "nothing",
+		  userfriendly: "no text in here"
 		}
 	});
-	
-    // Creates a new Backbone Collection class object
 	var SidemenusCollection = Backbone.Collection.extend({
-	
 		url: 'http://dominik-lohmann.de:5000/sidemenu/?{"navmobile":"true","$sort":"seq"}',
-		model: SidemenuModel,
-			
+		model: SidemenuModel,			
 		initialize: function() {
-			// nottting...
+			console.log('initializing sidemenuCollection');
 		},
 		fetch: function(options) {
-			// console.log('* fetching');
+			console.log('fetching SidemenuCollection');
 			var responseObjectSidemenu = Backbone.Collection.prototype.fetch.call(this, options);
 			return responseObjectSidemenu;
 		},
-
 		sync: function(method, model, options) {
-			// console.log('* syncing');
 			Backbone.sync.call(model, method, model, options);
 		},
-		parse: function(responseObject,response) {
-			// console.log('* parsing');
-			// console.log(this);
-			// console.log(responseObject);
-			// console.log(response);
-			
-			var _collection = this;
-			_collection.models = [];
-			for (n = 0; n < responseObject.length; ++n) {
-				model = responseObject[n];
-				var access = false;
-				
-				if (checkAppConfigs(model.roles)==true) access = true;
-				if (access==false) if (checkRoles(model.roles)==true) access = true;
-				
-				if (access==false) {
-					// _collection.add(model);
-					_collection.remove(model);
-				}
-
+		parse: function(responseSidemenu) {
+			for (n = 0; n < responseSidemenu.length; ++n) {
+				var model = responseSidemenu[n];
+				var access = 0;
+				// if (checkAppConfigs(model.roles)==true) access = 1;
+				if (access==0) if (checkRoles(model.roles)==true) access = 1;
+				console.log(model.userfriendly+' > '+access);
+				if (access==1) if (checkAppConfigs(model.roles)==true) access = 1;
+				console.log(model.roles.toString());
+				console.log(this);
+				if (access>0) this.add(new SidemenuModel(model));
+				else this.remove(new SidemenuModel(model));
 			}
-			
-			return(responseObject);
+			console.log(this);
+			return(this.models);
 		}
-
 	});
-
-    // Returns the Model class
     return SidemenusCollection;
-
   }
-
 );

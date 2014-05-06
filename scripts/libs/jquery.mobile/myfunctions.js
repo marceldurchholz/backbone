@@ -1,9 +1,9 @@
 // alert('functions');
 
 try {
-
-	var rootURL = "";
 	var root = this; // used by pdfbrowser and childbrowser
+	var rootURL = "";
+	var dpd_server = "http://dominik-lohmann.de:5000/";
 	var deviceSDID;
 	var cordovaIsLoaded = false;
 	var deviceSDID = "???";
@@ -605,7 +605,7 @@ try {
 	
 	function updateCoins(productId) {
 		// showModal();
-		$.ajax('http://dominik-lohmann.de:5000/users/?id='+window.me.id,{
+		$.ajax(window.dpd_server+'users/?id='+window.me.id,{
 			type:"GET",
 			async: false,
 		}).done(function(me) {
@@ -1783,7 +1783,7 @@ try {
 		data.purchases = me.purchases;
 		this._newData = data;
 		this._me = me;
-		$.ajax('http://dominik-lohmann.de:5000/users/?id='+me.id,{
+		$.ajax(window.dpd_server+'users/?id='+me.id,{
 			type:"GET",
 			async: false,
 		}).done(function(me) {
@@ -1798,7 +1798,7 @@ try {
 		else {
 			if (_me.purchases==undefined) _me.purchases = new Array();
 			me.purchases.push(videoData.id);
-			$.ajax('http://dominik-lohmann.de:5000/users/?id='+me.id,{
+			$.ajax(window.dpd_server+'users/?id='+me.id,{
 				type:"POST",
 				contentType: "application/json",
 				async: false,
@@ -2476,30 +2476,17 @@ try {
 	}
 	
 	$(document).ready(function() {
-		console.log('document ready');
+
+		// console.log('document ready');
+
 		$(document).off( "click", "#btnBack").on( "click", "#btnBack", function( e ) {
 			e.preventDefault();
 			$.mobile.jqmNavigator.popView();
 		});
-		/*
-		$(document).off( "pagehide" ).on( "pagehide", function( event ) {
-			$.sidr('close', 'sidr-left');
-		});
-		$(document).off( "swipeleft" ).on( "swipeleft" , function( e ) {
-			$.sidr('close', 'sidr-left');
-		});
-		$(document).off( "swiperight" ).on( "swiperight" , function( e ) {
-			$.sidr('open', 'sidr-left');
-		});
-		*/
+
 		$( "#panel_left" ).panel();
 		$( "#panel_right" ).panel();
 		$(document).off( "swipeleft swiperight" ).on( "swipeleft swiperight", '.ui-page-active', function( e ) {
-			// We check if there is no open panel on the page because otherwise
-			// a swipe to close the left panel would also open the right panel (and v.v.).
-			// We do this by checking the data that the framework stores on the page element (panel: open).
-			// console.log(e);
-			// console.log($.mobile.activePage.jqmData( "panel_left" ));
 			if ( $.mobile.activePage.jqmData( "panel_left" ) !== "open" ) {
 				if ( e.type === "swipeleft"  ) {
 					$( "#panel_right" ).panel( "open" );
@@ -2508,11 +2495,6 @@ try {
 				}
 			}
 		});
-		/*
-		$('#container').off( "swipeleft" ).on( "swipeleft" , function( e ) {
-			$.mobile.jqmNavigator.popView();
-		});
-		*/
 		
 		$(document).off( "click", "#sendLogoutBtn").on( "click", "#sendLogoutBtn", function( e ) {
 			e.preventDefault();
@@ -2537,8 +2519,8 @@ try {
 			}
 			dpd.users.login({username: username, password: password}, function(user, error) {
 			// dpd.users.post({username: username, password: password}, function(user, error) {
-				console.log(user);
-				console.log(error);
+				// console.log(user);
+				// console.log(error);
 				// return(false);
 				
 				if (error) {
@@ -2567,26 +2549,16 @@ try {
 								// window.location.href="#dashboard";
 								// window.myrouter.gotoRoute(href.substring(1));
 								var href = "#dashboard";
-								// console.log(result);
-								console.log('redirecting to: '+href);
 								window.myrouter.gotoRoute(href);
-								// window.location.hash = href;
 							});
 						});
 					}
 				}
 			});
 		});
-	});
-	
-/*
-	$(document).off( "pagehide" ).on( "pagehide", function( e ) {
-		$.sidr('close', 'sidr-left');
-	});
-
-	$(document).ready(function() {
-		alert('document ready');
 		
+		/*
+		alert('document ready');
 		$('#sidr-left').off( "swipeleft" ).on( "swipeleft" , function( e ) {
 			$.sidr('close', 'sidr-left');
 		});
@@ -2596,9 +2568,9 @@ try {
 		$('#container').off( "swipeleft" ).on( "swipeleft" , function( e ) {
 			$.mobile.jqmNavigator.popView();
 		});
-		
+		*/
+
 	});
-*/
 	
 	/*
 	function bindSwipeBack() {
@@ -2628,13 +2600,6 @@ try {
 	}, false);
 	
 	$(window).bind('hashchange', function(){
-		$('a').click(function(e){
-			alert('Click!');
-			e.preventDefault();
-		});
-	});
-	
-	$(window).bind('hashchange', function(){
 		showModal();
 		if (navigator.userAgent.match(/(iPad|iPhone)/)) {
 			modifyiOS7StatusBar();
@@ -2651,9 +2616,7 @@ try {
 			menuSwitched(false);
 		});
 	});
-	*/
 
-	/*
 	$('body').off('click','#captureVideoLinkButton').on('click','#captureVideoLinkButton',function(e) { 
 		e.preventDefault();
 		// $('#linkVideoUrl').val('bla');
@@ -2926,7 +2889,7 @@ try {
 				// return(false);
 				if(dbtype=="video") dbtable="videos";
 				if(dbtype=="card") dbtable="cards";
-				$.ajax('http://dominik-lohmann.de:5000/'+dbtable+'/?id='+id,{
+				$.ajax(window.dpd_server+''+dbtable+'/?id='+id,{
 					type:"POST",
 					contentType: "application/json",
 					async: false,
@@ -3273,10 +3236,9 @@ try {
 		}
 	}
 	
-	
 	function getOwnerData() {
 		// get owner data and roles
-		$.ajax('http://dominik-lohmann.de:5000/users/?kdnr='+window.system.kdnr,{
+		$.ajax(window.dpd_server+'users/?kdnr='+window.system.kdnr,{
 			type:"GET",
 			async: false,
 		}).done(function(result) {
@@ -3291,7 +3253,7 @@ try {
 
 	function getAppOptions() {
 		// get app data and roles
-		$.ajax('http://dominik-lohmann.de:5000/appoptions/',{
+		$.ajax(window.dpd_server+'appoptions/',{
 			type:"GET",
 			async: false,
 		}).done(function(result) {
@@ -3303,7 +3265,7 @@ try {
 	/*
 	function checkLogin() {
 		// get owner data and roles
-		$.ajax('http://dominik-lohmann.de:5000/users/?kdnr='+window.system.kdnr,{
+		$.ajax(window.dpd_server+'users/?kdnr='+window.system.kdnr,{
 			type:"GET",
 			async: false,
 		}).done(function(result) {
