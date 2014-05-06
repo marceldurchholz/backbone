@@ -2578,6 +2578,7 @@ try {
 								// window.dao.rememberUserData(username, password, '1');
 								// window.location.href="#dashboard";
 								// window.myrouter.gotoRoute(href.substring(1));
+								$.mobile.defaultPageTransition = 'flip';
 								var href = "#dashboard";
 								window.myrouter.gotoRoute(href);
 							});
@@ -2592,6 +2593,7 @@ try {
 			dpd.users.logout(function(err) {
 				if(err) console.log(err);
 				window.me = new Object();
+				$.mobile.defaultPageTransition = 'flip';
 				var href = "#login";
 				window.myrouter.gotoRoute(href);
 			});

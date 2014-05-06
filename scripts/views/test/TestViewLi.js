@@ -26,15 +26,10 @@ define(['underscore', 'Backbone', 'views/test/TestViewHref', 'text!views/test/Te
 				var _this = this;
 				var $el = $(this.el);
 				
-				// alert('rendering LI');
-				console.log(this.collection);
-				// this.collection = window.myrouter.filterCollection('has_role',this.collection, 'roles', 'public');
-				// this.collection = window.myrouter.filterCollection('<',this.collection, 'seq', 50);
-				console.log(this.collection);
-				console.log(window.me.id);
-				if (window.me.id && window.me.id!='') var filteredCollection = window.myrouter.filterCollection('has_not_role',this.collection, 'roles', 'public');
-				else var filteredCollection = window.myrouter.filterCollection('has_role',this.collection, 'roles', 'public');
-				filteredCollection.each(function(row) {				
+				this.collection = window.myrouter.filterCollection('!=',this.collection, 'navmobileshow', false);
+				if (window.me.id && window.me.id!='') this.collection = window.myrouter.filterCollection('has_not_role',this.collection, 'roles', 'public');
+				else this.collection = window.myrouter.filterCollection('has_role',this.collection, 'roles', 'public');
+				this.collection.each(function(row) {				
 					var _row = row;
 					$el.data('listId', _row.get('id'));
 					var contentObject = new Object({

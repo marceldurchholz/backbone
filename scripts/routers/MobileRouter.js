@@ -65,6 +65,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					// console.log('pagehide');
 					// console.log(window['sidemenuView']);
 					// window['sidemenuView'].el.remove();
+					$.mobile.defaultPageTransition = 'slide';
 				});
 				
 				this.collection.fetch({ 
