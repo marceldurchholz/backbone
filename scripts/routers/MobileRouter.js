@@ -46,28 +46,20 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				var _this = this;
 				console.log('initializing MobileRouter');
 				$(window).bind('hashchange', function(){
-					alert('ATTENTION !!!! hashchanged to: '+window.location.hash);
+					console.log('ATTENTION !!!! hashchanged to: '+window.location.hash);
 					_this.gotoRoute(window.location.hash);
 				});
 				$(document).off( "pagebeforecreate" ).on( "pagebeforecreate", function( event ) {	
-					// console.log('pagebeforecreate');
-					// console.log(window['sidemenuView'])
 				});
 				$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {				
-					// console.log('pagecreate');
 				});
 				$(document).off( "pageinit" ).on( "pageinit", function( event ) {	
-					// console.log(window['sidemenuView']);
-					// console.log('pageinit');
-					// this.collection = new sidemenusCollection();
 				});
 				$(document).off( "pagehide" ).on( "pagehide", function( event ) {	
-					// console.log('pagehide');
-					// console.log(window['sidemenuView']);
-					// window['sidemenuView'].el.remove();
+					// EFFECTS INFOS:
+					// http://www.w3schools.com/jquerymobile/jquerymobile_transitions.asp
 					$.mobile.defaultPageTransition = 'slidefade';
 				});
-				
 				this.collection.fetch({ 
 					silent:true,
 					success: function(response){
@@ -75,7 +67,6 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					_this.bindEvents();
 					_this.recreateSidemenu();
 					window['sidemenuView'] = new testView({collection:_this.collection});
-					// console.log(window['sidemenuView']);
 				}});
 
 				},
