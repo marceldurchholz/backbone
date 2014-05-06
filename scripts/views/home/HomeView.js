@@ -1,21 +1,11 @@
-define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/home/HomeView.html'],
-    function ($, _, Backbone, NextViewTemplate, HomeViewTemplate) {
+define(['jquery', 'underscore', 'Backbone', 'text!views/home/HomeView.html'],
+    function ($, _, Backbone, HomeViewTemplate) {
         var HomeView = Backbone.View.extend({
 
 			template: _.template(HomeViewTemplate),
-            events:{
-                'click a':'a_clickHandler',
-                'click button':'button_clickHandler',
-                'click #btnNextView':'btnNextView_clickHandler'
-            },
-            a_clickHandler:function (event) {
-				window.myrouter.checkLink(event);
-            },
-            button_clickHandler:function (event) {
-				window.myrouter.checkLink(event);
-            },
-            btnNextView_clickHandler:function (event) {
-                $.mobile.jqmNavigator.pushView(new NextViewTemplate);
+			events:{
+                'click a':global_a_clickHandler,
+                'click button':global_button_clickHandler,
             },
 
 			initialize:function() {

@@ -10,22 +10,21 @@ define(['underscore', 'Backbone', 'views/test/TestViewLi', 'text!views/test/Test
 			
 			
 			events:{
-                'click a':'a_clickHandler',
-                'click button':'button_clickHandler',
-            },
-            a_clickHandler:function (event) {
-				window.myrouter.checkLink(event);
+                'click a':global_a_clickHandler,
+                'click button':global_button_clickHandler,
             },
             button_clickHandler:function (event) {
 				window.myrouter.checkLink(event);
             },
 			initialize: function() {
+				var _this = this;
 				$(this.el).undelegate('a', 'click');
 			},
 			fetch: function() {
 				// console.log('fetching UL');
 			},
 			render: function() {
+				// alert('rendering UL');
 				var _this = this;
 				var $el = $(this.el);
 				var contentObject = new Object({

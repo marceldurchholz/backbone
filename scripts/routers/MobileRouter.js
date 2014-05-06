@@ -8,6 +8,40 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 
 			collection: new sidemenusCollection(),
 			
+			filterCollection: function (filter,collection, attribute, value) {
+				if (filter=='>') {
+					var models = collection.select(function (model) {
+						return model.get(attribute) > value;
+					});
+				}
+				if (filter=='<') {
+					var models = collection.select(function (model) {
+						return model.get(attribute) < value;
+					});
+				}
+				if (filter=='==') {
+					var models = collection.select(function (model) {
+						return model.get(attribute) == value;
+					});
+				}
+				if (filter=='!=') {
+					var models = collection.select(function (model) {
+						return model.get(attribute) != value;
+					});
+				}
+				if (filter=='has_role') {
+					var models = collection.select(function (model) {
+						return ($.inArray(value, model.get(attribute))=='-1' ? false : true);
+					});
+				}
+				if (filter=='has_not_role') {
+					var models = collection.select(function (model) {
+						return ($.inArray(value, model.get(attribute))=='-1' ? true : false);
+					});
+				}
+				return new collection.constructor(models);
+			},
+			
 			initialize: function() {
 				var _this = this;
 				console.log('initializing MobileRouter');
@@ -16,26 +50,31 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					_this.gotoRoute(window.location.hash);
 				});
 				$(document).off( "pagebeforecreate" ).on( "pagebeforecreate", function( event ) {	
-					// _this.collection.fetch();
-					// alert('pagebeforecreate');
-					new testView({});
+					// console.log('pagebeforecreate');
+					// console.log(window['sidemenuView'])
 				});
 				$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {				
-					// alert('pagecreate');
+					// console.log('pagecreate');
 				});
-				$(document).off( "pageinit" ).on( "pageinit", function( event ) {				
-					// alert('pageinit');
-					// _this.collection.fetch();
+				$(document).off( "pageinit" ).on( "pageinit", function( event ) {	
+					// console.log(window['sidemenuView']);
+					// console.log('pageinit');
 					// this.collection = new sidemenusCollection();
+				});
+				$(document).off( "pagehide" ).on( "pagehide", function( event ) {	
+					// console.log('pagehide');
+					// console.log(window['sidemenuView']);
+					// window['sidemenuView'].el.remove();
 				});
 				
 				this.collection.fetch({ 
 					silent:true,
 					success: function(response){
 					_this.collection = response;
-					console.log(_this.collection);
 					_this.bindEvents();
-					// _this.recreateSidemenu();
+					_this.recreateSidemenu();
+					window['sidemenuView'] = new testView({collection:_this.collection});
+					// console.log(window['sidemenuView']);
 				}});
 
 				},
@@ -51,27 +90,25 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				console.log(a);
 				console.log(this.collection);
 			},
-            routes: {
-				"": "loginRouter",
-				'*path':  'dynamicRouter'
-			},
 			recreateSidemenu: function(e,a) {
 				// alert('recreateSidemenu');
 				var _this = this;
 				_this.routes = [];
+				_this.routes['dynamic'] = 'dynamicRouter';
+				_this.routes[''] = "loginRouter";
+				_this.routes['*path'] = 'dynamicRouter';
 				this.collection.each(function(row) {				
 					var _row = row;
 					var userfriendly = _row.get('urloffline');
 					_this.routes[userfriendly] = userfriendly+'Router';
 				});
 			},
+			
 			bindEvents: function() {
+				var _this = this;
 				// this.collection.on("add", this.recreateSidemenu, this);
 				// this.collection.on("remove", this.recreateSidemenu, this);
-				var _this = this;
-				// _this.recreateSidemenu();
-				this.collection.on("reset", this.recreateSidemenu, this);
-				_this.collection.trigger('reset');
+				this.collection.on("reset", _this.recreateSidemenu, this);
 				Backbone.history.start({
 					// silent:true,
 					pushState: false,
@@ -81,53 +118,74 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				// this.recreateSidemenu();
 			},
 
+            routes: {
+				"": "loginRouter"
+			},
+			dynamicRouter: function() {
+				console.log('doing dynamicRouter');
+				$.mobile.jqmNavigator.pushView(new dynamicView());
+			},
+            noaccessRouter: function() {
+				console.log('doing noaccessRouter');
+				$.mobile.jqmNavigator.pushView(new noaccessView());
+            },
+            loginRouter: function() {
+				this.gotoRoute('#login');
+            },
+			
 			checkLink: function(event) {
 				console.log('checkLink');
 				var _this = this;
 				var href = $(event.currentTarget).attr('href');
+				var data_href = $(event.currentTarget).attr('href');
 				var is_ajax = $(event.currentTarget).attr('data-ajax');
 				if (is_ajax=='true') {
 					console.log(href+' has >> data-ajax=true');
+					if (event.preventDefault) event.preventDefault();
+					return(false);
 				}
 				else if (href!='#' && href!='undefined' && href!='' && href!=undefined) {
-					console.log(href+' has no >> data-ajax=true');
+					// console.log(href+' has no >> data-ajax=true');
 					if (event.preventDefault) event.preventDefault();
 					_this.gotoRoute(href);
 					return(false);
 				}
 				else {
-					// console.log('undefinierte aktion in MobileRouter.js');
+					if (event.preventDefault) event.preventDefault();
+					console.log('undefinierte aktion in MobileRouter.js');
 					return(false);
 				}
 			},
 			
 			gotoRoute: function(route) {
 				var _this = this;
+				console.log('gotoRoute: '+route);
 				_this.collection.fetch({ 
 					success: function(response){
 					_this.collection = response;
-					// console.log('gotoRoute: '+route);
-					// alert(route);
-					// if (route!='') this.recreateSidemenu();
 					if (route!='' && route!='#') {
 						var router = _this.routes[route.substring(1)];
 						if (router!=undefined) {
 							var checkroute = route.substring(1);
+							console.log(route);
 							var model = _this.collection.find(
 								function(model) {
 									return (model.get('urloffline')).toLowerCase() == checkroute;
 								}
 							);
 							if (!model) {
-								console.log('requested navmobile not existing');
+								console.log('requested navmobile NOT existing');
 								_this.noaccessRouter();
 								return(false);							
 							}
+							console.log('requested navmobile IS existing');
+							console.log(model);
 							var show = checkRoles(model.get('roles'));
 							if (show==true) _this.execRouterByRoute(route,model);
 							else _this.noaccessRouter();
 						}
 						else {
+							alert('router function not existing');
 							_this.dynamicRouter();
 							return(false);
 						}
@@ -136,81 +194,27 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					}
 				}});
 			},
-			callFunc: function(funcName,val) {
-				// console.log(new Object(funcName))
-				// console.log(new [funcName](val));
-				// String.prototype.toElement = function(){
-				// 	return t.getElementsByTagName("*")[0];
-				// }
-				// console.log(bla);
-				// var bla = new Object();
-				// return();
-			},
 			execRouterByRoute: function(route,model){
-				console.log('setted route '+route);
+				var _this = this;
+				console.log('execRouterByRoute '+route);
 				var pageObject = new Object({
 					'header_vars':new Object({title:model.get('userfriendly')}, {subtitle:model.get('slogan')}),
 					'footer_vars':new Object({copyright:model.get('companyname')}, {kdnr:model.get('kdnr')}),
 					'me':window.me,
+					'collection':_this.collection,
 				}, {variable:'page_vars'});
-				// var notsettedRouter = 'notsettedRouter';
-				// switch
 				var hash = route.substring(1); 
 				var viewName = hash+'View';
-
-					  try {
-						$.mobile.jqmNavigator.pushView((new (eval(viewName))(pageObject)));
-					  } catch (e) {
-						$.mobile.jqmNavigator.pushView((new dynamicView(pageObject)));
-					  } finally {
-						// $.mobile.jqmNavigator.pushView((new (eval(viewName))(pageObject)));
-					  }
-					  
-				/*
-				if (hash=='dashboard') $.mobile.jqmNavigator.pushView(new dashboardView(pageObject));
-				if (hash=='home') {
-					// var testvar = new homeView(pageObject);
-					// $.mobile.jqmNavigator.pushView(new homeView(pageObject))
-					// this.callFunc(viewName,pageObject);
-					// var b = (new (eval(viewName))(pageObject));
-					// console.log(b);
-					// console.log(new viewName);
-					// console.log((this[viewName]));
-					// console.log(this[viewName](pageObject)); // console.log(viewName); // $.mobile.jqmNavigator.pushView(new homeView(pageObject));
-					if (hash=='home') $.mobile.jqmNavigator.pushView(new homeView(pageObject));
-					}
-				if (hash=='next') $.mobile.jqmNavigator.pushView(new nextView(pageObject));
-				if (hash=='login') $.mobile.jqmNavigator.pushView(new loginView(pageObject));
-				*/
-			},
-			
-			dynamicRouter: function() {
-				console.log('route not setted in MobileRouter.js');
-				$.mobile.jqmNavigator.pushView(new dynamicView());
-			},
-            noaccessRouter: function() {
-				console.log('no access to route via MobileRouter.js');
-				$.mobile.jqmNavigator.pushView(new noaccessView());
-            },
-			homeRouter: function() {
-				this.gotoRoute('#home');
-            },
-            loginRouter: function() {
-				console.log('doing loginRouter');
-				this.gotoRoute('#login');
-            },
-            dashboardRouter: function() {
-				this.gotoRoute('#dashboard');
-            },
-            cardsRouter: function() {
-				this.gotoRoute('#cards');
-            }
-			
-			/*
-			nextRouter: function() {
-				this.gotoRoute('#next');
-            },
-			*/
+				try {
+					$.mobile.jqmNavigator.pushView((new (eval(viewName))(pageObject)));
+				} catch (e) {
+					console.log('execRouterByRoute dynamicView');
+					$.mobile.jqmNavigator.pushView((new dynamicView(pageObject)));
+				} finally {
+					// $.mobile.jqmNavigator.pushView((new (eval(viewName))(pageObject)));
+				}
+			}
+						
         });
 		
 		return MobileRouter;

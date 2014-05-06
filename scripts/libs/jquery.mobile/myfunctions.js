@@ -2468,6 +2468,14 @@ try {
 	};
 	*/
 
+	function global_a_clickHandler(event) {
+		// console.log('global_a_clickHandler');
+		window.myrouter.checkLink(event);
+	}
+	function global_button_clickHandler(event) {
+		window.myrouter.checkLink(event);
+	}
+	
 	function clearIntervals() {
 		if (window._thisViewCardStart) {
 			_thisViewCardStart.answerCountdownLoopStop();
@@ -2478,11 +2486,6 @@ try {
 	$(document).ready(function() {
 
 		// console.log('document ready');
-
-		$(document).off( "click", "#btnBack").on( "click", "#btnBack", function( e ) {
-			e.preventDefault();
-			$.mobile.jqmNavigator.popView();
-		});
 
 		$( "#panel_left" ).panel();
 		$( "#panel_right" ).panel();
@@ -2496,16 +2499,17 @@ try {
 			}
 		});
 		
-		$(document).off( "click", "#sendLogoutBtn").on( "click", "#sendLogoutBtn", function( e ) {
+		$(document).off( "click", "#btnBack").on( "click", "#btnBack", function( e ) {
 			e.preventDefault();
-			dpd.users.logout(function(err) {
-				if(err) console.log(err);
-				window.me = new Object();
-				var href = "#login";
-				window.myrouter.gotoRoute(href);
-			});
+			$.mobile.jqmNavigator.popView();
 		});
-
+		
+		$(document).off( "click", "#btnNextView").on( "click", "#btnNextView", function( e ) {
+			e.preventDefault();
+			// $.mobile.jqmNavigator.pushView(new NextViewTemplate);
+			window.myrouter.gotoRoute('#next');
+		});
+		
 		$(document).off( "click", "#sendLoginBtn").on( "click", "#sendLoginBtn", function( e ) {
 			e.preventDefault();
 			var username = $('#username').val().toLowerCase();
@@ -2557,6 +2561,17 @@ try {
 			});
 		});
 		
+		$(document).off( "click", "#sendLogoutBtn").on( "click", "#sendLogoutBtn", function( e ) {
+			e.preventDefault();
+			dpd.users.logout(function(err) {
+				if(err) console.log(err);
+				window.me = new Object();
+				var href = "#login";
+				window.myrouter.gotoRoute(href);
+			});
+			return(false);
+		});
+
 		/*
 		alert('document ready');
 		$('#sidr-left').off( "swipeleft" ).on( "swipeleft" , function( e ) {

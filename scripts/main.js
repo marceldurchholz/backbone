@@ -57,7 +57,7 @@ require(['domReady', 'routers/MobileRouter', 'jqm'],
             function onDeviceReady(desktop) {
                 if (desktop !== true) {
 					// Hiding splash screen when app is loaded
-                    cordova.exec(null, null, 'SplashScreen', 'hide', []);
+                    // cordova.exec(null, null, 'SplashScreen', 'hide', []);
 					if (navigator.userAgent.match(/(iPad|iPhone)/)) {
 						StatusBar.hide();
 						document.body.style.marginTop = "0px";
@@ -78,9 +78,9 @@ require(['domReady', 'routers/MobileRouter', 'jqm'],
                 // Pushing MainView
                 // $.mobile.jqmNavigator.pushView(new HomeView());
 				
+				
 				/* new integrated router */
 				// new MobileRouter();
-				
 				window.myrouter = new MobileRouter();
 				
             }
