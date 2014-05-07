@@ -29,8 +29,8 @@ require.config({
 		transit:'libs/jquery.mobile/transit',
 		// touchwipe:'libs/jquery.mobile/touchwipe/touchwipe',
 		myfunctions:'libs/jquery.mobile/myfunctions',
-		sidr:'libs/jquery.mobile/sidr/sidr',
-		preventLinks:'libs/jquery.mobile/preventLinks/preventLinks',
+		// sidr:'libs/jquery.mobile/sidr/sidr',
+		// preventLinks:'libs/jquery.mobile/preventLinks/preventLinks',
 		deployd: "http://dominik-lohmann.de:5000/dpd",
 
     },
@@ -43,7 +43,7 @@ require.config({
             exports:'_'
         },
         jqm:{
-            deps:['jquery', 'jqmNavigator', 'fastclick', 'myfunctions', 'transit', 'sidr', 'preventLinks', 'deployd']
+            deps:['jquery', 'jqmNavigator', 'fastclick', 'myfunctions', 'transit', 'deployd']
         }
     }
 });

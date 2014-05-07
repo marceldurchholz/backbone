@@ -8,6 +8,16 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 
 			collection: new sidemenusCollection(),
 			
+			/***** TODOs *****/
+			//  http://demoinfinite.appspot.com/
+			//      Responsive Infinite Scroll (DEMO SITE)
+			//  https://github.com/spacenick/backbone-deployd/blob/master/backbone-deployd.js
+			//      Simple Backbone.sync override to use dpd JavaScript SDK; so you don't have to care about your API url (dpd.js resolves it by itself) and the query syntax is improved.
+			//  http://prinzhorn.github.io/skrollr/
+			//       parallax scrolling for the masses
+			//  https://github.com/yckart/Transe.js
+			//      jQuery Element Animations / Transformable scroll elements
+			
 			filterCollection: function (filter,collection, attribute, value) {
 				if (filter=='>') {
 					var models = collection.select(function (model) {
@@ -53,7 +63,10 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				});
 				$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {				
 				});
-				$(document).off( "pageinit" ).on( "pageinit", function( event ) {	
+				$(document).off( "pageinit" ).on( "pageinit", function( event ) {
+					console.log('pageinit');
+					FastClick.attach(event.currentTarget);
+					console.log(event);
 				});
 				$(document).off( "pagehide" ).on( "pagehide", function( event ) {	
 					// EFFECTS INFOS:
@@ -151,6 +164,8 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 			
 			gotoRoute: function(route) {
 				var _this = this;
+				$( "#panel_left" ).panel( "close" );
+				$( "#panel_rigth" ).panel( "close" );
 				console.log('gotoRoute: '+route);
 				_this.collection.fetch({ 
 					success: function(response){
