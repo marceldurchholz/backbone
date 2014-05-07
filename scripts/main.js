@@ -74,6 +74,8 @@ require(['domReady', 'routers/MobileRouter', 'jqm'],
 
                 // Setting default transition to slide
                 $.mobile.defaultPageTransition = 'fade';
+				
+				$.mobile.page.prototype.options.domCache = true;
 
                 // Pushing MainView
                 // $.mobile.jqmNavigator.pushView(new HomeView());

@@ -65,13 +65,23 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				});
 				$(document).off( "pageinit" ).on( "pageinit", function( event ) {
 					console.log('pageinit');
-					FastClick.attach(event.currentTarget);
+					$.mobile.loading('hide');
 					console.log(event);
 				});
 				$(document).off( "pagehide" ).on( "pagehide", function( event ) {	
 					// EFFECTS INFOS:
 					// http://www.w3schools.com/jquerymobile/jquerymobile_transitions.asp
 					$.mobile.defaultPageTransition = 'slidefade';
+				});
+				
+				$( document ).ajaxStart(function() {
+					console.log( "Triggered ajaxStart handler." );
+						$.mobile.loading('show', {
+						// text: 'foo',
+						// textVisible: true,
+						// html: "",
+						theme: 'a'
+					});
 				});
 				this.collection.fetch({ 
 					silent:true,
