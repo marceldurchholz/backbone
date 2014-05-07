@@ -2538,9 +2538,19 @@ try {
 		
 		$(document).off( "click", "#sendLoginBtn").on( "click", "#sendLoginBtn", function( e ) {
 			e.preventDefault();
-			var username = $('#username').val().toLowerCase();
-			var password = $('#password').val();
-			// alert(username+ ' / ' +password);
+			// $(this).find("#username").val();
+			// return(false);
+			
+			var username = $.mobile.activePage.find('#username').val();
+			// console.log(username);
+			// console.log(username);
+			// return(false);
+			// var password = $('#password').val();
+			var password = $.mobile.activePage.find('#password').val();
+			// var password = $(this).constructor.mobile.activePage.find('#password').val();
+			// alert($('#username').val().toLowerCase()+ ' / ' +$('#password').val());
+			// var new_username = $(this.el).find("#username").val();
+			
 			// doAlert('Sie werden danach automatisch weitergeleitet...','Login wird geprüft');
 			if (checkString(username)!=true || password=='') {
 				doAlert('Bitte überprüfen Sie die eingegebenen Daten.','Eingaben unvollständig oder nicht korrekt!');

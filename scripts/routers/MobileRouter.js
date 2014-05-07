@@ -18,6 +18,8 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 			//  https://github.com/yckart/Transe.js
 			//      jQuery Element Animations / Transformable scroll elements
 			
+			currentView: null,
+			
 			filterCollection: function (filter,collection, attribute, value) {
 				if (filter=='>') {
 					var models = collection.select(function (model) {
@@ -54,11 +56,10 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 			
 			initialize: function() {
 				var _this = this;
+
 				console.log('initializing MobileRouter');
-				$(window).bind('hashchange', function(){
-					console.log('ATTENTION !!!! hashchanged to: '+window.location.hash);
-					_this.gotoRoute(window.location.hash);
-				});
+				// console.log(_this.ghostView);
+				
 				$(document).off( "pagebeforecreate" ).on( "pagebeforecreate", function( event ) {	
 				});
 				$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {				
@@ -72,6 +73,10 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					// EFFECTS INFOS:
 					// http://www.w3schools.com/jquerymobile/jquerymobile_transitions.asp
 					$.mobile.defaultPageTransition = 'slidefade';
+					console.log('pagehide');
+					console.log(_this.ghostView);
+					_this.ghostView.unbind();
+					// _this.ghostView.remove();
 				});
 				
 				$( document ).ajaxStart(function() {
@@ -119,11 +124,40 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				});
 			},
 			
+			hashChange: function(evt) {
+				console.log('ATTENTION !!!! hashchanged to: '+window.location.hash);
+				_this.gotoRoute(window.location.hash);
+				/*
+				if(this.cancelNavigate) { // cancel out if just reverting the URL
+					evt.stopImmediatePropagation();
+					this.cancelNavigate = false;
+					return;
+				}
+				if(this.view && this.view.dirty) {
+					var dialog = confirm("You have unsaved changes. To stay on the page, press cancel. To discard changes and leave the page, press OK");
+					if(dialog == true)
+						return;
+					else {
+						evt.stopImmediatePropagation();
+						this.cancelNavigate = true;
+						window.location.href = evt.originalEvent.oldURL;
+					}
+				}
+				*/
+			},
+			/*
+			beforeUnload : function() {
+				if(this.view && this.view.dirty)
+					return "You have unsaved changes. If you leave or reload this page, your changes will be lost.";
+			},
+			*/
 			bindEvents: function() {
 				var _this = this;
 				// this.collection.on("add", this.recreateSidemenu, this);
 				// this.collection.on("remove", this.recreateSidemenu, this);
 				this.collection.on("reset", _this.recreateSidemenu, this);
+				$(window).on("hashchange", _this.hashChange); // this will run before backbone's route handler
+				// $(window).on("beforeunload", _this.beforeUnload);
 				Backbone.history.start({
 					// silent:true,
 					pushState: false,
@@ -196,7 +230,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 								return(false);							
 							}
 							console.log('requested navmobile IS existing');
-							console.log(model);
+							// console.log(model);
 							var show = checkRoles(model.get('roles'));
 							if (show==true) _this.execRouterByRoute(route,model);
 							else _this.noaccessRouter();
@@ -229,7 +263,9 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					'hash':hash
 				}, {variable:'page_vars'});
 				try {
-					$.mobile.jqmNavigator.pushView((new (eval(viewName))(pageObject)));
+					_this.ghostView = (new (eval(viewName))(pageObject));
+					console.log(_this.ghostView);
+					$.mobile.jqmNavigator.pushView(_this.ghostView);
 				} catch (e) {
 					console.log('switching to dynamicView (files not found)');
 					// pageObject.template = route;
