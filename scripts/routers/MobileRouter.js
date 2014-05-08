@@ -1,12 +1,12 @@
 // alert('mobile router');
 
-define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/next/NextView', 'views/login/LoginView', 'views/dashboard/DashboardView', 'views/noaccess/NoaccessView', 'views/dynamic/DynamicView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 'jqm'],
         
-    function(domReady, sidemenusCollection, testView, nextView, loginView, dashboardView, noaccessView, dynamicView) {
+    function(domReady, sidemenusCollection, loginView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
-			collection: new sidemenusCollection(),
+			// collection: new sidemenusCollection(),
 			
 			/***** TODOs *****/
 			//  http://demoinfinite.appspot.com/
@@ -18,226 +18,18 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 			//  https://github.com/yckart/Transe.js
 			//      jQuery Element Animations / Transformable scroll elements
 			
-			filterCollection: function (filter,collection, attribute, value) {
-				if (filter=='>') {
-					var models = collection.select(function (model) {
-						return model.get(attribute) > value;
-					});
-				}
-				if (filter=='<') {
-					var models = collection.select(function (model) {
-						return model.get(attribute) < value;
-					});
-				}
-				if (filter=='==') {
-					var models = collection.select(function (model) {
-						return model.get(attribute) == value;
-					});
-				}
-				if (filter=='!=') {
-					var models = collection.select(function (model) {
-						return model.get(attribute) != value;
-					});
-				}
-				if (filter=='has_role') {
-					var models = collection.select(function (model) {
-						return ($.inArray(value, model.get(attribute))=='-1' ? false : true);
-					});
-				}
-				if (filter=='has_not_role') {
-					var models = collection.select(function (model) {
-						return ($.inArray(value, model.get(attribute))=='-1' ? true : false);
-					});
-				}
-				return new collection.constructor(models);
-			},
-			
 			initialize: function() {
 				var _this = this;
-
-				_this.ghostView = new Object()
-
-						Backbone.history.start({
-							pushState: false,
-							hashChange: false
-						});
-				/*
-				this.collection.fetch({ 
-					silent:true,
-					success: function(response){
-						_this.collection = response;
-						_this.bindEvents();
-						_this.recreateSidemenu();
-						// window['sidemenuView'] = new testView({collection:_this.collection});
-						var queryRoute = window.location.hash;
-						if (queryRoute=='') queryRoute = '#login';
-						Backbone.history.start({
-							// silent:true,
-							pushState: false,
-							hashChange: false
-						});
-						_this.gotoRoute(queryRoute);
-					}
-				});
-				*/
-
+				// alert('initializing MobileRouter');
+				Backbone.history.start();
 			},
-			addSidemenu: function(e,a) {
-				console.log('addSidemenu');
-				console.log(e);
-				console.log(a);
-				console.log(this.collection);
-			},
-			removeSidemenu: function(e,a) {
-				console.log('removeSidemenu');
-				console.log(e);
-				console.log(a);
-				console.log(this.collection);
-			},
-
             routes: {
 				"": "loginRouter",
 				"login": "loginRouter"
 			},
-			dynamicRouter: function() {
-				console.log('doing dynamicRouter');
-				$.mobile.jqmNavigator.pushView(new dynamicView().render());
-			},
-            noaccessRouter: function() {
-				console.log('doing noaccessRouter');
-				$.mobile.jqmNavigator.pushView(new noaccessView().render());
-            },
             loginRouter: function() {
-				$.mobile.jqmNavigator.pushView(new loginView().render());
-				// this.gotoRoute('#login');
-            },
-			recreateSidemenu: function(e,a) {
-				// alert('recreateSidemenu');
-				var _this = this;
-				_this.routes = [];
-				_this.routes['dynamic'] = 'dynamicRouter';
-				_this.routes[''] = "loginRouter";
-				_this.routes['*path'] = 'dynamicRouter';
-				this.collection.each(function(row) {				
-					var _row = row;
-					var userfriendly = _row.get('urloffline');
-					_this.routes[userfriendly] = userfriendly+'Router';
-				});
-			},
-			
-			bindEvents: function() {
-				var _this = this;
-				console.log('binding events');
-				// this.collection.on("add", this.recreateSidemenu, this);
-				// this.collection.on("remove", this.recreateSidemenu, this);
-				// this.collection.on("reset", _this.recreateSidemenu, this);
-				// $(window).on("beforeunload", _this.beforeUnload);
-				// this.recreateSidemenu();
-			},
-
-			checkLink: function(e) {
-				console.log('checkLink');
-				var _this = this;
-				var href = $(e.currentTarget).attr('href');
-				var data_href = $(e.currentTarget).attr('href');
-				var is_ajax = $(e.currentTarget).attr('data-ajax');
-				if (is_ajax=='true') {
-					console.log(href+' has >> data-ajax=true');
-					if (e.preventDefault) e.preventDefault();
-					return(false);
-				}
-				else if (href!='#' && href!='undefined' && href!='' && href!=undefined) {
-					// console.log(href+' has no >> data-ajax=true');
-					if (e.preventDefault) e.preventDefault();
-					_this.gotoRoute(href);
-					return(false);
-				}
-				else {
-					if (e.preventDefault) e.preventDefault();
-					// console.log('undefinierte aktion in MobileRouter.js: eventuell ein realler <a href="#bla">foo</a> link ?!?');
-					console.log('wahrscheinlich ein link, der durch eine globale function in myfunctions.js definiert sein sollte/ist...');
-					return(false);
-				}
-			},
-			
-			gotoRoute: function(route) {
-				var _this = this;				
-				console.log('gotoRoute: '+route);
-				_this.collection.fetch({ 
-					success: function(response){
-					_this.collection = response;
-					if (route!='' && route!='#') {
-						var router = _this.routes[route.substring(1)];
-						if (router!=undefined) {
-							var checkroute = route.substring(1);
-							console.log(route);
-							var model = _this.collection.find(
-								function(model) {
-									return (model.get('urloffline')).toLowerCase() == checkroute;
-								}
-							);
-							if (!model) {
-								console.log('requested navmobile NOT existing');
-								_this.noaccessRouter();
-								return(false);							
-							}
-							console.log('requested navmobile IS existing');
-							// console.log(model);
-							var show = checkRoles(model.get('roles'));
-							if (show==true) _this.execRouterByRoute(route,model);
-							else _this.noaccessRouter();
-						}
-						else {
-							// alert('router function not existing');
-							console.log('hash eventually not pulled via navmobile=true (router function not created/existing)');
-							_this.noaccessRouter();
-							// _this.dynamicRouter();
-							return(false);
-						}
-					}
-					else {
-					}
-				}});
-			},
-			execRouterByRoute: function(route,model){
-				var _this = this;
-				var hash = route.substring(1); 
-				var viewName = hash+'View';
-				console.log('execRouterByRoute '+route);
-				var pageObject = new Object({
-					'header_vars':new Object({title:model.get('userfriendly')}, {subtitle:model.get('slogan')}),
-					'footer_vars':new Object({copyright:model.get('companyname')}, {kdnr:model.get('kdnr')}),
-					'me':window.me,
-					'collection':_this.collection,
-					'model':model,
-					'viewName':viewName,
-					'route':route,
-					'hash':hash
-				}, {variable:'page_vars'});
-				try {
-					console.log('KEIN FEHLER');
-					console.log(viewName);
-					console.log(pageObject);
-					_this.newView = (new (eval(viewName))(pageObject)).render();
-					// console.log(_this.newView);
-				} catch (e) {
-					console.log('folgend wird hier ein fehler gemeldet der mit absicht durch ein try() debugged wird');
-					console.log(e);
-					console.log('switching to dynamicView (error on function call for '+viewName+')');
-					// pageObject.template = route;
-					// pageObject.collection = _this.collection;
-					// new dynamicView({collection:_this.collection});
-					// pushView.template = 'dynamicView';
-					// _this.newView = new dynamicView(pageObject);
-					// $.mobile.jqmNavigator.pushView(_this.newView);
-					_this.newView = (new dynamicView(pageObject));
-				} finally {
-					$.mobile.jqmNavigator.pushView(_this.newView);
-					// $.mobile.jqmNavigator.pushView((new (eval(viewName))(pageObject)));
-					// console.log(_this.ghostView);
-						
-				}
-			}
+				$.mobile.jqmNavigator.pushView(new loginView);
+            }
 						
         });
 		
