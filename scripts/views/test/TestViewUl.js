@@ -1,39 +1,49 @@
-define(['underscore', 'Backbone', 'views/test/TestViewLi', 'text!views/test/TestViewUl.html'],
-    function (_, Backbone, TestViewLi, TestViewUlTemplate) {
+define(['underscore', 'Backbone', 'views/test/TestViewLi'],
+    function (_, Backbone, TestViewLi) {
 
 		var TestViewUlVar = Backbone.View.extend({
 
-			// el: "",
-			tagName: 'div',
-			className: 'NO_SIDEBAR_CLASS',
-			template: _.template(TestViewUlTemplate),
-			
-			
+			tagName: 'ul',
+			className: 'nav nav-list lists-nav',
+			// template: _.template(TestNestedTemplate),
+            
 			events:{
-                'click a':global_a_clickHandler,
-                'click button':global_button_clickHandler,
+                'click a':'a_clickHandler'
             },
-            button_clickHandler:function (event) {
-				window.myrouter.checkLink(event);
+            a_clickHandler:function (event) {
+				event.preventDefault();
+				window.myrouter.gotoRoute($(event.currentTarget).attr('href').substring(1));
+				return(false);
             },
 			initialize: function() {
-				var _this = this;
+				console.log('initializing UL');
 				$(this.el).undelegate('a', 'click');
 			},
 			fetch: function() {
-				// console.log('fetching UL');
+				console.log('fetching UL');
 			},
 			render: function() {
-				// alert('rendering UL');
-				var _this = this;
+				console.log('rendering/appending list item in UL');
 				var $el = $(this.el);
-				var contentObject = new Object({
-					item: {
-						'ulHTML':(new TestViewLi({collection:this.collection}).render().el).outerHTML
-					}
-				},{variable: 'item'});
-				$el.append(this.template(contentObject));
+				var parentitemB;
+				// parentitem = new TestViewTemplate({ model: list });
+				// parentitemB = new TestViewLi({collection:this.collection});
+				// $el.append(parentitemB.render().el);
+				
+				console.log(this.collection);
+				parentitemB = new TestViewLi({collection:this.collection});
+				this.$el.append(parentitemB.render().el);
+				
+				console.log(this.$el);
 				return this;
+				/*
+				var $el = $(this.el);
+				var self = this;
+				// $el.append(this.template);
+				console.log($el);
+				$(this.el).append = 'buffdataaa';
+				return this;
+				*/
 			}
 		});
 

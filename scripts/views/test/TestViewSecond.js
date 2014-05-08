@@ -1,10 +1,12 @@
-define(['underscore', 'Backbone', 'collections/sidemenusCollection', 'text!views/test/TestView.html', 'views/test/TestNestedView', 'views/test/TestViewUl'],
-    function (_, Backbone, sidemenusCollection, TestViewTemplate, TestNestedView, TestViewUl) {
+define(['underscore', 'Backbone', 'collections/sidemenusCollection', 'text!views/test/TestView.html', 'views/test/TestNestedView'],
+    function (_, Backbone, sidemenusCollection, TestViewTemplate, TestNestedView) {
 
         var TestView = Backbone.View.extend({
 
 			el: "#sidr-left",
-			// template: _.template(TestViewTemplate),
+			template: _.template(TestViewTemplate),
+			tagName: 'ul',
+			className: 'nav nav-list lists-nav',
 			collection: new sidemenusCollection(),
 			// model: new Backbone.Model.extend({defaults: {userfriendly: "No Menu Yet"}}),
             events:{
@@ -29,10 +31,11 @@ define(['underscore', 'Backbone', 'collections/sidemenusCollection', 'text!views
 				this.collection.on("reset", this.render, this);
 			},
 			fetch:function(a,b) {
+                this.render();
                 // this.render();
 			},
             render:function () {
-				console.log('rendering TestView');
+				console.log('rendering TestViewSecond');
 				
 				/*
 				// das hier später "vorlagern" 
@@ -43,19 +46,12 @@ define(['underscore', 'Backbone', 'collections/sidemenusCollection', 'text!views
 				*/
 				
 				var $el = $(this.el);
-				var parentitem;
-				// parentitem = new TestViewTemplate({ model: list });
-				parentitem = new TestViewUl({collection:this.collection});
-				$el.append(parentitem.render().el);
-				
-				/*
-				var $el = $(this.el);
+
 				this.collection.each(function(list) {
 					var item, sidebarItem;
 					item = new TestNestedView({ model: list });
 					$el.append(item.render().el);
 				});
-				*/
 				
 				// this.nestedView = new TestNestedView({model:this.collection}).render();
 

@@ -3,16 +3,18 @@ define(['underscore', 'Backbone', 'text!views/login/LoginView.html'],
 
         var LoginView = Backbone.View.extend({
 
-			template: _.template(LoginViewTemplate),
-			events:{
-                'click a':global_a_clickHandler,
-                'click button':global_button_clickHandler,
+            events:{
+                'click a':'a_clickHandler',
+                'click button':'button_clickHandler'
             },
-			initialize:function() {
-				$(this.el).undelegate('a', 'click');
-			},
+            a_clickHandler:function (event) {
+				window.myrouter.checkLink(event);
+            },
+            button_clickHandler:function (event) {
+				window.myrouter.checkLink(event);
+            },
             render:function () {
-				this.$el.html(this.template(this.options));
+                this.$el.html(_.template(LoginViewTemplate));
 				return this;
             }
 

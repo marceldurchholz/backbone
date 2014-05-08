@@ -1,47 +1,45 @@
-define(['underscore', 'Backbone', 'views/test/TestViewHref', 'text!views/test/TestViewHref.html'],
-    function (_, Backbone, TestViewHref, TestViewHrefTemplate) {
+define(['underscore', 'Backbone', 'views/test/TestViewHref', 'views/test/TestViewLi'],
+    function (_, Backbone, TestViewHref, TestViewLi) {
 
 		var TestViewLiVar = Backbone.View.extend({
 
-			// el: "",
-			tagName: 'ul',
-			className: 'NO_UL_CLASS',
-			template: _.template(TestViewHrefTemplate),
-			
-			
+			tagName: 'li',
+			className: 'list-menu-item',
+			// template: _.template(TestNestedTemplate),
+            
 			events:{
-                'click a':global_a_clickHandler,
-                'click button':global_button_clickHandler,
+                'click a':'a_clickHandler'
+            },
+            a_clickHandler:function (event) {
+				event.preventDefault();
+				window.myrouter.gotoRoute($(event.currentTarget).attr('href').substring(1));
+				return(false);
             },
 			initialize: function() {
+				console.log('initializing LI');
 				$(this.el).undelegate('a', 'click');
-				// this.collection.on("reset", this.render, this);
 			},
 			fetch: function() {
-				// console.log('fetching UL');
+				console.log('fetching LI');
 			},
-			
 			render: function() {
+				console.log('rendering/appending list item in LI');
+				console.log(this.collection);
 				
-				var _this = this;
 				var $el = $(this.el);
-				
-				this.collection = window.myrouter.filterCollection('!=',this.collection, 'navmobileshow', false);
-				if (window.me.id && window.me.id!='') this.collection = window.myrouter.filterCollection('has_not_role',this.collection, 'roles', 'public');
-				else this.collection = window.myrouter.filterCollection('has_role',this.collection, 'roles', 'public');
-				this.collection.each(function(row) {				
-					var _row = row;
-					$el.data('listId', _row.get('id'));
-					var contentObject = new Object({
-						item: {
-							'liHTML':(new TestViewHref({model:_row}).render().el).outerHTML
-						}
-					},{variable: 'item'});
-					$el.append(contentObject.item.liHTML);
+				this.collection.each(function(list) {
+					var item, sidebarItem;
+					item = new TestViewHref({ model: list });
+					$el.append(item.render().el);
 				});
-				$el.prepend('<li data-mini="true" data-icon="arrow-l"><a data-ajax="true" class="ui-btn ui-btn-icon-left ui-icon-carat-l" href="#panel_left" data-rel="close">Menü schließen</a></li>');
-				$el.attr('data-role','listview').listview().listview("refresh");
-				return this;
+				
+				var parentitemB;
+				// var $el = $(this.el);
+				// var self = this;
+				// $el.append(this.template);
+				// console.log($el);
+				// $(this.el).append = 'buffdataaa';
+				return(this);
 			}
 		});
 

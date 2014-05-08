@@ -29,32 +29,22 @@ require.config({
 		transit:'libs/jquery.mobile/transit',
 		// touchwipe:'libs/jquery.mobile/touchwipe/touchwipe',
 		myfunctions:'libs/jquery.mobile/myfunctions',
-		// sidr:'libs/jquery.mobile/sidr/sidr',
-		// preventLinks:'libs/jquery.mobile/preventLinks/preventLinks',
+		sidr:'libs/jquery.mobile/sidr/sidr',
+		preventLinks:'libs/jquery.mobile/preventLinks/preventLinks',
 		deployd: "http://dominik-lohmann.de:5000/dpd",
 
     },
     shim:{
         Backbone:{
-            deps:['underscore', 'myfunctions'],
+            deps:['underscore', 'jquery'],
             exports:'Backbone'
-        },
-		// VOR myfunctions lade die folgende scripte... usw...
-        myfunctions:{
-            deps:['jquery','deployd']
         },
         underscore:{
             exports:'_'
         },
-		transit: {
-			deps:['jqm']
-		},
         jqm:{
-            deps:['jquery','jqmNavigator']
-        },
-		fastclick: {
-			deps:['jqm']
-		}
+            deps:['jquery', 'jqmNavigator', 'fastclick', 'myfunctions', 'transit', 'sidr', 'preventLinks', 'deployd']
+        }
     }
 });
 
@@ -67,7 +57,7 @@ require(['domReady', 'routers/MobileRouter', 'jqm'],
             function onDeviceReady(desktop) {
                 if (desktop !== true) {
 					// Hiding splash screen when app is loaded
-                    // cordova.exec(null, null, 'SplashScreen', 'hide', []);
+                    cordova.exec(null, null, 'SplashScreen', 'hide', []);
 					if (navigator.userAgent.match(/(iPad|iPhone)/)) {
 						StatusBar.hide();
 						document.body.style.marginTop = "0px";
@@ -83,13 +73,10 @@ require(['domReady', 'routers/MobileRouter', 'jqm'],
                 $.mobile.pageContainer = $('#container');
 
                 // Setting default transition to slide
-                $.mobile.defaultPageTransition = 'fade';
-				
-				// $.mobile.page.prototype.options.domCache = true;
+                $.mobile.defaultPageTransition = 'slide';
 
                 // Pushing MainView
                 // $.mobile.jqmNavigator.pushView(new HomeView());
-				
 				
 				/* new integrated router */
 				// new MobileRouter();
