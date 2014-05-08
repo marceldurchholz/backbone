@@ -1,14 +1,14 @@
-define(['underscore', 'Backbone', 'text!views/next/NextView.html'],
-    function (_, Backbone, NextViewTemplate) {
+define(['underscore', 'Backbone', 'text!views/noaccess/NoaccessView.html'],
+    function (_, Backbone, NoaccessViewTemplate) {
 
-        var NextViewVar = Backbone.View.extend({
+        var NoaccessViewVar = Backbone.View.extend({
 
 			events:{
                 'click a':'a_clickHandler',
                 'click button':'button_clickHandler',
             },
             a_clickHandler:function (event) {
-				// window.myrouter.checkLink(event);
+				window.myrouter.checkLink(event);
             },
             button_clickHandler:function (event) {
 				window.myrouter.checkLink(event);
@@ -17,11 +17,11 @@ define(['underscore', 'Backbone', 'text!views/next/NextView.html'],
 				$(this.el).undelegate('a', 'click');
 			},
             render:function () {
-                this.$el.html(_.template(NextViewTemplate));
+                this.$el.html(_.template(NoaccessViewTemplate));
 				return this;
             }
 
         });
 
-        return NextViewVar;
+        return NoaccessViewVar;
     });

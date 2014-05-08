@@ -25,8 +25,8 @@ require.config({
 		jqm:'libs/jquery.mobile/jquery.mobile-1.4.2',
         // jQuery Mobile plugin for Backbone views navigation
         jqmNavigator:'libs/jquery.mobile/jqmNavigator',
-		// fastclick:'libs/jquery.mobile/fastclick',
-		// transit:'libs/jquery.mobile/transit',
+		fastclick:'libs/jquery.mobile/fastclick',
+		transit:'libs/jquery.mobile/transit',
 		// touchwipe:'libs/jquery.mobile/touchwipe/touchwipe',
 		myfunctions:'libs/jquery.mobile/myfunctions',
 		// sidr:'libs/jquery.mobile/sidr/sidr',
@@ -36,15 +36,25 @@ require.config({
     },
     shim:{
         Backbone:{
-            deps:['underscore', 'jquery','myfunctions'],
+            deps:['underscore', 'myfunctions'],
             exports:'Backbone'
+        },
+		// VOR myfunctions lade die folgende scripte... usw...
+        myfunctions:{
+            deps:['jquery','deployd']
         },
         underscore:{
             exports:'_'
         },
+		transit: {
+			deps:['jqm']
+		},
         jqm:{
-            deps:['jquery', 'jqmNavigator', 'deployd']
-        }
+            deps:['jquery','jqmNavigator']
+        },
+		fastclick: {
+			deps:['jqm']
+		}
     }
 });
 
@@ -57,14 +67,14 @@ require(['domReady', 'routers/MobileRouter', 'jqm'],
             function onDeviceReady(desktop) {
                 if (desktop !== true) {
 					// Hiding splash screen when app is loaded
-                    cordova.exec(null, null, 'SplashScreen', 'hide', []);
+                    // cordova.exec(null, null, 'SplashScreen', 'hide', []);
 					if (navigator.userAgent.match(/(iPad|iPhone)/)) {
 						StatusBar.hide();
 						document.body.style.marginTop = "0px";
 						$("#body").css('top', "0px");
 						// alert('FastClick.attach');
 						// console.log(document.body.innerHTML);
-						// FastClick.attach(document.body);
+						FastClick.attach(document.body);
 					}
 				}
 
@@ -73,10 +83,13 @@ require(['domReady', 'routers/MobileRouter', 'jqm'],
                 $.mobile.pageContainer = $('#container');
 
                 // Setting default transition to slide
-                $.mobile.defaultPageTransition = 'slide';
+                $.mobile.defaultPageTransition = 'fade';
+				
+				// $.mobile.page.prototype.options.domCache = true;
 
                 // Pushing MainView
                 // $.mobile.jqmNavigator.pushView(new HomeView());
+				
 				
 				/* new integrated router */
 				// new MobileRouter();
