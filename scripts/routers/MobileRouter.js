@@ -1,8 +1,8 @@
 // alert('mobile router');
 
-define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/home/HomeView', 'views/next/NextView', 'views/login/LoginView', 'views/dashboard/DashboardView', 'views/noaccess/NoaccessView', 'views/dynamic/DynamicView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/next/NextView', 'views/login/LoginView', 'views/dashboard/DashboardView', 'views/noaccess/NoaccessView', 'views/dynamic/DynamicView', 'jqm'],
         
-    function(domReady, sidemenusCollection, testView, homeView, nextView, loginView, dashboardView, noaccessView, dynamicView) {
+    function(domReady, sidemenusCollection, testView, nextView, loginView, dashboardView, noaccessView, dynamicView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
@@ -57,47 +57,30 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 			initialize: function() {
 				var _this = this;
 
+				_this.ghostView = new Object()
+				
 				console.log('initializing MobileRouter');
 				// console.log(_this.ghostView);
 				
-				$(document).off( "pagebeforecreate" ).on( "pagebeforecreate", function( event ) {	
-				});
-				$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {				
-				});
-				$(document).off( "pageinit" ).on( "pageinit", function( event ) {
-					console.log('pageinit');
-					$.mobile.loading('hide');
-					console.log(event);
-				});
-				$(document).off( "pagehide" ).on( "pagehide", function( event ) {	
-					// EFFECTS INFOS:
-					// http://www.w3schools.com/jquerymobile/jquerymobile_transitions.asp
-					$.mobile.defaultPageTransition = 'slidefade';
-					console.log('pagehide');
-					console.log(_this.ghostView);
-					_this.ghostView.unbind();
-					// _this.ghostView.remove();
-				});
-				
-				$( document ).ajaxStart(function() {
-					console.log( "Triggered ajaxStart handler." );
-						$.mobile.loading('show', {
-						// text: 'foo',
-						// textVisible: true,
-						// html: "",
-						theme: 'a'
-					});
-				});
 				this.collection.fetch({ 
 					silent:true,
 					success: function(response){
-					_this.collection = response;
-					_this.bindEvents();
-					_this.recreateSidemenu();
-					window['sidemenuView'] = new testView({collection:_this.collection});
-				}});
+						_this.collection = response;
+						_this.bindEvents();
+						_this.recreateSidemenu();
+						window['sidemenuView'] = new testView({collection:_this.collection});
+						var queryRoute = window.location.hash;
+						if (queryRoute=='') queryRoute = '#login';
+						Backbone.history.start({
+							// silent:true,
+							pushState: false,
+							hashChange: false
+						});
+						_this.gotoRoute(queryRoute);
+					}
+				});
 
-				},
+			},
 			addSidemenu: function(e,a) {
 				console.log('addSidemenu');
 				console.log(e);
@@ -110,6 +93,21 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				console.log(a);
 				console.log(this.collection);
 			},
+
+            routes: {
+				"a": "v"
+			},
+			dynamicRouter: function() {
+				console.log('doing dynamicRouter');
+				$.mobile.jqmNavigator.pushView(new dynamicView().render());
+			},
+            noaccessRouter: function() {
+				console.log('doing noaccessRouter');
+				$.mobile.jqmNavigator.pushView(new noaccessView().render());
+            },
+            loginRouter: function() {
+				this.gotoRoute('#login');
+            },
 			recreateSidemenu: function(e,a) {
 				// alert('recreateSidemenu');
 				var _this = this;
@@ -124,92 +122,43 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				});
 			},
 			
-			hashChange: function(evt) {
-				console.log('ATTENTION !!!! hashchanged to: '+window.location.hash);
-				_this.gotoRoute(window.location.hash);
-				/*
-				if(this.cancelNavigate) { // cancel out if just reverting the URL
-					evt.stopImmediatePropagation();
-					this.cancelNavigate = false;
-					return;
-				}
-				if(this.view && this.view.dirty) {
-					var dialog = confirm("You have unsaved changes. To stay on the page, press cancel. To discard changes and leave the page, press OK");
-					if(dialog == true)
-						return;
-					else {
-						evt.stopImmediatePropagation();
-						this.cancelNavigate = true;
-						window.location.href = evt.originalEvent.oldURL;
-					}
-				}
-				*/
-			},
-			/*
-			beforeUnload : function() {
-				if(this.view && this.view.dirty)
-					return "You have unsaved changes. If you leave or reload this page, your changes will be lost.";
-			},
-			*/
 			bindEvents: function() {
 				var _this = this;
+				console.log('binding events');
 				// this.collection.on("add", this.recreateSidemenu, this);
 				// this.collection.on("remove", this.recreateSidemenu, this);
 				this.collection.on("reset", _this.recreateSidemenu, this);
-				$(window).on("hashchange", _this.hashChange); // this will run before backbone's route handler
 				// $(window).on("beforeunload", _this.beforeUnload);
-				Backbone.history.start({
-					// silent:true,
-					pushState: false,
-					hashChange: false
-				});
-
 				// this.recreateSidemenu();
 			},
 
-            routes: {
-				"": "loginRouter"
-			},
-			dynamicRouter: function() {
-				console.log('doing dynamicRouter');
-				$.mobile.jqmNavigator.pushView(new dynamicView());
-			},
-            noaccessRouter: function() {
-				console.log('doing noaccessRouter');
-				$.mobile.jqmNavigator.pushView(new noaccessView());
-            },
-            loginRouter: function() {
-				this.gotoRoute('#login');
-            },
-			
-			checkLink: function(event) {
+			checkLink: function(e) {
 				console.log('checkLink');
 				var _this = this;
-				var href = $(event.currentTarget).attr('href');
-				var data_href = $(event.currentTarget).attr('href');
-				var is_ajax = $(event.currentTarget).attr('data-ajax');
+				var href = $(e.currentTarget).attr('href');
+				var data_href = $(e.currentTarget).attr('href');
+				var is_ajax = $(e.currentTarget).attr('data-ajax');
 				if (is_ajax=='true') {
 					console.log(href+' has >> data-ajax=true');
-					if (event.preventDefault) event.preventDefault();
+					if (e.preventDefault) e.preventDefault();
 					return(false);
 				}
 				else if (href!='#' && href!='undefined' && href!='' && href!=undefined) {
 					// console.log(href+' has no >> data-ajax=true');
-					if (event.preventDefault) event.preventDefault();
+					if (e.preventDefault) e.preventDefault();
 					_this.gotoRoute(href);
 					return(false);
 				}
 				else {
-					if (event.preventDefault) event.preventDefault();
-					console.log('undefinierte aktion in MobileRouter.js');
+					if (e.preventDefault) e.preventDefault();
+					// console.log('undefinierte aktion in MobileRouter.js: eventuell ein realler <a href="#bla">foo</a> link ?!?');
+					console.log('wahrscheinlich ein link, der durch eine globale function in myfunctions.js definiert sein sollte/ist...');
 					return(false);
 				}
 			},
 			
 			gotoRoute: function(route) {
-				var _this = this;
-				$( "#panel_left" ).panel( "close" );
-				$( "#panel_rigth" ).panel( "close" );
+				var _this = this;				
 				console.log('gotoRoute: '+route);
 				_this.collection.fetch({ 
 					success: function(response){
@@ -263,18 +212,27 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					'hash':hash
 				}, {variable:'page_vars'});
 				try {
-					_this.ghostView = (new (eval(viewName))(pageObject));
-					console.log(_this.ghostView);
-					$.mobile.jqmNavigator.pushView(_this.ghostView);
+					console.log('KEIN FEHLER');
+					console.log(viewName);
+					console.log(pageObject);
+					_this.newView = (new (eval(viewName))(pageObject)).render();
+					// console.log(_this.newView);
 				} catch (e) {
-					console.log('switching to dynamicView (files not found)');
+					console.log('folgend wird hier ein fehler gemeldet der mit absicht durch ein try() debugged wird');
+					console.log(e);
+					console.log('switching to dynamicView (error on function call for '+viewName+')');
 					// pageObject.template = route;
 					// pageObject.collection = _this.collection;
 					// new dynamicView({collection:_this.collection});
 					// pushView.template = 'dynamicView';
-					$.mobile.jqmNavigator.pushView(new dynamicView(pageObject));
+					// _this.newView = new dynamicView(pageObject);
+					// $.mobile.jqmNavigator.pushView(_this.newView);
+					_this.newView = (new dynamicView(pageObject)).render();
 				} finally {
+					$.mobile.jqmNavigator.pushView(_this.newView);
 					// $.mobile.jqmNavigator.pushView((new (eval(viewName))(pageObject)));
+					// console.log(_this.ghostView);
+						
 				}
 			}
 						

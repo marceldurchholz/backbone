@@ -9,20 +9,11 @@ define(['underscore', 'Backbone', 'text!views/login/LoginView.html'],
                 'click button':global_button_clickHandler,
             },
 			initialize:function() {
-				this.$el.undelegate('a', 'click');
-				var that = this;
-				this._donutViews = [];
-				that._donutViews.push(this.template(this.options));
+				$(this.el).undelegate('a', 'click');
 			},
             render:function () {
-				var that = this;
-				$(this.el).empty();
-				// this.$el.html();
-				_(this._donutViews).each(function(dv) {
-					// console.log(dv);
-					that.$el.append(dv);
-				});
-				return that;
+				this.$el.html(this.template(this.options));
+				return this;
             }
 
             /*

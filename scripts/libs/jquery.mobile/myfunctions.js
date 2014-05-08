@@ -761,7 +761,7 @@ try {
 	}
 
 	function checkFileExists(fileName){
-		// fileName = 'file:///cordova/frameworks/backbone/views/support/supportView.html';
+		// fileName = 'file:///cordova/frameworks/backbone/scripts/views/support/supportView.html';
 		var http = new XMLHttpRequest();
 		http.open('HEAD', fileName, false);
 		http.send(null);
@@ -781,8 +781,10 @@ try {
 		}
 
 		self.xmlHttpReq.open('HEAD', fileUrl, true);
+		alert(fileUrl);
 		self.xmlHttpReq.onreadystatechange = function() {
 			if (self.xmlHttpReq.readyState == 4) {
+				alert(self.xmlHttpReq.status);
 				if (self.xmlHttpReq.status == 200) {
 					// alert('the file exists');
 				} else if (self.xmlHttpReq.status == 404) {
@@ -2508,13 +2510,201 @@ try {
 			_thisViewCardStart.answerCountdownButtonDelayStop();
 		}
 	}
+
 	
+	function sendAnonymRegister(e) {
+		var randomId = getRandomID();
+		$.mobile.activePage.find('#username').val(randomId);
+		$.mobile.activePage.find('#password').val(randomId);
+		sendRegister(e);
+	}
+	
+	function sendRegister(e) {
+		var username = $.mobile.activePage.find('#username').val().toLowerCase();
+		var password = $.mobile.activePage.find('#password').val();
+		var giftcode = $.mobile.activePage.find('#giftcodeInput').val().toLowerCase();
+		// alert(username+'/'+password);
+		if (username!='' && password!='') {
+			if (checkString(username)==true) {
+				var roles = ["user","seeker","wall","videos","cards"];
+				var registered = dateYmdHis();
+				var sponsor = '';
+				sponsor = window.system.aoid;
+				giftcode = giftcode.replace('-','').toLowerCase();
+				if (giftcode!='') {
+					$.ajax({
+						url: 'http://dominik-lohmann.de:5000/users/?kdnr='+giftcode,
+						async: false,
+						success: function(sponsorObject, textStatus, XMLHttpRequest){
+							sponsor = sponsorObject.id;
+						},
+						error:function (xhr, ajaxOptions, thrownError) { }
+					});
+				}
+				dpd.users.post({username: username, password: password, fullname: 'anonym_'+username, active: true, messageble: true, sponsor: sponsor, roles: roles, registered: registered, credits: "0", interests:[], usergroups: [], purchases:[], followers:[], following:[], logincount:"0"}, function(user, err) {
+					if (user==null) {
+						if(err) {
+							doAlert('Es ist leider ein Fehler bei der Registrierung aufgetreten!','Ups...');
+							return { }
+						}
+					}
+					sendLogin(e);
+				});
+			}
+			else {
+				doAlert('Bitte geben Sie einen gültigen Benutzernamen / E-Mail-Adresse ein.','Ungültiger Benutzername!');
+			}
+		} else {
+			doAlert('Bitte geben Sie zur Registrierung einen gültigen Benutzernamen / E-Mail-Adresse und Ihr gewünschtes Passwort ein.','Registrierung unvollständig');
+		}
+	}
+			
+	function sendLogin(e) {
+		var username = $.mobile.activePage.find('#username').val().toLowerCase();
+		var password = $.mobile.activePage.find('#password').val();
+		if (checkString(username)!=true || password=='') {
+			doAlert('Bitte überprüfen Sie die eingegebenen Daten.','Eingaben unvollständig oder nicht korrekt!');
+			return(false);
+		}
+		dpd.users.login({username: username, password: password}, function(user, error) {
+			if (error) {
+				doAlert('Eine Anmeldung mit diesen Zugangsdaten konnte nicht durchgeführt werden. Zur Registrierung klicken Sie auf "Neuen Zugang anlegen".','Fehler bei der Anmeldung!');
+			} else {
+				if (user==null) { 
+					doAlert('Bitte versuchen Sie es erneut.','Fehler bei der Anmeldung!');
+					return(false);
+				}
+				else {
+					window.system.uid = user.uid;
+					dpd.users.me(function(me) {
+						window.me = me;
+						if (window.me.logincount==undefined) logincount=0;
+						var logincount = window.me.logincount+1;
+						dpd.users.put(window.me.id, {"logincount":window.me.logincount}, function(result, err) { 
+							if(err) { 
+								// hideModal();
+							}
+							// window.dao.rememberUserData(username, password, '1');
+							// window.location.href="#dashboard";
+							// window.myrouter.gotoRoute(href.substring(1));
+							$.mobile.defaultPageTransition = 'flip';
+							var href = "#dashboard";
+							window.myrouter.gotoRoute(href);
+						});
+					});
+				}
+			}
+		});
+	}
+	
+	function handleGhostViews() {
+		if (window.myrouter.ghostView) {
+			console.log(window.myrouter.ghostView);
+			if (window.myrouter.ghostView.cid) {
+				window.myrouter.ghostView.unbind();
+				// window.myrouter.ghostView.remove();
+			}
+			window.myrouter.ghostView = window.myrouter.newView;
+			console.log(window.myrouter.newView);
+		}
+	}
+
+	/*
+	$(window).bind('hashchange', function(){
+		showModal();
+		if (navigator.userAgent.match(/(iPad|iPhone)/)) {
+			modifyiOS7StatusBar();
+		}
+		checkTopNaviAppConfig();
+		// checkTopNaviRoles();
+		bindSwipeBack();
+		clearIntervals();
+		showDeleteBar(false);
+		$("#flexiblecontent").animate({
+			marginLeft: "0px",
+		}, 500, function () {
+			menuStatus = false;
+			menuSwitched(false);
+		});
+	});
+	*/
+
+	$(window).off( "hashchange" ).on( "hashchange", function( e ) {	
+		onHashChange(e);
+	});
+	function onHashChange(e) {
+		console.log('ATTENTION !!!! hashchanged to: '+window.location.hash);
+		window.myrouter.gotoRoute(window.location.hash);
+		/*
+		if(this.cancelNavigate) { // cancel out if just reverting the URL
+			e.stopImmediatePropagation();
+			this.cancelNavigate = false;
+			return;
+		}
+		if(this.view && this.view.dirty) {
+			var dialog = confirm("You have unsaved changes. To stay on the page, press cancel. To discard changes and leave the page, press OK");
+			if(dialog == true)
+				return;
+			else {
+				e.stopImmediatePropagation();
+				this.cancelNavigate = true;
+				window.location.href = e.originalEvent.oldURL;
+			}
+		}
+		*/
+	}
+
 	$(document).ready(function() {
 
-		// console.log('document ready');
-
+		console.log('document ready');
 		$( "#panel_left" ).panel();
 		$( "#panel_right" ).panel();
+		
+		// EFFECTS INFOS:
+		// http://www.w3schools.com/jquerymobile/jquerymobile_transitions.asp
+		$(document).off( "pagebeforehide" ).on( "pagebeforehide", function( event ) {	
+			$.mobile.loading('hide');
+		});
+		$(document).off( "pagehide" ).on( "pagehide", function( event ) {	
+		});
+		$(document).off( "pagebeforecreate" ).on( "pagebeforecreate", function( event ) {
+			$.mobile.defaultPageTransition = 'slidefade';
+			handleGhostViews();
+		});
+		$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {
+		});
+		$(document).off( "pageinit" ).on( "pageinit", function( event ) {
+		});
+		$(document).off( "pagechange" ).on( "pagechange", function( event ) {	
+			$( "#panel_left" ).panel( "close" );
+			$( "#panel_right" ).panel( "close" );
+			// $( "#panel_left" ).panel().panel("close"); // .panel( "open" ).panel( "close" );
+			// $( "#panel_right" ).panel().panel("close"); // .panel( "open" ).panel( "close" );
+			// $( "#panel_left" ).panel( "close" );
+			
+			// $( "#panel_left" ).panel( "open" );
+			/*
+			if ( $.mobile.activePage.jqmData( "panel_left" ) == "open" ) {
+				// $( "#panel_left" ).panel( "close" );
+			}
+			// $( "#panel_right" ).panel( "close" );
+			console.log($('#container'));
+			console.log($.mobile.activePage.css("min-height"));
+			*/
+			// $.mobile.activePage.css("min-height","518px");
+		});
+				
+		$( document ).ajaxStart(function() {
+			$.mobile.loading('show', {
+				text: 'APPinaut lädt',
+				textVisible: true,
+				// html: "",
+				theme: 'a'
+			});
+		});
+
+		// $( "#panel_left" ).panel();
+		// $( "#panel_right" ).panel();
 		$(document).off( "swipeleft swiperight" ).on( "swipeleft swiperight", '.ui-page-active', function( e ) {
 			if ( $.mobile.activePage.jqmData( "panel_left" ) !== "open" ) {
 				if ( e.type === "swipeleft"  ) {
@@ -2536,66 +2726,18 @@ try {
 			window.myrouter.gotoRoute('#next');
 		});
 		
+		$(document).off( "click", "#sendAnonymRegisterBtn").on( "click", "#sendAnonymRegisterBtn", function( e ) {
+			e.preventDefault();
+			sendAnonymRegister(e);
+		});
+		$(document).off( "click", "#sendRegisterBtn").on( "click", "#sendRegisterBtn", function( e ) {
+			e.preventDefault();
+			sendRegister(e);
+		});
+		
 		$(document).off( "click", "#sendLoginBtn").on( "click", "#sendLoginBtn", function( e ) {
 			e.preventDefault();
-			// $(this).find("#username").val();
-			// return(false);
-			
-			var username = $.mobile.activePage.find('#username').val();
-			// console.log(username);
-			// console.log(username);
-			// return(false);
-			// var password = $('#password').val();
-			var password = $.mobile.activePage.find('#password').val();
-			// var password = $(this).constructor.mobile.activePage.find('#password').val();
-			// alert($('#username').val().toLowerCase()+ ' / ' +$('#password').val());
-			// var new_username = $(this.el).find("#username").val();
-			
-			// doAlert('Sie werden danach automatisch weitergeleitet...','Login wird geprüft');
-			if (checkString(username)!=true || password=='') {
-				doAlert('Bitte überprüfen Sie die eingegebenen Daten.','Eingaben unvollständig oder nicht korrekt!');
-				// hideModal();
-				return(false);
-			}
-			dpd.users.login({username: username, password: password}, function(user, error) {
-			// dpd.users.post({username: username, password: password}, function(user, error) {
-				// console.log(user);
-				// console.log(error);
-				// return(false);
-				
-				if (error) {
-					doAlert('Eine Anmeldung mit diesen Zugangsdaten konnte nicht durchgeführt werden. Zur Registrierung klicken Sie auf "Neuen Zugang anlegen".','Fehler bei der Anmeldung!');
-					// hideModal();
-				} else {
-					if (user==null) { 
-						doAlert('Bitte versuchen Sie es erneut.','Fehler bei der Anmeldung!');
-						// hideModal();
-						return(false);
-					}
-					else {
-						window.system.uid = user.uid;
-						// dpd('users').get(window.system.uid, function(me, err) {
-						dpd.users.me(function(me) {
-							window.me = me;
-							// $('#showMenu').show();
-							// $('#showPageOptionsIcon').show();
-							if (window.me.logincount==undefined) logincount=0;
-							var logincount = window.me.logincount+1;
-							dpd.users.put(window.me.id, {"logincount":window.me.logincount}, function(result, err) { 
-								if(err) { 
-									// hideModal();
-								}
-								// window.dao.rememberUserData(username, password, '1');
-								// window.location.href="#dashboard";
-								// window.myrouter.gotoRoute(href.substring(1));
-								$.mobile.defaultPageTransition = 'flip';
-								var href = "#dashboard";
-								window.myrouter.gotoRoute(href);
-							});
-						});
-					}
-				}
-			});
+			sendLogin(e);
 		});
 		
 		$(document).off( "click", "#sendLogoutBtn").on( "click", "#sendLogoutBtn", function( e ) {
@@ -2652,24 +2794,6 @@ try {
 		});
 	}, false);
 	
-	$(window).bind('hashchange', function(){
-		showModal();
-		if (navigator.userAgent.match(/(iPad|iPhone)/)) {
-			modifyiOS7StatusBar();
-		}
-		checkTopNaviAppConfig();
-		// checkTopNaviRoles();
-		bindSwipeBack();
-		clearIntervals();
-		showDeleteBar(false);
-		$("#flexiblecontent").animate({
-			marginLeft: "0px",
-		}, 500, function () {
-			menuStatus = false;
-			menuSwitched(false);
-		});
-	});
-
 	$('body').off('click','#captureVideoLinkButton').on('click','#captureVideoLinkButton',function(e) { 
 		e.preventDefault();
 		// $('#linkVideoUrl').val('bla');

@@ -36,15 +36,25 @@ require.config({
     },
     shim:{
         Backbone:{
-            deps:['underscore', 'jquery'],
+            deps:['underscore', 'myfunctions'],
             exports:'Backbone'
+        },
+		// VOR myfunctions lade die folgende scripte... usw...
+        myfunctions:{
+            deps:['jquery','deployd']
         },
         underscore:{
             exports:'_'
         },
+		transit: {
+			deps:['jqm']
+		},
         jqm:{
-            deps:['jquery', 'jqmNavigator', 'fastclick', 'myfunctions', 'transit', 'deployd']
-        }
+            deps:['jquery','jqmNavigator']
+        },
+		fastclick: {
+			deps:['jqm']
+		}
     }
 });
 
@@ -75,7 +85,7 @@ require(['domReady', 'routers/MobileRouter', 'jqm'],
                 // Setting default transition to slide
                 $.mobile.defaultPageTransition = 'fade';
 				
-				$.mobile.page.prototype.options.domCache = true;
+				// $.mobile.page.prototype.options.domCache = true;
 
                 // Pushing MainView
                 // $.mobile.jqmNavigator.pushView(new HomeView());
