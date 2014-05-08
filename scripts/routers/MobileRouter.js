@@ -1,8 +1,8 @@
 // alert('mobile router');
 
-define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/home/x-homeView', 'views/next/NextView', 'views/login/LoginView', 'views/dashboard/DashboardView', 'views/noaccess/NoaccessView', 'views/dynamic/DynamicView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/next/NextView', 'views/login/LoginView', 'views/dashboard/DashboardView', 'views/noaccess/NoaccessView', 'views/dynamic/DynamicView', 'jqm'],
         
-    function(domReady, sidemenusCollection, testView, nextView, homeViewPredefined, loginView, dashboardView, noaccessView, dynamicView) {
+    function(domReady, sidemenusCollection, nextView, loginView, dashboardView, noaccessView, dynamicView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
@@ -68,7 +68,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 						_this.collection = response;
 						_this.bindEvents();
 						_this.recreateSidemenu();
-						window['sidemenuView'] = new testView({collection:_this.collection});
+						// window['sidemenuView'] = new testView({collection:_this.collection});
 						var queryRoute = window.location.hash;
 						if (queryRoute=='') queryRoute = '#login';
 						Backbone.history.start({

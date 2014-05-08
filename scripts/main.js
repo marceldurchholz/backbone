@@ -36,14 +36,15 @@ require.config({
     },
     shim:{
         Backbone:{
-            deps:['underscore', 'jquery','myfunctions'],
+            deps:['underscore', 'jquery','myfunctions','deployd'],
             exports:'Backbone'
         },
         underscore:{
             exports:'_'
         },
         jqm:{
-            deps:['jquery', 'jqmNavigator', 'deployd']
+            deps:['jquery', 'jqmNavigator'],
+			exports: "$.mobile.jqmNavigator"
         }
     }
 });
