@@ -2715,7 +2715,7 @@ try {
 		// alert('pagebeforeshow');
 		// alert($('#ui-header').height());
 		// alert($.mobile.activePage.css("min-height"));
-		$.mobile.activePage.css("min-height" ,  ($(window).height()-46)+"px" );
+		
 		// alert($.mobile.activePage.find('#ui-header').height()); // .css("height" ,  $(window).height()+"px" );
 		/*
 		$('#container').find('.ui-page').last().each(function() {

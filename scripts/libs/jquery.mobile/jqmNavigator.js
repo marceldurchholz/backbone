@@ -85,6 +85,9 @@
                             pageContainer:containerViews.pageContainer
                         }, options));
                     }
+					// $.mobile.activePage.css("min-height" ,  ($(window).height()-46)+"px" );
+					// alert(parseInt(view.$el.css('padding-top')));
+					view.$el.css("min-height" ,  (parseInt($(window).height())-parseInt(view.$el.css('padding-top')))+"px" );
                 },
 
                 /**

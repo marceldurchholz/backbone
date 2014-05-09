@@ -5,8 +5,8 @@ define(['underscore', 'Backbone', 'text!views/login/LoginView.html'],
 
 			template: _.template(LoginViewTemplate),
 			events:{
-                // 'click a':global_a_clickHandler,
-                // 'click button':global_button_clickHandler,
+                'click a':global_a_clickHandler,
+                'click button':global_button_clickHandler,
             },
 			initialize:function() {
 				$(this.el).undelegate('a', 'click');

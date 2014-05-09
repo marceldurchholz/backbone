@@ -14,10 +14,10 @@ require.config({
         Backbone:'libs/backbone/backbone',
         
 		// jquery:'libs/jquery/jquery-1.8.2',
-		jquery:'libs/jquery/jquery-1.11.1',
-		jquerymigrate:'libs/jquery/jquery-migrate-1.2.1',
-		// jquery:'libs/jquery/jquery-2.0.3',
-        
+		// jquery:'libs/jquery/jquery-1.11.1',
+		jquery:'libs/jquery/jquery-2.0.3',
+        jquerymigrate:'libs/jquery/jquery-migrate-1.2.1',
+		
 		// jqm:'libs/jquery.mobile/jquery.mobile-1.2.0',
 		// jqm:'libs/jquery.mobile/jquery.mobile-1.3.2',
         jqm:'libs/jquery.mobile/jquery.mobile-1.4.2',
@@ -45,8 +45,8 @@ require.config({
     }
 });
 
-require(['domReady', 'views/login/LoginView', 'jqm'],
-    function (domReady, LoginView) {
+require(['domReady', 'routers/MobileRouter', 'views/login/LoginView', 'jqm'],
+    function (domReady, MobileRouter, LoginView) {
 
         // domReady is RequireJS plugin that triggers when DOM is ready
         domReady(function () {
@@ -70,22 +70,17 @@ require(['domReady', 'views/login/LoginView', 'jqm'],
                 $.mobile.pageContainer = $('#container');
 
                 // Setting default transition to slide
-                $.mobile.defaultPageTransition = 'slide';
+                $.mobile.defaultPageTransition = 'slidefade';
 
                 // Pushing MainView
                 // $.mobile.jqmNavigator.pushView(new HomeView());
 				
 				/* new integrated router */
 				// new MobileRouter();
-				/*
+
 				window.myrouter = new MobileRouter();
-				Backbone.history.start({
-					// silent:true,
-					pushState: false,
-					hashChange: false
-				});
-				*/
-				$.mobile.jqmNavigator.pushView(new LoginView());
+
+				// $.mobile.jqmNavigator.pushView(new LoginView);
 
             }
 
