@@ -1,8 +1,8 @@
 // alert('mobile router');
 
-define(['domReady', 'views/login/LoginView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 'jqm'],
         
-    function(domReady, LoginView) {
+    function(domReady, sidemenusCollection, LoginView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
@@ -16,14 +16,10 @@ define(['domReady', 'views/login/LoginView', 'jqm'],
 			//  https://github.com/yckart/Transe.js
 			//      jQuery Element Animations / Transformable scroll elements
 			
-
+			collection: new sidemenusCollection(),
+			
 			initialize: function() {
 				var _this = this;
-				Backbone.history.start({
-					// silent:true,
-					pushState: false,
-					hashChange: false
-				});
 
 			},
 
@@ -36,8 +32,38 @@ define(['domReady', 'views/login/LoginView', 'jqm'],
 				$.mobile.jqmNavigator.pushView(new LoginView());
 				
             },
+			dynamicRouter: function() {
+				console.log('doing dynamicRouter');
+				$.mobile.jqmNavigator.pushView(new dynamicView().render());
+			},
+            noaccessRouter: function() {
+				console.log('doing noaccessRouter');
+				$.mobile.jqmNavigator.pushView(new noaccessView().render());
+            },
 			
+			recreateSidemenu: function(e,a) {
+				// alert('recreateSidemenu');
+				var _this = this;
+				_this.routes = [];
+				_this.routes['dynamic'] = 'dynamicRouter';
+				_this.routes[''] = "loginRouter";
+				_this.routes['*path'] = 'dynamicRouter';
+				this.collection.each(function(row) {				
+					var _row = row;
+					var userfriendly = _row.get('urloffline');
+					_this.routes[userfriendly] = userfriendly+'Router';
+				});
+			},
 			
+			bindEvents: function() {
+				var _this = this;
+				console.log('binding events');
+				// this.collection.on("add", this.recreateSidemenu, this);
+				// this.collection.on("remove", this.recreateSidemenu, this);
+				this.collection.on("reset", _this.recreateSidemenu, this);
+				// $(window).on("beforeunload", _this.beforeUnload);
+				// this.recreateSidemenu();
+			},
 			
 			checkLink: function(e) {
 				console.log('checkLink');

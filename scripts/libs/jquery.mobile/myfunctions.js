@@ -2735,8 +2735,8 @@ try {
 	$(document).ready(function() {
 
 		console.log('document ready');
-		$( "#panel_left" ).panel().panel( "close" );
-		$( "#panel_right" ).panel().panel( "close" );
+		if ($( "#panel_left" )) $( "#panel_left" ).panel().panel( "close" );
+		if ($( "#panel_right" )) $( "#panel_right" ).panel().panel( "close" );
 		
 		// EFFECTS INFOS:
 		// http://www.w3schools.com/jquerymobile/jquerymobile_transitions.asp

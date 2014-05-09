@@ -45,7 +45,7 @@ require.config({
     }
 });
 
-require(['domReady', 'routers/MobileRouter', 'jqm'],
+define(['domReady', 'routers/MobileRouter', 'jqm'],
     function (domReady, MobileRouter) {
 
         // domReady is RequireJS plugin that triggers when DOM is ready
@@ -78,7 +78,12 @@ require(['domReady', 'routers/MobileRouter', 'jqm'],
 				/* new integrated router */
 				// new MobileRouter();
 
-				new MobileRouter();
+				window.myrouter = new MobileRouter();
+				Backbone.history.start({
+					// silent:true,
+					pushState: false,
+					hashChange: false
+				});
 
 				// $.mobile.jqmNavigator.pushView(new LoginView);
 
@@ -93,5 +98,7 @@ require(['domReady', 'routers/MobileRouter', 'jqm'],
             }
 
         });
-
-    });
+	
+    }
+);
+	
