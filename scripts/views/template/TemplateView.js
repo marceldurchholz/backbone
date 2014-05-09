@@ -33,15 +33,20 @@ define(['jquery', 'underscore', 'Backbone'],
 				_this.options.dynContent = _this.options.model.get('dynContent');
 				_this.options.templateUrl = _this.options.model.get('templateUrl');
 				
-				if (_this.options.dynContent && _this.options.dynContent!='') contentExists = true;
-				else contentExists = false;
-				if (_this.options.templateUrl && _this.options.templateUrl!='') fileExists = true;
-				else fileExists = false;
+				if (_this.options.dynContent && _this.options.dynContent!='') { }
+				else _this.options.dynContent = '';
+				if (_this.options.templateUrl || _this.options.templateUrl=='') {
+					_this.options.templateUrl = 'text!views/template/TemplateView.html';
+					fileExists=false;
+				}
+				
+				// if (_this.options.templateUrl)
+				/*
 				if (contentExists==false && fileExists==false) {
 					_this.options.templateUrl = 'text!views/template/TemplateView.html';
 					fileExists=true;
 				}
-				
+				*/
 				if (fileExists==false) {
 					var output = _.template(_this.options.dynContent,{
 						page_vars: _this.options
@@ -63,9 +68,8 @@ define(['jquery', 'underscore', 'Backbone'],
 					});
 				}
 				return _this;
-				/*
-				*/
-            }
+
+			}
 
         });
         return TemplateView;

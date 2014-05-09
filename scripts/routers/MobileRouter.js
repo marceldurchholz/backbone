@@ -1,8 +1,6 @@
-// console('mobile router');
-
-define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/home/HomeView', 'views/template/TemplateView', 'views/login/LoginView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/template/TemplateView', 'views/login/LoginView', 'jqm'],
         
-    function(domReady, sidemenusCollection, testView, homeView, templateView, loginView) {
+    function(domReady, sidemenusCollection, testView, templateView, loginView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
@@ -40,16 +38,16 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 			},
 			startRouter: function() {
 				_this = this;
-				alert('silence is golden...');
+				// alert('silence is golden...');
 				_this.initRouter();
 			},
             loginRouter: function() {
 				// console('doing loginRouter');
 				$.mobile.jqmNavigator.pushView(new loginView());
             },
-			dynamicRouter: function() {
-				// console('doing dynamicRouter');
-				// $.mobile.jqmNavigator.pushView(new dynamicView().render());
+			templateRouter: function() {
+				// console('doing templateRouter');
+				// $.mobile.jqmNavigator.pushView(new templateView().render());
 			},
             noaccessRouter: function() {
 				// console('doing noaccessRouter');
@@ -58,33 +56,22 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 
 			initRouter: function() {
 				_this = this;
-				alert('innniting...');
+				// alert('innniting...');
 				this.collection.fetch({ 
-					// silent:true,
 					success: function(response){
 						_this.collection = response;
 						// _this.bindEvents();
 						_this.recreateSidemenu();
-						// window['sidemenuView'] = 
 						new testView({collection:_this.collection});
-						alert(queryRoute);
+						// alert(queryRoute);
 						var queryRoute = window.location.hash;
-						if (queryRoute=='') queryRoute = '#login';
-						// alert(_this.routes['login']);
-						
-						// _this.loginRouter();
-						
-						// var pageObject = {};
-						// var viewName = _this.routes['login'];
-						// _this.newView = (new (eval(viewName))(pageObject)).render();
-						// $.mobile.jqmNavigator.pushView(_this.newView);
-						
+						if (queryRoute=='') queryRoute = '#home';
 						_this.gotoRoute(queryRoute);
 					}
 				});
 			},
 			recreateSidemenu: function(e,a) {
-				alert('recreateSidemenu');
+				// alert('recreateSidemenu');
 				var _this = this;
 				_this.routes = [];
 				this.collection.each(function(row) {
@@ -92,7 +79,6 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					var userfriendly = _row.get('urloffline');
 					_this.routes[userfriendly] = userfriendly+'Router';
 				});
-				// _this.routes['dynamic'] = 'dynamicRouter';
 				_this.routes[''] = "startRouter";
 				_this.routes['noaccess'] = 'noaccessRouter';
 				_this.routes['*path'] = 'initRouter';
@@ -164,7 +150,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 							// alert('router function not existing');
 							console.log('hash eventually not pulled via navmobile=true (router function not created/existing)');
 							_this.noaccessRouter();
-							// _this.dynamicRouter();
+							// _this.templateRouter();
 							return(false);
 						}
 					}
@@ -196,14 +182,8 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				} catch (e) {
 					console.log('folgend wird hier ein fehler gemeldet der mit absicht durch ein try() debugged wird');
 					console.log(e);
-					console.log('switching to dynamicView (error on function call for '+viewName+')');
-					// pageObject.template = route;
-					// pageObject.collection = _this.collection;
-					// new dynamicView({collection:_this.collection});
-					// pushView.template = 'dynamicView';
-					// _this.newView = new dynamicView(pageObject);
-					// $.mobile.jqmNavigator.pushView(_this.newView);
-					_this.newView = (new dynamicView(pageObject)).render();
+					console.log('switching to templateView (error on function call for '+viewName+')');
+					_this.newView = (new templateView(pageObject)).render();
 				} finally {
 					$.mobile.jqmNavigator.pushView(_this.newView);
 					// $.mobile.jqmNavigator.pushView((new (eval(viewName))(pageObject)));
