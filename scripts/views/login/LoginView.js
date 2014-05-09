@@ -16,14 +16,6 @@ define(['underscore', 'Backbone', 'text!views/login/LoginView.html'],
 				return this;
             }
 
-            /*
-			btnBack_clickHandler:function (event) {
-				event.preventDefault();
-                $.mobile.jqmNavigator.popView();
-				return(false);
-            }
-			*/
-
         });
 
         return LoginView;
