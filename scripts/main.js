@@ -45,7 +45,7 @@ require.config({
     }
 });
 
-define(['domReady', 'routers/MobileRouter', 'jqm'],
+define(['domReady', 'routers/MobileRouter', 'jqm', 'deployd'],
     function (domReady, MobileRouter) {
 
         // domReady is RequireJS plugin that triggers when DOM is ready
@@ -77,8 +77,9 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
 				
 				/* new integrated router */
 				// new MobileRouter();
-
-				window.myrouter = new MobileRouter();
+				
+				alert('loading router');
+				// window.myrouter = new MobileRouter();
 
 
 				// $.mobile.jqmNavigator.pushView(new LoginView);
