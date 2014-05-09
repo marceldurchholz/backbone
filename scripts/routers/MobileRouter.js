@@ -72,7 +72,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 				_this.routes = [];
 				_this.routes['dynamic'] = 'dynamicRouter';
 				_this.routes[''] = "loginRouter";
-				_this.routes['*path'] = 'initRouter';
+				_this.routes['*path'] = 'dynamicRouter';
 				this.collection.each(function(row) {				
 					var _row = row;
 					var userfriendly = _row.get('urloffline');
