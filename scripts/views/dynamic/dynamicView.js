@@ -1,5 +1,5 @@
-define(['underscore', 'Backbone', 'text!views/dynamic/dynamicView.html', 'text!views/dynamic/blankView.html'], // 
-    function (_, Backbone, DynamicViewTemplate, BlankViewTemplate) { // 
+define(['underscore', 'Backbone'],
+    function (_, Backbone) { 
 
         var DynamicViewVar = Backbone.View.extend({
 
@@ -28,7 +28,7 @@ define(['underscore', 'Backbone', 'text!views/dynamic/dynamicView.html', 'text!v
 				if (_this.options.templateUrl && _this.options.templateUrl!='') fileExists = true;
 				else fileExists = false;
 				if (contentExists==false && fileExists==false) {
-					_this.options.templateUrl = 'text!views/dynamic/dynamicView.html';
+					_this.options.templateUrl = 'text!views/dynamic/DynamicView.html';
 					fileExists=true;
 				}
 				

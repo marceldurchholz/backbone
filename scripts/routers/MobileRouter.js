@@ -1,8 +1,8 @@
 alert('mobile router');
 
-define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/login/LoginView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/dynamic/DynamicView', 'views/login/LoginView', 'jqm'],
         
-    function(domReady, sidemenusCollection, testView, loginView) {
+    function(domReady, sidemenusCollection, testView, dynamicView, loginView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
@@ -108,7 +108,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				// $(window).on("beforeunload", _this.beforeUnload);
 				// this.recreateSidemenu();
 			},
-			
+			*/
 			checkLink: function(e) {
 				console.log('checkLink');
 				var _this = this;
@@ -212,7 +212,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				}
 			},
 			
-			
+			/*
 			filterCollection: function (filter,collection, attribute, value) {
 				if (filter=='>') {
 					var models = collection.select(function (model) {
