@@ -2678,7 +2678,8 @@ try {
 	});
 	function onHashChange(e) {
 		console.log('ATTENTION !!!! hashchanged to: '+window.location.hash);
-		window.myrouter.gotoRoute(window.location.hash);
+		// window.myrouter.gotoRoute(window.location.hash);
+		window.myrouter.initRouter();
 		/*
 		if(this.cancelNavigate) { // cancel out if just reverting the URL
 			e.stopImmediatePropagation();
@@ -2727,14 +2728,14 @@ try {
 
 	$(document).off( "pagebeforecreate" ).on( "pagebeforecreate", function( event ) {
 		// $.mobile.defaultPageTransition = 'slidefade';
-		// handleGhostViews();
+		handleGhostViews();
 		// alert($.mobile.activePage.css("min-height"));
 		// alert($.mobile.activePage.find('.ui-header').css("min-height"));
 	});
 	
 	$(document).ready(function() {
 
-		console.log('document ready');
+		// console.log('document ready');
 		if ($( "#panel_left" )) $( "#panel_left" ).panel().panel( "close" );
 		if ($( "#panel_right" )) $( "#panel_right" ).panel().panel( "close" );
 		
@@ -2748,7 +2749,7 @@ try {
 		$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {
 		});
 		$(document).off( "pagechange" ).on( "pagechange", function( event ) {
-			alert("pagechange");
+			// alert("pagechange");
 			$( "#panel_left" ).panel().panel( "close" );
 			$( "#panel_right" ).panel().panel( "close" );
 			// $( "#panel_left" ).panel().panel("close"); // .panel( "open" ).panel( "close" );

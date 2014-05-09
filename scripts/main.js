@@ -29,11 +29,11 @@ require.config({
 		myfunctions:'libs/jquery.mobile/myfunctions',
 		// sidr:'libs/jquery.mobile/sidr/sidr',
 		// preventLinks:'libs/jquery.mobile/preventLinks/preventLinks',
-		// deployd: "http://dominik-lohmann.de:5000/dpd"
+		deployd: "http://dominik-lohmann.de:5000/dpd"
     },
     shim:{
         Backbone:{
-            deps:['underscore', 'jquery','myfunctions'],
+            deps:['underscore', 'jquery','myfunctions','deployd'],
             exports:'Backbone'
         },
         underscore:{
@@ -79,11 +79,7 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
 				// new MobileRouter();
 
 				window.myrouter = new MobileRouter();
-				Backbone.history.start({
-					// silent:true,
-					pushState: false,
-					hashChange: false
-				});
+
 
 				// $.mobile.jqmNavigator.pushView(new LoginView);
 

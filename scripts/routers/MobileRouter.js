@@ -1,8 +1,8 @@
 // alert('mobile router');
 
-define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 'views/noaccess/NoaccessView', 'views/dynamic/DynamicView', 'views/test/TestView', 'jqm'],
         
-    function(domReady, sidemenusCollection, LoginView) {
+    function(domReady, sidemenusCollection, loginView, noaccessView, dynamicView, testView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
@@ -20,17 +20,42 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 			
 			initialize: function() {
 				var _this = this;
-
+				_this.ghostView = new Object();
+				// console.log(_this.ghostView);
+				_this.initRouter();
+				Backbone.history.start({
+					// silent:true,
+					pushState: false,
+					hashChange: false
+				});
 			},
 
             routes: {
-				"": "loginRouter"
+				"": "nothingRouter"
+			},
+			nothingRouter: function() {
+				console.log('silence is golden...');
+			},
+			initRouter: function() {
+				_this = this;
+				this.collection.fetch({ 
+					silent:true,
+					success: function(response){
+						_this.collection = response;
+						_this.bindEvents();
+						_this.recreateSidemenu();
+						// window['sidemenuView'] = 
+						new testView({collection:_this.collection});
+						console.log(window.myrouter.routes);
+						var queryRoute = window.location.hash;
+						if (queryRoute=='') queryRoute = '#login';
+						_this.gotoRoute(queryRoute);
+					}
+				});
 			},
             loginRouter: function() {
-				// this.gotoRoute('#login');
-				// alert('doing loginrouter');
-				$.mobile.jqmNavigator.pushView(new LoginView());
-				
+				console.log('doing loginRouter');
+				$.mobile.jqmNavigator.pushView(new loginView());
             },
 			dynamicRouter: function() {
 				console.log('doing dynamicRouter');
@@ -45,9 +70,10 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 				// alert('recreateSidemenu');
 				var _this = this;
 				_this.routes = [];
-				_this.routes['dynamic'] = 'dynamicRouter';
+				// _this.routes['dynamic'] = 'dynamicRouter';
 				_this.routes[''] = "loginRouter";
-				_this.routes['*path'] = 'dynamicRouter';
+				// _this.routes['noaccess'] = "dynamicRouter";
+				_this.routes['*path'] = 'initRouter';
 				this.collection.each(function(row) {				
 					var _row = row;
 					var userfriendly = _row.get('urloffline');
@@ -166,9 +192,42 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 					// console.log(_this.ghostView);
 						
 				}
-			}
+			},
 			
 			
+			filterCollection: function (filter,collection, attribute, value) {
+				if (filter=='>') {
+					var models = collection.select(function (model) {
+						return model.get(attribute) > value;
+					});
+				}
+				if (filter=='<') {
+					var models = collection.select(function (model) {
+						return model.get(attribute) < value;
+					});
+				}
+				if (filter=='==') {
+					var models = collection.select(function (model) {
+						return model.get(attribute) == value;
+					});
+				}
+				if (filter=='!=') {
+					var models = collection.select(function (model) {
+						return model.get(attribute) != value;
+					});
+				}
+				if (filter=='has_role') {
+					var models = collection.select(function (model) {
+						return ($.inArray(value, model.get(attribute))=='-1' ? false : true);
+					});
+				}
+				if (filter=='has_not_role') {
+					var models = collection.select(function (model) {
+						return ($.inArray(value, model.get(attribute))=='-1' ? true : false);
+					});
+				}
+				return new collection.constructor(models);
+			}			
 			
 						
         });

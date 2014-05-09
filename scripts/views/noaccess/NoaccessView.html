@@ -1,11 +1,13 @@
 <div data-role="header" data-position="fixed">
-    <a id="btnBack" href="#" data-icon="back" data-iconpos="left">Zurück</a>
-    <h1>Noaccess View</h1>
-    <a style="float:right" class="sidr_left" href="#sidr_left" data-icon="plus" data-iconpos="right">Menü</a>
+    <a data-ajax="true" href="#panel_left" data-icon="grid" data-iconpos="left">Menü</a>
+    <h1><%= window.system.owner.companyname %></h1>
+    <a data-ajax="true" href="#panel_right" data-icon="gear" data-iconpos="notext">Prefs</a>
 </div>
 
 <div data-role="content">
 
-	KEIN ZUGRIFF
+	<div style="padding:20px 20px 40px 20px;text-align:center;display:block;">
+		<h1>Zugriff<br>nicht<br>gestattet</h1>
+	</div>
 	
 </div>
