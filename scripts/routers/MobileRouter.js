@@ -23,11 +23,6 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 				_this.ghostView = new Object();
 				// console.log(_this.ghostView);
 				_this.initRouter();
-				Backbone.history.start({
-					// silent:true,
-					pushState: false,
-					hashChange: false
-				});
 			},
 
             routes: {
@@ -49,6 +44,11 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 						console.log(window.myrouter.routes);
 						var queryRoute = window.location.hash;
 						if (queryRoute=='') queryRoute = '#login';
+						Backbone.history.start({
+							// silent:true,
+							pushState: false,
+							hashChange: false
+						});
 						_this.gotoRoute(queryRoute);
 					}
 				});
@@ -70,7 +70,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 				// alert('recreateSidemenu');
 				var _this = this;
 				_this.routes = [];
-				// _this.routes['dynamic'] = 'dynamicRouter';
+				_this.routes['dynamic'] = 'dynamicRouter';
 				_this.routes[''] = "loginRouter";
 				_this.routes['*path'] = 'initRouter';
 				this.collection.each(function(row) {				
