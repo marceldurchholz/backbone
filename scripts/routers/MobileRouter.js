@@ -1,6 +1,6 @@
 alert('mobile router');
 
-define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'jqm'],
         
     function(domReady, sidemenusCollection, testView) {
 
@@ -20,7 +20,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 			
 			initialize: function() {
 				var _this = this;
-				// window.myrouter = _this;
+				window.myrouter = _this;
 				_this.ghostView = new Object();
 				// console.log(_this.ghostView);
 				alert('initializing...');
@@ -33,25 +33,29 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 			},
 
             routes: {
-				"": "nothingRouter",
-				"login": "loginRouter"
+				"": "startRouter",
+				"login": "loginRouter",
+				"noaccess": "noaccessRouter",
+				"*path": "initRouter"
 			},
-			nothingRouter: function() {
+			startRouter: function() {
+				_this = this;
 				alert('silence is golden...');
+				_this.initRouter();
 			},
             loginRouter: function() {
 				alert('doing loginRouter');
 				$.mobile.jqmNavigator.pushView(new loginView());
             },
-			/*
 			dynamicRouter: function() {
 				alert('doing dynamicRouter');
-				$.mobile.jqmNavigator.pushView(new dynamicView().render());
+				// $.mobile.jqmNavigator.pushView(new dynamicView().render());
 			},
             noaccessRouter: function() {
 				alert('doing noaccessRouter');
-				$.mobile.jqmNavigator.pushView(new noaccessView().render());
+				// $.mobile.jqmNavigator.pushView(new noaccessView().render());
             },
+
 			initRouter: function() {
 				_this = this;
 				alert('innniting...');
@@ -59,13 +63,13 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 					// silent:true,
 					success: function(response){
 						_this.collection = response;
-						_this.bindEvents();
+						// _this.bindEvents();
 						_this.recreateSidemenu();
 						// window['sidemenuView'] = 
-						new testView({collection:_this.collection});
+						// new testView({collection:_this.collection});
+						alert(queryRoute);
 						var queryRoute = window.location.hash;
 						if (queryRoute=='') queryRoute = '#login';
-						alert(queryRoute);
 						// _this.gotoRoute(queryRoute);
 					}
 				});
@@ -74,16 +78,18 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 				alert('recreateSidemenu');
 				var _this = this;
 				_this.routes = [];
-				// _this.routes['dynamic'] = 'dynamicRouter';
-				_this.routes[''] = "loginRouter";
-				_this.routes['noaccess'] = 'noaccessRouter';
-				_this.routes['*path'] = 'initRouter';
-				this.collection.each(function(row) {				
+				this.collection.each(function(row) {
 					var _row = row;
 					var userfriendly = _row.get('urloffline');
 					_this.routes[userfriendly] = userfriendly+'Router';
 				});
+				// _this.routes['dynamic'] = 'dynamicRouter';
+				_this.routes[''] = "startRouter";
+				_this.routes['noaccess'] = 'noaccessRouter';
+				_this.routes['*path'] = 'initRouter';
+				
 			},
+			/*
 			bindEvents: function() {
 				var _this = this;
 				alert('binding events');
