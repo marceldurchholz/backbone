@@ -23,6 +23,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 				window.myrouter = _this;
 				_this.ghostView = new Object();
 				// console.log(_this.ghostView);
+				alert('initializing...');
 				_this.initRouter();
 				/*
 				Backbone.history.start({
@@ -34,7 +35,8 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 			},
 
             routes: {
-				"": "nothingRouter"
+				"": "nothingRouter",
+				"login": "loginRouter"
 			},
 			nothingRouter: function() {
 				alert('silence is golden...');
@@ -43,17 +45,17 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 				_this = this;
 				alert('innniting...');
 				this.collection.fetch({ 
-					silent:true,
+					// silent:true,
 					success: function(response){
 						_this.collection = response;
 						_this.bindEvents();
 						_this.recreateSidemenu();
 						// window['sidemenuView'] = 
 						new testView({collection:_this.collection});
-						console.log(window.myrouter.routes);
 						var queryRoute = window.location.hash;
 						if (queryRoute=='') queryRoute = '#login';
-						_this.gotoRoute(queryRoute);
+						alert(queryRoute);
+						// _this.gotoRoute(queryRoute);
 					}
 				});
 			},
@@ -62,23 +64,22 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 				$.mobile.jqmNavigator.pushView(new loginView());
             },
 			dynamicRouter: function() {
-				console.log('doing dynamicRouter');
+				alert('doing dynamicRouter');
 				$.mobile.jqmNavigator.pushView(new dynamicView().render());
 			},
             noaccessRouter: function() {
-				console.log('doing noaccessRouter');
+				alert('doing noaccessRouter');
 				$.mobile.jqmNavigator.pushView(new noaccessView().render());
             },
 			
 			recreateSidemenu: function(e,a) {
-				// alert('recreateSidemenu');
+				alert('recreateSidemenu');
 				var _this = this;
 				_this.routes = [];
 				// _this.routes['dynamic'] = 'dynamicRouter';
 				_this.routes[''] = "loginRouter";
-				// _this.routes['noaccess'] = "dynamicRouter";
-				_this.routes['*path'] = 'initRouter';
 				_this.routes['noaccess'] = 'noaccessRouter';
+				_this.routes['*path'] = 'initRouter';
 				this.collection.each(function(row) {				
 					var _row = row;
 					var userfriendly = _row.get('urloffline');
@@ -88,7 +89,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 			
 			bindEvents: function() {
 				var _this = this;
-				console.log('binding events');
+				alert('binding events');
 				// this.collection.on("add", this.recreateSidemenu, this);
 				// this.collection.on("remove", this.recreateSidemenu, this);
 				this.collection.on("reset", _this.recreateSidemenu, this);

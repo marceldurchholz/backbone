@@ -1,5 +1,3 @@
-// alert('functions');
-
 try {
 
 	function global_a_clickHandler(event) {
@@ -3727,4 +3725,3 @@ try {
 	alert('error 2 in js script');
 	console.log(e);
 }
-

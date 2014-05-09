@@ -33,7 +33,7 @@ require.config({
     },
     shim:{
         Backbone:{
-            deps:['underscore', 'jquery','myfunctions'],
+            deps:['underscore', 'jquery', 'myfunctions'],
             exports:'Backbone'
         },
         underscore:{
@@ -79,7 +79,7 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
 				// new MobileRouter();
 				
 				// alert('loading router');
-				// window.myrouter = new MobileRouter();
+				window.myrouter = new MobileRouter();
 
 
 				// $.mobile.jqmNavigator.pushView(new LoginView);
