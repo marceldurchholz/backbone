@@ -45,16 +45,7 @@ require.config({
     }
 });
 
-requirejs.onError = function (err) {
-    console.log(err.requireType);
-    if (err.requireType === 'timeout') {
-        console.log('modules: ' + err.requireModules);
-    }
-
-    throw err;
-};
-
-define(['domReady', 'routers/MobileRouter', 'jqm'],
+define(['domReady', 'jqm'],
     function (domReady, MobileRouter) {
 
         // domReady is RequireJS plugin that triggers when DOM is ready
@@ -87,8 +78,8 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
 				/* new integrated router */
 				// new MobileRouter();
 				
-				// alert('loading router');
-				window.myrouter = new MobileRouter();
+				alert('loading router');
+				// window.myrouter = new MobileRouter();
 
 
 				// $.mobile.jqmNavigator.pushView(new LoginView);
