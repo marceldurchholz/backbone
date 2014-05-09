@@ -6,8 +6,8 @@
  * Time: 9:53 AM
  */
 
-define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.html'],
-    function ($, _, Backbone, TemplateViewTemplate) {
+define(['jquery', 'underscore', 'Backbone'],
+    function ($, _, Backbone) {
         var TemplateView = Backbone.View.extend({
 
 			events:{
@@ -27,9 +27,9 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 			},
             render:function () {
 				var page_vars = _this.options;
-                this.$el.html(_.template(TemplateViewTemplate));
-                return this;
-				/*
+                // this.$el.html(_.template(TemplateViewTemplate));
+                // return this;
+
 				_this.options.dynContent = _this.options.model.get('dynContent');
 				_this.options.templateUrl = _this.options.model.get('templateUrl');
 				
@@ -42,6 +42,7 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 					fileExists=true;
 				}
 				
+				/*
 				if (fileExists==false) {
 					var output = _.template(_this.options.dynContent,{
 						page_vars: _this.options
