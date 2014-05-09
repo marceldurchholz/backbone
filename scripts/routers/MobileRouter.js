@@ -1,8 +1,8 @@
 // alert('mobile router');
 
-define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 'views/dynamic/DynamicView', 'views/test/TestView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 'views/noaccess/NoaccessView', 'views/dynamic/DynamicView', 'views/test/TestView', 'jqm'],
         
-    function(domReady, sidemenusCollection, loginView, dynamicView, testView) {
+    function(domReady, sidemenusCollection, loginView, noaccessView, dynamicView, testView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
@@ -72,6 +72,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 				_this.routes = [];
 				// _this.routes['dynamic'] = 'dynamicRouter';
 				_this.routes[''] = "loginRouter";
+				// _this.routes['noaccess'] = "dynamicRouter";
 				_this.routes['*path'] = 'initRouter';
 				this.collection.each(function(row) {				
 					var _row = row;
