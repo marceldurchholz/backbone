@@ -42,7 +42,6 @@ define(['jquery', 'underscore', 'Backbone'],
 					fileExists=true;
 				}
 				
-				/*
 				if (fileExists==false) {
 					var output = _.template(_this.options.dynContent,{
 						page_vars: _this.options
@@ -64,6 +63,7 @@ define(['jquery', 'underscore', 'Backbone'],
 					});
 				}
 				return _this;
+				/*
 				*/
             }
 
