@@ -1,8 +1,8 @@
 // alert('mobile router');
 
-define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 'views/dynamic/DynamicView', 'views/test/TestView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 'views/noaccess/NoaccessView', 'views/dynamic/DynamicView', 'views/test/TestView', 'jqm'],
         
-    function(domReady, sidemenusCollection, loginView, dynamicView, testView) {
+    function(domReady, sidemenusCollection, loginView, noaccessView, dynamicView, testView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
@@ -20,19 +20,26 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 			
 			initialize: function() {
 				var _this = this;
+				window.myrouter = _this;
 				_this.ghostView = new Object();
 				// console.log(_this.ghostView);
 				_this.initRouter();
+				Backbone.history.start({
+					// silent:true,
+					pushState: false,
+					hashChange: false
+				});
 			},
 
             routes: {
 				"": "nothingRouter"
 			},
 			nothingRouter: function() {
-				console.log('silence is golden...');
+				alert('silence is golden...');
 			},
 			initRouter: function() {
 				_this = this;
+				alert('innniting...');
 				this.collection.fetch({ 
 					silent:true,
 					success: function(response){
@@ -44,17 +51,12 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 						console.log(window.myrouter.routes);
 						var queryRoute = window.location.hash;
 						if (queryRoute=='') queryRoute = '#login';
-						Backbone.history.start({
-							// silent:true,
-							pushState: false,
-							hashChange: false
-						});
 						_this.gotoRoute(queryRoute);
 					}
 				});
 			},
             loginRouter: function() {
-				console.log('doing loginRouter');
+				alert('doing loginRouter');
 				$.mobile.jqmNavigator.pushView(new loginView());
             },
 			dynamicRouter: function() {
@@ -70,9 +72,11 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 				// alert('recreateSidemenu');
 				var _this = this;
 				_this.routes = [];
-				_this.routes['dynamic'] = 'dynamicRouter';
+				// _this.routes['dynamic'] = 'dynamicRouter';
 				_this.routes[''] = "loginRouter";
-				_this.routes['*path'] = 'dynamicRouter';
+				// _this.routes['noaccess'] = "dynamicRouter";
+				_this.routes['*path'] = 'initRouter';
+				_this.routes['noaccess'] = 'noaccessRouter';
 				this.collection.each(function(row) {				
 					var _row = row;
 					var userfriendly = _row.get('urloffline');
