@@ -45,6 +45,15 @@ require.config({
     }
 });
 
+requirejs.onError = function (err) {
+    console.log(err.requireType);
+    if (err.requireType === 'timeout') {
+        console.log('modules: ' + err.requireModules);
+    }
+
+    throw err;
+};
+
 define(['domReady', 'routers/MobileRouter', 'jqm'],
     function (domReady, MobileRouter) {
 
