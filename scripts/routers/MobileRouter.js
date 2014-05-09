@@ -67,8 +67,8 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					success: function(response){
 						_this.collection = response;
 						_this.bindEvents();
-						_this.recreateSidemenu();
-						window['sidemenuView'] = new testView({collection:_this.collection});
+						// _this.recreateSidemenu();
+						// window['sidemenuView'] = new testView({collection:_this.collection});
 						var queryRoute = window.location.hash;
 						if (queryRoute=='') queryRoute = '#login';
 						Backbone.history.start({
@@ -76,14 +76,14 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 							pushState: false,
 							hashChange: false
 						});
-						_this.gotoRoute(queryRoute);
+						// _this.gotoRoute(queryRoute);
 					}
 				});
 
 			},
 
             routes: {
-				"": ""
+				"": "loginRouter"
 			},
 			dynamicRouter: function() {
 				console.log('doing dynamicRouter');
@@ -93,7 +93,11 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				console.log('doing noaccessRouter');
 				$.mobile.jqmNavigator.pushView(new noaccessView().render());
             },
-            
+            loginRouter: function() {
+				// this.gotoRoute('#login');
+				alert('doing loginrouter');
+				$.mobile.jqmNavigator.pushView(new loginView().render());
+            },
 			recreateSidemenu: function(e,a) {
 				// alert('recreateSidemenu');
 				var _this = this;
