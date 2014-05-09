@@ -1,4 +1,4 @@
-alert('mobile router');
+// console('mobile router');
 
 define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/home/HomeView', 'views/template/TemplateView', 'views/login/LoginView', 'jqm'],
         
@@ -23,7 +23,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				window.myrouter = _this;
 				_this.ghostView = new Object();
 				// console.log(_this.ghostView);
-				alert('initializing...');
+				// console('initializing...');
 				// _this.initRouter();
 				Backbone.history.start({
 					// silent:true,
@@ -44,15 +44,15 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				_this.initRouter();
 			},
             loginRouter: function() {
-				alert('doing loginRouter');
+				// console('doing loginRouter');
 				$.mobile.jqmNavigator.pushView(new loginView());
             },
 			dynamicRouter: function() {
-				alert('doing dynamicRouter');
+				// console('doing dynamicRouter');
 				// $.mobile.jqmNavigator.pushView(new dynamicView().render());
 			},
             noaccessRouter: function() {
-				alert('doing noaccessRouter');
+				// console('doing noaccessRouter');
 				// $.mobile.jqmNavigator.pushView(new noaccessView().render());
             },
 
@@ -66,20 +66,20 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 						// _this.bindEvents();
 						_this.recreateSidemenu();
 						// window['sidemenuView'] = 
-						// new testView({collection:_this.collection});
+						new testView({collection:_this.collection});
 						alert(queryRoute);
 						var queryRoute = window.location.hash;
 						if (queryRoute=='') queryRoute = '#login';
-						alert(_this.routes['login']);
+						// alert(_this.routes['login']);
 						
-						_this.loginRouter();
+						// _this.loginRouter();
 						
 						// var pageObject = {};
 						// var viewName = _this.routes['login'];
 						// _this.newView = (new (eval(viewName))(pageObject)).render();
 						// $.mobile.jqmNavigator.pushView(_this.newView);
 						
-						// _this.gotoRoute(queryRoute);
+						_this.gotoRoute(queryRoute);
 					}
 				});
 			},
@@ -212,7 +212,6 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				}
 			},
 			
-			/*
 			filterCollection: function (filter,collection, attribute, value) {
 				if (filter=='>') {
 					var models = collection.select(function (model) {
@@ -245,8 +244,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					});
 				}
 				return new collection.constructor(models);
-			}			
-			*/
+			}	
 			
 						
         });
