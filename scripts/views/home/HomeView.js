@@ -6,8 +6,8 @@
  * Time: 9:53 AM
  */
 
-define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/home/HomeView.tpl'],
-    function ($, _, Backbone, NextView, HomeViewTemplate) {
+define(['jquery', 'underscore', 'Backbone', 'text!views/home/HomeView.html'],
+    function ($, _, Backbone, HomeViewTemplate) {
         var HomeView = Backbone.View.extend({
 
             events:{
@@ -17,10 +17,6 @@ define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/h
             render:function () {
                 this.$el.html(_.template(HomeViewTemplate));
                 return this;
-            },
-
-            btnNextView_clickHandler:function (event) {
-                $.mobile.jqmNavigator.pushView(new NextView);
             }
 
         });

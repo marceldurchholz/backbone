@@ -1,18 +1,18 @@
-define(['underscore', 'Backbone'],
-    function (_, Backbone) { 
+define(['jquery', 'underscore', 'Backbone'],
+    function ($, _, Backbone) { 
 
         var DynamicView = Backbone.View.extend({
 
 			events:{
-                'click a':global_a_clickHandler,
-                'click button':global_button_clickHandler,
+                // 'click a':global_a_clickHandler,
+                // 'click button':global_button_clickHandler,
             },
 			initialize:function() {
-				var _this = this;
+				// var _this = this;
 				$(this.el).undelegate('a', 'click');
 			},
 			putTemplateContent: function() {
-				var _this = this;
+				// var _this = this;
 				var output = _.template(_this.options.dynContent,{
 					page_vars: _this.options
 				}, {variable:'page_vars'});
@@ -20,7 +20,7 @@ define(['underscore', 'Backbone'],
 				
 			},
             render:function () {
-				var _this = this;
+				// var _this = this;
 				/*
 				var page_vars = _this.options;
 				_this.options.dynContent = _this.options.model.get('dynContent');
