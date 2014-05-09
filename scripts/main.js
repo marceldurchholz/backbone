@@ -29,7 +29,7 @@ require.config({
 		myfunctions:'libs/jquery.mobile/myfunctions',
 		// sidr:'libs/jquery.mobile/sidr/sidr',
 		// preventLinks:'libs/jquery.mobile/preventLinks/preventLinks',
-		deployd: "http://dominik-lohmann.de:5000/dpd"
+		// deployd: "http://dominik-lohmann.de:5000/dpd"
     },
     shim:{
         Backbone:{
@@ -45,7 +45,7 @@ require.config({
     }
 });
 
-define(['domReady', 'routers/MobileRouter', 'jqm', 'deployd'],
+define(['domReady', 'routers/MobileRouter', 'jqm'],
     function (domReady, MobileRouter) {
 
         // domReady is RequireJS plugin that triggers when DOM is ready
@@ -78,7 +78,7 @@ define(['domReady', 'routers/MobileRouter', 'jqm', 'deployd'],
 				/* new integrated router */
 				// new MobileRouter();
 				
-				alert('loading router');
+				// alert('loading router');
 				// window.myrouter = new MobileRouter();
 
 

@@ -24,11 +24,13 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 				_this.ghostView = new Object();
 				// console.log(_this.ghostView);
 				_this.initRouter();
+				/*
 				Backbone.history.start({
 					// silent:true,
 					pushState: false,
 					hashChange: false
 				});
+				*/
 			},
 
             routes: {

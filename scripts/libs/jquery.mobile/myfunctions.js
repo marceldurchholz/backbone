@@ -2677,7 +2677,7 @@ try {
 		onHashChange(e);
 	});
 	function onHashChange(e) {
-		console.log('ATTENTION !!!! hashchanged to: '+window.location.hash);
+		alert('ATTENTION !!!! hashchanged to: '+window.location.hash);
 		// window.myrouter.gotoRoute(window.location.hash);
 		window.myrouter.initRouter();
 		/*
