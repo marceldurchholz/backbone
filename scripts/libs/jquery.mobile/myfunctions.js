@@ -2669,7 +2669,7 @@ try {
 		});
 		$(document).off( "pagebeforecreate" ).on( "pagebeforecreate", function( event ) {
 			$.mobile.defaultPageTransition = 'slidefade';
-			handleGhostViews();
+			// handleGhostViews();
 		});
 		$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {
 		});
@@ -2677,8 +2677,8 @@ try {
 		});
 		$(document).off( "pagechange" ).on( "pagechange", function( event ) {
 			console.log("pagechange");
-			$( "#panel_left" ).panel().panel( "close" );
-			$( "#panel_right" ).panel().panel( "close" );
+			// $( "#panel_left" ).panel().panel( "close" );
+			// $( "#panel_right" ).panel().panel( "close" );
 			// $( "#panel_left" ).panel().panel("close"); // .panel( "open" ).panel( "close" );
 			// $( "#panel_right" ).panel().panel("close"); // .panel( "open" ).panel( "close" );
 			// $( "#panel_left" ).panel( "close" );

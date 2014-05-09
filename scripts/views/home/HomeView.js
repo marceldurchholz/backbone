@@ -4,8 +4,8 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/home/HomeView.html'],
 
 			template: _.template(HomeViewTemplate),
 			events:{
-                'click a':global_a_clickHandler,
-                'click button':global_button_clickHandler,
+                // 'click a':global_a_clickHandler,
+                // 'click button':global_button_clickHandler,
             },
 
 			initialize:function() {

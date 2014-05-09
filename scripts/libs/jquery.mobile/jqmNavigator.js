@@ -1,5 +1,3 @@
-// alert('loading jqmNavigator.js');
-
 //////////////////////////////////////////////////////////////////////////////////////
 //
 //	Copyright 2012 Piotr Walczyszyn (http://outof.me | @pwalczyszyn)
@@ -26,7 +24,7 @@
     }
 }(this, function ($) {
 
-		$(document).bind("mobileinit", function () {
+    $(document).bind("mobileinit", function () {
 
         // We want to handle link clicks from Backbone
         $.mobile.linkBindingEnabled = false;

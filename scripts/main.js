@@ -31,20 +31,19 @@ require.config({
 		myfunctions:'libs/jquery.mobile/myfunctions',
 		// sidr:'libs/jquery.mobile/sidr/sidr',
 		// preventLinks:'libs/jquery.mobile/preventLinks/preventLinks',
-		deployd: "http://dominik-lohmann.de:5000/dpd",
+		deployd: "http://dominik-lohmann.de:5000/dpd"
 
     },
     shim:{
         Backbone:{
-            deps:['underscore', 'jquery','myfunctions','deployd'],
+            deps:['underscore', 'jquery','myfunctions'],
             exports:'Backbone'
         },
         underscore:{
             exports:'_'
         },
         jqm:{
-            deps:['jquery', 'jqmNavigator'],
-			exports: "$.mobile.jqmNavigator"
+            deps:['jquery', 'jqmNavigator', 'deployd']
         }
     }
 });
