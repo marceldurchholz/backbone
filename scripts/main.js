@@ -14,23 +14,26 @@ require.config({
         Backbone:'libs/backbone/backbone',
         
 		// jquery:'libs/jquery/jquery-1.8.2',
-		// jqm:'libs/jquery.mobile/jquery.mobile-1.2.0',
+		jquery:'libs/jquery/jquery-1.11.1',
+		jquerymigrate:'libs/jquery/jquery-migrate-1.2.1',
+		// jquery:'libs/jquery/jquery-2.0.3',
         
-		jquery:'libs/jquery/jquery-2.0.3',
+		// jqm:'libs/jquery.mobile/jquery.mobile-1.2.0',
+		// jqm:'libs/jquery.mobile/jquery.mobile-1.3.2',
         jqm:'libs/jquery.mobile/jquery.mobile-1.4.2',
         
 		jqmNavigator:'libs/jquery.mobile/jqmNavigator',
 		// fastclick:'libs/jquery.mobile/fastclick',
 		// transit:'libs/jquery.mobile/transit',
 		// touchwipe:'libs/jquery.mobile/touchwipe/touchwipe',
-		// myfunctions:'libs/jquery.mobile/myfunctions',
+		myfunctions:'libs/jquery.mobile/myfunctions',
 		// sidr:'libs/jquery.mobile/sidr/sidr',
 		// preventLinks:'libs/jquery.mobile/preventLinks/preventLinks',
 		// deployd: "http://dominik-lohmann.de:5000/dpd"
     },
     shim:{
         Backbone:{
-            deps:['underscore', 'jquery'],
+            deps:['underscore', 'jquery','myfunctions'],
             exports:'Backbone'
         },
         underscore:{
@@ -38,12 +41,12 @@ require.config({
         },
         jqm:{
             deps:['jquery', 'jqmNavigator']
-        }
+        },
     }
 });
 
-require(['domReady', 'views/home/HomeView', 'jqm'],
-    function (domReady, HomeView) {
+require(['domReady', 'views/login/LoginView', 'jqm'],
+    function (domReady, LoginView) {
 
         // domReady is RequireJS plugin that triggers when DOM is ready
         domReady(function () {
@@ -82,7 +85,8 @@ require(['domReady', 'views/home/HomeView', 'jqm'],
 					hashChange: false
 				});
 				*/
-				$.mobile.jqmNavigator.pushView(new HomeView());
+				$.mobile.jqmNavigator.pushView(new LoginView());
+
             }
 
             if (navigator.userAgent.match(/(iPad|iPhone|Android)/)) {

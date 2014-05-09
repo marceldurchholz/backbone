@@ -1,8 +1,8 @@
 // alert('mobile router');
 
-define(['domReady', 'views/noaccess/noaccessView', 'jqm'],
+define(['jquery', 'domReady', 'views/login/loginView', 'jqm', 'myfunctions'],
         
-    function(domReady, loginView) {
+    function($, domReady, loginView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
@@ -27,8 +27,9 @@ define(['domReady', 'views/noaccess/noaccessView', 'jqm'],
 			},
             loginRouter: function() {
 				// this.gotoRoute('#login');
-				alert('doing loginrouter');
-				$.mobile.jqmNavigator.pushView(new loginView());
+				// alert('doing loginrouter');
+				$.mobile.jqmNavigator.pushView(new loginView().page());
+				
             }
 						
         });

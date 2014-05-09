@@ -2,7 +2,6 @@
 
 try {
 
-
 	function global_a_clickHandler(event) {
 		// console.log('global_a_clickHandler');
 		window.myrouter.checkLink(event);
@@ -49,19 +48,13 @@ try {
 	}
 
 } catch (e) {
-	console.log('error in js script');
+	alert('error in js script');
+	console.log(e);
 }
 
 
 
-
-
-
-
-
-
 try {
-} catch(e) {
 	var root = this; // used by pdfbrowser and childbrowser
 	var rootURL = "";
 	var dpd_server = "http://dominik-lohmann.de:5000/";
@@ -120,7 +113,6 @@ try {
 		}
 	};
 
-	$('#body').css("display","block");
 	var currentHash = window.location.hash;
 	var imagePath = '';
 	var menuStatus = false;
@@ -2705,7 +2697,41 @@ try {
 		}
 		*/
 	}
+	
+	$(document).off( "pageinit" ).on( "pageinit", function( event ) {
+		$('#container').find('.ui-page').last().each(function() {
+			// $(this).css("min-height",$(window).height()+"px");
+			// $.mobile.activePage.css("min-height")
+		});
+		// alert($.mobile.activePage.css("min-height"));
+		/*
+			.ui-page{
+				min-height: 502px !important;
+			}
+		*/
+	});
 
+	$(document).off( "pagebeforeshow" ).on( "pagebeforeshow", function( event ) {
+		// alert('pagebeforeshow');
+		// alert($('#ui-header').height());
+		// alert($.mobile.activePage.css("min-height"));
+		$.mobile.activePage.css("min-height" ,  ($(window).height()-46)+"px" );
+		// alert($.mobile.activePage.find('#ui-header').height()); // .css("height" ,  $(window).height()+"px" );
+		/*
+		$('#container').find('.ui-page').last().each(function() {
+			$(this).css("min-height",$(window).height()+"px");
+			// $.mobile.activePage.css("min-height")
+		});
+		*/
+	});
+
+	$(document).off( "pagebeforecreate" ).on( "pagebeforecreate", function( event ) {
+		// $.mobile.defaultPageTransition = 'slidefade';
+		// handleGhostViews();
+		// alert($.mobile.activePage.css("min-height"));
+		// alert($.mobile.activePage.find('.ui-header').css("min-height"));
+	});
+	
 	$(document).ready(function() {
 
 		console.log('document ready');
@@ -2718,17 +2744,11 @@ try {
 			$.mobile.loading('hide');
 		});
 		$(document).off( "pagehide" ).on( "pagehide", function( event ) {	
-		});
-		$(document).off( "pagebeforecreate" ).on( "pagebeforecreate", function( event ) {
-			$.mobile.defaultPageTransition = 'slidefade';
-			handleGhostViews();
-		});
+		});0
 		$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {
 		});
-		$(document).off( "pageinit" ).on( "pageinit", function( event ) {
-		});
 		$(document).off( "pagechange" ).on( "pagechange", function( event ) {
-			console.log("pagechange");
+			alert("pagechange");
 			$( "#panel_left" ).panel().panel( "close" );
 			$( "#panel_right" ).panel().panel( "close" );
 			// $( "#panel_left" ).panel().panel("close"); // .panel( "open" ).panel( "close" );
@@ -3702,5 +3722,8 @@ try {
 			// console.log(value);
 		});
 	};
+} catch(e) {
 	alert('error 2 in js script');
+	console.log(e);
 }
+
