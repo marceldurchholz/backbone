@@ -45,8 +45,8 @@ require.config({
     }
 });
 
-require(['domReady', 'routers/MobileRouter', 'views/login/LoginView', 'jqm'],
-    function (domReady, MobileRouter, LoginView) {
+require(['domReady', 'routers/MobileRouter', 'jqm'],
+    function (domReady, MobileRouter) {
 
         // domReady is RequireJS plugin that triggers when DOM is ready
         domReady(function () {
@@ -70,7 +70,7 @@ require(['domReady', 'routers/MobileRouter', 'views/login/LoginView', 'jqm'],
                 $.mobile.pageContainer = $('#container');
 
                 // Setting default transition to slide
-                $.mobile.defaultPageTransition = 'slidefade';
+                $.mobile.defaultPageTransition = 'slide';
 
                 // Pushing MainView
                 // $.mobile.jqmNavigator.pushView(new HomeView());
@@ -78,7 +78,7 @@ require(['domReady', 'routers/MobileRouter', 'views/login/LoginView', 'jqm'],
 				/* new integrated router */
 				// new MobileRouter();
 
-				window.myrouter = new MobileRouter();
+				new MobileRouter();
 
 				// $.mobile.jqmNavigator.pushView(new LoginView);
 

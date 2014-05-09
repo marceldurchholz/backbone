@@ -1,6 +1,6 @@
 // alert('mobile router');
 
-define(['domReady', 'views/login/loginView', 'jqm'],
+define(['domReady', 'views/login/LoginView', 'jqm'],
         
     function(domReady, LoginView) {
 
@@ -32,8 +32,8 @@ define(['domReady', 'views/login/loginView', 'jqm'],
 			},
             loginRouter: function() {
 				// this.gotoRoute('#login');
-				alert('doing loginrouter');
-				$.mobile.jqmNavigator.pushView(new LoginView);
+				// alert('doing loginrouter');
+				$.mobile.jqmNavigator.pushView(new LoginView());
 				
             },
 			
