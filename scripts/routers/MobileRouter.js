@@ -1,8 +1,8 @@
 alert('mobile router');
 
-define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/home/HomeView', 'views/dynamic/DynamicView', 'views/login/LoginView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/home/HomeView', 'views/template/TemplateView', 'views/login/LoginView', 'jqm'],
         
-    function(domReady, sidemenusCollection, testView, homeView, dynamicView, loginView) {
+    function(domReady, sidemenusCollection, testView, homeView, templateView, loginView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
