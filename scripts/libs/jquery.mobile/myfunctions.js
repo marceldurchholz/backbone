@@ -1,6 +1,67 @@
 // alert('functions');
 
 try {
+
+
+	function global_a_clickHandler(event) {
+		// console.log('global_a_clickHandler');
+		window.myrouter.checkLink(event);
+	}
+	function global_button_clickHandler(event) {
+		window.myrouter.checkLink(event);
+	}
+	window.system = {
+		app: new Object(),
+		master: window.master,
+		kdnr: window.kdnr,
+		owner: new Object(),
+		appoptions: new Array(),
+		me: new Object(),
+		aoid: window.aoid,
+		uid: window.uid,
+		showtutorial: false,
+		contentHelper: 0,
+		timestamp: 0,
+		modaltimeout: 0,
+		videolength: 0,
+		// this.routerSwitched(false);
+		toggleLoading: function(status) {
+			console.log(status);
+			if (status==true) showModal();
+			else {
+				hideModal();
+			}
+		},
+		redirectToUrl: function(targetUrl) {
+			var url = targetUrl;
+			// IE8 and lower fix
+			if (navigator.userAgent.match(/MSIE\s(?!9.0)/)) {
+				var referLink = document.createElement("a");
+				referLink.href = url;
+				document.body.appendChild(referLink);
+				referLink.click();
+			}
+			// All other browsers
+			else { 
+				window.location.replace(url); 
+			}
+		}
+	}
+
+} catch (e) {
+	console.log('error in js script');
+}
+
+
+
+
+
+
+
+
+
+try {
+} catch(e) {
 	var root = this; // used by pdfbrowser and childbrowser
 	var rootURL = "";
 	var dpd_server = "http://dominik-lohmann.de:5000/";
@@ -2495,15 +2556,6 @@ try {
 		}
 	};
 	*/
-
-	function global_a_clickHandler(event) {
-		// console.log('global_a_clickHandler');
-		window.myrouter.checkLink(event);
-	}
-	function global_button_clickHandler(event) {
-		window.myrouter.checkLink(event);
-	}
-	
 	function clearIntervals() {
 		if (window._thisViewCardStart) {
 			_thisViewCardStart.answerCountdownLoopStop();
@@ -2669,7 +2721,7 @@ try {
 		});
 		$(document).off( "pagebeforecreate" ).on( "pagebeforecreate", function( event ) {
 			$.mobile.defaultPageTransition = 'slidefade';
-			// handleGhostViews();
+			handleGhostViews();
 		});
 		$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {
 		});
@@ -2677,8 +2729,8 @@ try {
 		});
 		$(document).off( "pagechange" ).on( "pagechange", function( event ) {
 			console.log("pagechange");
-			// $( "#panel_left" ).panel().panel( "close" );
-			// $( "#panel_right" ).panel().panel( "close" );
+			$( "#panel_left" ).panel().panel( "close" );
+			$( "#panel_right" ).panel().panel( "close" );
 			// $( "#panel_left" ).panel().panel("close"); // .panel( "open" ).panel( "close" );
 			// $( "#panel_right" ).panel().panel("close"); // .panel( "open" ).panel( "close" );
 			// $( "#panel_left" ).panel( "close" );
@@ -3377,43 +3429,6 @@ try {
 		$.mobile.loading( 'hide' );
 	}
 
-	window.system = {
-		master: window.master,
-		kdnr: window.kdnr,
-		owner: new Object(),
-		appoptions: new Array(),
-		me: new Object(),
-		aoid: window.aoid,
-		uid: window.uid,
-		showtutorial: false,
-		contentHelper: 0,
-		timestamp: 0,
-		modaltimeout: 0,
-		videolength: 0,
-		// this.routerSwitched(false);
-		toggleLoading: function(status) {
-			console.log(status);
-			if (status==true) showModal();
-			else {
-				hideModal();
-			}
-		},
-		redirectToUrl: function(targetUrl) {
-			var url = targetUrl;
-			// IE8 and lower fix
-			if (navigator.userAgent.match(/MSIE\s(?!9.0)/)) {
-				var referLink = document.createElement("a");
-				referLink.href = url;
-				document.body.appendChild(referLink);
-				referLink.click();
-			}
-			// All other browsers
-			else { 
-				window.location.replace(url); 
-			}
-		}
-	}
-	
 	function getOwnerData() {
 		// get owner data and roles
 		$.ajax(window.dpd_server+'users/?kdnr='+window.system.kdnr,{
@@ -3687,7 +3702,5 @@ try {
 			// console.log(value);
 		});
 	};
-
-} catch (e) {
-	console.log('error in js script');
+	alert('error 2 in js script');
 }

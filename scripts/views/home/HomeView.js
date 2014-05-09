@@ -1,22 +1,26 @@
-define(['jquery', 'underscore', 'Backbone', 'text!views/home/HomeView.html'],
-    function ($, _, Backbone, HomeViewTemplate) {
+/**
+ * Created by Piotr Walczyszyn (outof.me | @pwalczyszyn)
+ *
+ * User: pwalczys
+ * Date: 2/16/12
+ * Time: 9:53 AM
+ */
+
+define(['jquery', 'underscore', 'Backbone', 'views/next/NextView', 'text!views/home/HomeView.tpl'],
+    function ($, _, Backbone, NextView, HomeViewTemplate) {
         var HomeView = Backbone.View.extend({
 
-			template: _.template(HomeViewTemplate),
-			events:{
-                // 'click a':global_a_clickHandler,
-                // 'click button':global_button_clickHandler,
+            events:{
+                'click #btnNextView':'btnNextView_clickHandler'
             },
 
-			initialize:function() {
-				$(this.el).undelegate('a', 'click');
-				// $(this.el).undelegate('button', 'click');
-			},
-			
             render:function () {
-				var _this = this;
-				this.$el.html(this.template(this.options));
-				return this;
+                this.$el.html(_.template(HomeViewTemplate));
+                return this;
+            },
+
+            btnNextView_clickHandler:function (event) {
+                $.mobile.jqmNavigator.pushView(new NextView);
             }
 
         });

@@ -8,48 +8,42 @@
 
 require.config({
     paths:{
-        // RequireJS plugin
         text:'libs/require/text',
-        // RequireJS plugin
         domReady:'libs/require/domReady',
-        // underscore library
         underscore:'libs/underscore/underscore',
-        // Backbone.js library
         Backbone:'libs/backbone/backbone',
-        // jQuery
-        // jquery:'libs/jquery/jquery-1.8.2',
-        jquery:'libs/jquery/jquery-2.0.3',
-        // jQuery Mobile framework
-        // jqm:'libs/jquery.mobile/jquery.mobile-1.2.0',
-        // jqm:'libs/jquery.mobile/jquery.mobile-1.3.2',
-		jqm:'libs/jquery.mobile/jquery.mobile-1.4.2',
-        // jQuery Mobile plugin for Backbone views navigation
-        jqmNavigator:'libs/jquery.mobile/jqmNavigator',
+        
+		// jquery:'libs/jquery/jquery-1.8.2',
+		// jqm:'libs/jquery.mobile/jquery.mobile-1.2.0',
+        
+		jquery:'libs/jquery/jquery-2.0.3',
+        jqm:'libs/jquery.mobile/jquery.mobile-1.4.2',
+        
+		jqmNavigator:'libs/jquery.mobile/jqmNavigator',
 		// fastclick:'libs/jquery.mobile/fastclick',
 		// transit:'libs/jquery.mobile/transit',
 		// touchwipe:'libs/jquery.mobile/touchwipe/touchwipe',
-		myfunctions:'libs/jquery.mobile/myfunctions',
+		// myfunctions:'libs/jquery.mobile/myfunctions',
 		// sidr:'libs/jquery.mobile/sidr/sidr',
 		// preventLinks:'libs/jquery.mobile/preventLinks/preventLinks',
-		deployd: "http://dominik-lohmann.de:5000/dpd"
-
+		// deployd: "http://dominik-lohmann.de:5000/dpd"
     },
     shim:{
         Backbone:{
-            deps:['underscore', 'jquery','myfunctions'],
+            deps:['underscore', 'jquery'],
             exports:'Backbone'
         },
         underscore:{
             exports:'_'
         },
         jqm:{
-            deps:['jquery', 'jqmNavigator', 'deployd']
+            deps:['jquery', 'jqmNavigator']
         }
     }
 });
 
-require(['domReady', 'routers/MobileRouter', 'jqm'],
-    function (domReady, MobileRouter) {
+require(['domReady', 'views/home/HomeView', 'jqm'],
+    function (domReady, HomeView) {
 
         // domReady is RequireJS plugin that triggers when DOM is ready
         domReady(function () {
@@ -80,14 +74,15 @@ require(['domReady', 'routers/MobileRouter', 'jqm'],
 				
 				/* new integrated router */
 				// new MobileRouter();
+				/*
 				window.myrouter = new MobileRouter();
-						Backbone.history.start({
-							// silent:true,
-							pushState: false,
-							hashChange: false
-						});
-
-
+				Backbone.history.start({
+					// silent:true,
+					pushState: false,
+					hashChange: false
+				});
+				*/
+				$.mobile.jqmNavigator.pushView(new HomeView());
             }
 
             if (navigator.userAgent.match(/(iPad|iPhone|Android)/)) {
