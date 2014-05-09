@@ -57,29 +57,6 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 			initialize: function() {
 				var _this = this;
 
-				_this.ghostView = new Object()
-				
-				console.log('initializing MobileRouter');
-				// console.log(_this.ghostView);
-				
-				this.collection.fetch({ 
-					silent:true,
-					success: function(response){
-						_this.collection = response;
-						_this.bindEvents();
-						// _this.recreateSidemenu();
-						// window['sidemenuView'] = new testView({collection:_this.collection});
-						var queryRoute = window.location.hash;
-						if (queryRoute=='') queryRoute = '#login';
-						Backbone.history.start({
-							// silent:true,
-							pushState: false,
-							hashChange: false
-						});
-						// _this.gotoRoute(queryRoute);
-					}
-				});
-
 			},
 
             routes: {
@@ -96,7 +73,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
             loginRouter: function() {
 				// this.gotoRoute('#login');
 				alert('doing loginrouter');
-				$.mobile.jqmNavigator.pushView(new loginView().render());
+				$.mobile.jqmNavigator.pushView(new loginView());
             },
 			recreateSidemenu: function(e,a) {
 				// alert('recreateSidemenu');
@@ -112,15 +89,6 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				});
 			},
 			
-			bindEvents: function() {
-				var _this = this;
-				console.log('binding events');
-				// this.collection.on("add", this.recreateSidemenu, this);
-				// this.collection.on("remove", this.recreateSidemenu, this);
-				this.collection.on("reset", _this.recreateSidemenu, this);
-				// $(window).on("beforeunload", _this.beforeUnload);
-				// this.recreateSidemenu();
-			},
 
 			checkLink: function(e) {
 				console.log('checkLink');

@@ -81,7 +81,13 @@ require(['domReady', 'routers/MobileRouter', 'jqm'],
 				/* new integrated router */
 				// new MobileRouter();
 				window.myrouter = new MobileRouter();
-				
+						Backbone.history.start({
+							// silent:true,
+							pushState: false,
+							hashChange: false
+						});
+
+
             }
 
             if (navigator.userAgent.match(/(iPad|iPhone|Android)/)) {
