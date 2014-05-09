@@ -33,14 +33,14 @@ require.config({
     },
     shim:{
         Backbone:{
-            deps:['underscore', 'jquery','myfunctions','deployd'],
+            deps:['underscore', 'jquery','myfunctions'],
             exports:'Backbone'
         },
         underscore:{
             exports:'_'
         },
         jqm:{
-            deps:['jquery', 'jqmNavigator']
+            deps:['jquery', 'jqmNavigator', 'deployd']
         },
     }
 });
