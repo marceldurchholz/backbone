@@ -1,8 +1,8 @@
-// alert('mobile router');
+alert('mobile router');
 
-define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 'views/noaccess/NoaccessView', 'views/dynamic/DynamicView', 'views/test/TestView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 'jqm'],
         
-    function(domReady, sidemenusCollection, loginView, noaccessView, dynamicView, testView) {
+    function(domReady, sidemenusCollection, testView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
@@ -20,18 +20,16 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 			
 			initialize: function() {
 				var _this = this;
-				window.myrouter = _this;
+				// window.myrouter = _this;
 				_this.ghostView = new Object();
 				// console.log(_this.ghostView);
 				alert('initializing...');
-				_this.initRouter();
-				/*
+				// _this.initRouter();
 				Backbone.history.start({
 					// silent:true,
 					pushState: false,
 					hashChange: false
 				});
-				*/
 			},
 
             routes: {
@@ -41,6 +39,19 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 			nothingRouter: function() {
 				alert('silence is golden...');
 			},
+            loginRouter: function() {
+				alert('doing loginRouter');
+				$.mobile.jqmNavigator.pushView(new loginView());
+            },
+			/*
+			dynamicRouter: function() {
+				alert('doing dynamicRouter');
+				$.mobile.jqmNavigator.pushView(new dynamicView().render());
+			},
+            noaccessRouter: function() {
+				alert('doing noaccessRouter');
+				$.mobile.jqmNavigator.pushView(new noaccessView().render());
+            },
 			initRouter: function() {
 				_this = this;
 				alert('innniting...');
@@ -59,19 +70,6 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 					}
 				});
 			},
-            loginRouter: function() {
-				alert('doing loginRouter');
-				$.mobile.jqmNavigator.pushView(new loginView());
-            },
-			dynamicRouter: function() {
-				alert('doing dynamicRouter');
-				$.mobile.jqmNavigator.pushView(new dynamicView().render());
-			},
-            noaccessRouter: function() {
-				alert('doing noaccessRouter');
-				$.mobile.jqmNavigator.pushView(new noaccessView().render());
-            },
-			
 			recreateSidemenu: function(e,a) {
 				alert('recreateSidemenu');
 				var _this = this;
@@ -86,7 +84,6 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 					_this.routes[userfriendly] = userfriendly+'Router';
 				});
 			},
-			
 			bindEvents: function() {
 				var _this = this;
 				alert('binding events');
@@ -234,6 +231,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/login/LoginView', 
 				}
 				return new collection.constructor(models);
 			}			
+			*/
 			
 						
         });
