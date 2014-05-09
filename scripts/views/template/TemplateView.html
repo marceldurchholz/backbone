@@ -1,8 +1,12 @@
 <div data-role="header" data-position="fixed">
-    <h1>Template View</h1>
+    <a id="btnBack" href="#" data-icon="back" data-iconpos="left">Zurück</a>
+    <h1><%= page_vars.header_vars.title %></h1>
+    <a data-ajax="true" href="#panel_right" data-icon="gear" data-iconpos="notext">Prefs</a>
 </div>
 
 <div data-role="content">
-    <p>Click the button below no navigate to next view</p>
-    <button id="btnNextView">Next</button>
+	
+	<!-- dynamicView.html -->
+	<%= page_vars.dynContent %>
+	
 </div>

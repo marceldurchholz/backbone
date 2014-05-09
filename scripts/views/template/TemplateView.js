@@ -38,7 +38,7 @@ define(['jquery', 'underscore', 'Backbone'],
 				if (_this.options.templateUrl && _this.options.templateUrl!='') fileExists = true;
 				else fileExists = false;
 				if (contentExists==false && fileExists==false) {
-					_this.options.templateUrl = 'text!views/dynamic/DynamicView.html';
+					_this.options.templateUrl = 'text!views/template/TemplateView.html';
 					fileExists=true;
 				}
 				
