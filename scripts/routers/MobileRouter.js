@@ -1,8 +1,8 @@
 alert('mobile router');
 
-define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/login/LoginView', 'jqm'],
         
-    function(domReady, sidemenusCollection, testView) {
+    function(domReady, sidemenusCollection, testView, loginView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
@@ -70,6 +70,15 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'j
 						alert(queryRoute);
 						var queryRoute = window.location.hash;
 						if (queryRoute=='') queryRoute = '#login';
+						alert(_this.routes['login']);
+						
+						_this.loginRouter();
+						
+						// var pageObject = {};
+						// var viewName = _this.routes['login'];
+						// _this.newView = (new (eval(viewName))(pageObject)).render();
+						// $.mobile.jqmNavigator.pushView(_this.newView);
+						
 						// _this.gotoRoute(queryRoute);
 					}
 				});
