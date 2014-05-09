@@ -1,7 +1,7 @@
 define(['underscore', 'Backbone'],
     function (_, Backbone) { 
 
-        var DynamicViewVar = Backbone.View.extend({
+        var DynamicView = Backbone.View.extend({
 
 			events:{
                 'click a':global_a_clickHandler,
@@ -58,5 +58,5 @@ define(['underscore', 'Backbone'],
 
         });
 
-        return DynamicViewVar;
+        return DynamicView;
     });

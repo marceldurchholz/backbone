@@ -108,7 +108,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				// $(window).on("beforeunload", _this.beforeUnload);
 				// this.recreateSidemenu();
 			},
-			*/
+			
 			checkLink: function(e) {
 				console.log('checkLink');
 				var _this = this;
@@ -212,7 +212,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				}
 			},
 			
-			/*
+			
 			filterCollection: function (filter,collection, attribute, value) {
 				if (filter=='>') {
 					var models = collection.select(function (model) {
