@@ -29,11 +29,11 @@ require.config({
 		myfunctions:'libs/jquery.mobile/myfunctions',
 		// sidr:'libs/jquery.mobile/sidr/sidr',
 		// preventLinks:'libs/jquery.mobile/preventLinks/preventLinks',
-		// deployd: "http://dominik-lohmann.de:5000/dpd"
+		deployd: "http://dominik-lohmann.de:5000/dpd"
     },
     shim:{
         Backbone:{
-            deps:['underscore', 'jquery', 'myfunctions'],
+            deps:['underscore', 'jquery', 'deployd', 'myfunctions'],
             exports:'Backbone'
         },
         underscore:{

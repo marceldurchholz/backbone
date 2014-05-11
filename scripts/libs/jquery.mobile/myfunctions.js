@@ -2641,12 +2641,14 @@ try {
 	
 	function handleGhostViews() {
 		if (window.myrouter.ghostView) {
+			console.log('ghostView');
 			console.log(window.myrouter.ghostView);
 			if (window.myrouter.ghostView.cid) {
 				window.myrouter.ghostView.unbind();
 				// window.myrouter.ghostView.remove();
 			}
 			window.myrouter.ghostView = window.myrouter.newView;
+			console.log('newView:');
 			console.log(window.myrouter.newView);
 		}
 	}
@@ -2698,6 +2700,7 @@ try {
 	}
 	
 	$(document).off( "pageinit" ).on( "pageinit", function( event ) {
+		// alert('pageinit');
 		$('#container').find('.ui-page').last().each(function() {
 			// $(this).css("min-height",$(window).height()+"px");
 			// $.mobile.activePage.css("min-height")
@@ -2745,9 +2748,14 @@ try {
 		$(document).off( "pagehide" ).on( "pagehide", function( event ) {	
 		});0
 		$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {
+			setTimeout(function() {
+				$('#container').trigger('create');
+			},1);
+			// alert('pagecreate');			
 		});
 		$(document).off( "pagechange" ).on( "pagechange", function( event ) {
 			// alert("pagechange");
+			$.mobile.defaultPageTransition = 'slidefade';
 			$( "#panel_left" ).panel().panel( "close" );
 			$( "#panel_right" ).panel().panel( "close" );
 			// $( "#panel_left" ).panel().panel("close"); // .panel( "open" ).panel( "close" );

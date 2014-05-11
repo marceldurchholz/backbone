@@ -6,10 +6,14 @@
  * Time: 9:53 AM
  */
 
-define(['jquery', 'underscore', 'Backbone'],
-    function ($, _, Backbone) {
+define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.html', 'text!views/dynamic/blankView.html', 'text!views/home/HomeView.html'],
+    function ($, _, Backbone, standardTemplate, blanktemplate, hometemplate) {
         var TemplateView = Backbone.View.extend({
 
+			template: standardTemplate,
+			blanktemplate: blanktemplate,
+			hometemplate: hometemplate,
+			
 			events:{
                 'click a':global_a_clickHandler,
                 'click button':global_button_clickHandler,
@@ -20,26 +24,55 @@ define(['jquery', 'underscore', 'Backbone'],
 			},
 			putTemplateContent: function() {
 				var output = _.template(_this.options.dynContent,{
-					page_vars: _this.options
-				}, {variable:'page_vars'});
+					pageObject: _this.options
+				}, {variable:'pageObject'});
 				$(this.el).html(output);
 				
 			},
             render:function () {
-				var page_vars = _this.options;
-                // this.$el.html(_.template(TemplateViewTemplate));
-                // return this;
+				_this = this;
+				var pageObject = _this.options;
 
 				_this.options.dynContent = _this.options.model.get('dynContent');
 				_this.options.templateUrl = _this.options.model.get('templateUrl');
 				
-				if (_this.options.dynContent && _this.options.dynContent!='') { }
-				else _this.options.dynContent = '';
-				if (_this.options.templateUrl || _this.options.templateUrl=='') {
-					_this.options.templateUrl = 'text!views/template/TemplateView.html';
-					fileExists=false;
+				// alert(_this.options.templateUrl);
+				if (_this.options.templateUrl && _this.options.templateUrl!='') {
+					fileExists = true;
+				}
+				else {
+					fileExists = false;
 				}
 				
+				if (fileExists==true) {
+					// alert('true');
+					require([_this.options.templateUrl], function(templateContent) {
+						// var _mytemplateContent = _.template('text!views/home/HomeView.html');
+						// alert(homeTemplateContent);
+						// alert(templateContent);
+						// _this.$el.html(_.template(homeTemplateContent,{page_vars:_this.options}));
+						var bla = _.template(templateContent,{page_vars:_this.options});
+						_this.$el.html(_.template(bla,{page_vars:_this.options}));
+					});
+					// alert(mytemplate);
+					// var bla = _.template(hometemplate,{page_vars:_this.options});
+					// this.$el.html(_.template(bla,{page_vars:_this.options}));
+					// alert(_this.options.templateUrl);
+				}
+				else {
+					this.$el.html(_.template(standardTemplate,{page_vars:_this.options}));
+				}
+				this.trigger("create");
+				return this;
+				
+				if (_this.options.dynContent && _this.options.dynContent!='') { }
+				else _this.options.dynContent = '';
+				if (!_this.options.templateUrl || _this.options.templateUrl=='') {
+					_this.options.templateUrl = 'text!views/template/TemplateView.html';
+					fileExists = false;
+				}
+				else fileExists = true;
+
 				// if (_this.options.templateUrl)
 				/*
 				if (contentExists==false && fileExists==false) {
@@ -47,27 +80,32 @@ define(['jquery', 'underscore', 'Backbone'],
 					fileExists=true;
 				}
 				*/
+				// console.log(fileExists);
+				
+				require([_this.options.templateUrl], function(wrapperContent) {
+					_this.options.wrapperContent = wrapperContent;
+					alert(wrapperContent);
+					alert(_this.options.wrapperContent);
+					// var page_vars = _this.options
+					
+					alert(_.template(_this.options.wrapperContent,{pageObject: _this.options}, {variable:'pageObject'}));
+				});
+				return(false);
+				
+				_this = this;
 				if (fileExists==false) {
-					var output = _.template(_this.options.dynContent,{
-						page_vars: _this.options
-					}, {variable:'page_vars'});
-					$(this.el).html(output);
-				}
-				else {
+					alert(_this.options.dynContent);
 					require([_this.options.templateUrl], function(wrapperContent) {
-						var _wrapperContent = wrapperContent;
-						var dynContent = _.template(_wrapperContent,{
-							page_vars: _this.options,
-							myvar: 'foo'
-						});
-						var finalContent = _.template(dynContent,{
-							page_vars: _this.options,
-							myvar: 'foo'
-						});
-						$(_this.el).html(finalContent);
+						var output = _.template(_this.options.dynContent,{
+							pageObject: _this.options
+						}, {variable:'pageObject'});
+						$(_this.el).html(output);
+						return _this;
 					});
 				}
-				return _this;
+				
+				
+				
 
 			}
 

@@ -20,6 +20,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				var _this = this;
 				window.myrouter = _this;
 				_this.ghostView = new Object();
+				_this.bindEvents();
 				// console.log(_this.ghostView);
 				// console('initializing...');
 				// _this.initRouter();
@@ -50,7 +51,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				// $.mobile.jqmNavigator.pushView(new templateView().render());
 			},
             noaccessRouter: function() {
-				// console('doing noaccessRouter');
+				alert('doing noaccessRouter');
 				// $.mobile.jqmNavigator.pushView(new noaccessView().render());
             },
 
@@ -61,7 +62,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					success: function(response){
 						_this.collection = response;
 						// _this.bindEvents();
-						_this.recreateSidemenu();
+						// _this.recreateSidemenu();
 						new testView({collection:_this.collection});
 						// alert(queryRoute);
 						var queryRoute = window.location.hash;
@@ -71,7 +72,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				});
 			},
 			recreateSidemenu: function(e,a) {
-				// alert('recreateSidemenu');
+				console.log('recreateSidemenu');
 				var _this = this;
 				_this.routes = [];
 				this.collection.each(function(row) {
@@ -84,17 +85,15 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				_this.routes['*path'] = 'initRouter';
 				
 			},
-			/*
 			bindEvents: function() {
 				var _this = this;
-				alert('binding events');
+				// alert('binding events');
 				// this.collection.on("add", this.recreateSidemenu, this);
 				// this.collection.on("remove", this.recreateSidemenu, this);
 				this.collection.on("reset", _this.recreateSidemenu, this);
 				// $(window).on("beforeunload", _this.beforeUnload);
 				// this.recreateSidemenu();
 			},
-			*/
 			checkLink: function(e) {
 				console.log('checkLink');
 				var _this = this;
@@ -125,6 +124,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				_this.collection.fetch({ 
 					success: function(response){
 					_this.collection = response;
+					console.log(_this.collection);
 					if (route!='' && route!='#') {
 						var router = _this.routes[route.substring(1)];
 						if (router!=undefined) {
@@ -135,6 +135,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 									return (model.get('urloffline')).toLowerCase() == checkroute;
 								}
 							);
+							console.log(model);
 							if (!model) {
 								console.log('requested navmobile NOT existing');
 								_this.noaccessRouter();
@@ -177,15 +178,18 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					console.log('KEIN FEHLER');
 					console.log(viewName);
 					console.log(pageObject);
-					_this.newView = (new (eval(viewName))(pageObject)).render();
+					// return(false);
+					_this.newView = (new (eval(viewName))(pageObject)).render(); // wothout render() ??????
+					$.mobile.jqmNavigator.pushView(_this.newView);
 					// console.log(_this.newView);
 				} catch (e) {
 					console.log('folgend wird hier ein fehler gemeldet der mit absicht durch ein try() debugged wird');
 					console.log(e);
 					console.log('switching to templateView (error on function call for '+viewName+')');
-					_this.newView = (new templateView(pageObject)).render();
-				} finally {
+					_this.newView = (new templateView(pageObject));
 					$.mobile.jqmNavigator.pushView(_this.newView);
+				} finally {
+					// $.mobile.jqmNavigator.pushView(_this.newView);
 					// $.mobile.jqmNavigator.pushView((new (eval(viewName))(pageObject)));
 					// console.log(_this.ghostView);
 						
