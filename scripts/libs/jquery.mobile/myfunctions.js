@@ -2777,7 +2777,7 @@ try {
 			$.mobile.defaultPageTransition = 'slidefade';
 			$( "#panel_left" ).panel().panel( "close" );
 			$( "#panel_right" ).panel().panel( "close" );
-			$.mobile.pageContainer.trigger("create");
+			// $.mobile.pageContainer.trigger("create");
 			// $( "#panel_left" ).panel().panel("close"); // .panel( "open" ).panel( "close" );
 			// $( "#panel_right" ).panel().panel("close"); // .panel( "open" ).panel( "close" );
 			// $( "#panel_left" ).panel( "close" );

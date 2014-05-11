@@ -1,16 +1,106 @@
 <div data-role="header" data-position="fixed">
     <a data-ajax="true" href="#panel_left" data-icon="grid" data-iconpos="left">Menü</a>
-    <h1><%= page_vars.header_vars.title %></h1>
+    <h1>Willkommen<% if(parseInt(window.me.username)>0) { } else { %><br><%= window.me.username %> <% } %><!--<%= page_vars.header_vars.title %>--></h1>
     <a data-ajax="true" href="#panel_right" data-icon="gear" data-iconpos="notext">Prefs</a>
 </div>
 
 <div data-role="content">
+	<!--
 	<p>
 		me.id: <%= me.id %><br>
 	</p>
 
-	<!--
 	<a id="sendLogoutBtn" class="sendLogoutBtn" data-role="button"><span>Abmelden</span></a>
 	-->
+	
+	
+		<ul data-role="listview" data-theme="a" data-icon="false">
+			<li>
+				<a href="#myprofile" style="padding-top:0px;padding-bottom:0px;">
+					<div style="float:left;position:relative;top:0px;left:0px;"><img style="margin:7px;height:60px;width:60px;" src="<% if (window.me.pictureurl && window.me.pictureurl!="") { %><%= window.me.pictureurl %><% } else { %>images/avatar.jpg<% } %>" /></div>
+					<h5 style="padding-top:2px;padding-bottom:4px;margin-left:80px;">Mein Profil</h5>
+					<p style="margin-left:80px;">Persönliche Daten, Beschreibung und Fachbereiche</p>
+					<!-- <p class="ui-li-aside"><strong>6:24</strong>PM</p> -->
+				</a>
+			</li>
+			
+			<% if (checkAppConfig("wall")==true) { %>
+				<li>
+					<a href="#learningstreamview" style="padding-top:0px;padding-bottom:0px;">
+						<div style="float:left;position:relative;top:0px;left:0px;"><img style="margin:7px;height:60px;width:60px;" src="images/icon-cloud-storage-001-60x60.png" /></div>
+						<h5 style="padding-top:2px;padding-bottom:4px;margin-left:80px;">Pinnwand</h5>
+						<p style="margin-left:80px;">Ausgewählte Inhalte (chronologisch)</p>
+						<!-- <p class="ui-li-aside"><strong>6:24</strong>PM</p> -->
+					</a>
+				</li>
+			<% } %>
+			
+			<% if (checkAppConfig("videos")==true) { %>
+				<li>
+					<a href="#videos" style="padding-top:0px;padding-bottom:0px;">
+						<div style="float:left;position:relative;top:0px;left:0px;"><img style="margin:7px;height:60px;width:60px;" src="images/icon-multimedia-60.png" /></div>
+						<h5 style="padding-top:2px;padding-bottom:4px;margin-left:80px;">Mediathek</h5>
+						<p style="margin-left:80px;">Multimediainhalte (nach Kategorien gelistet)</p>
+						<!-- <p class="ui-li-aside"><strong>6:24</strong>PM</p> -->
+					</a>
+				</li>
+			<% } %>
+			
+			<% if (checkAppConfig("cards")==true) { %>
+				<li>
+					<a href="#cards" style="padding-top:0px;padding-bottom:0px;">
+						<div style="float:left;position:relative;top:0px;left:0px;"><img style="margin:7px;height:60px;width:60px;" src="images/icon-cards-60.png" /></div>
+						<h5 style="padding-top:2px;padding-bottom:4px;margin-left:80px;">Lernsets</h5>
+						<p style="margin-left:80px;">Lernkarten zum interaktiven Lernen</p>
+						<!-- <p class="ui-li-aside"><strong>6:24</strong>PM</p> -->
+					</a>
+				</li>
+			<% } %>
+			
+			<% if (checkAppConfig("messages")==true) { %>
+				<li>
+					<a href="#messages" style="padding-top:0px;padding-bottom:0px;">
+						<div style="float:left;position:relative;top:0px;left:0px;"><img style="margin:7px;height:60px;width:60px;" src="images/icon-message-<% if(window.me.newmsgs>0) { %>unread<% } else { %>read<% } %>-60.png" /></div>
+						<h5 style="padding-top:2px;padding-bottom:4px;margin-left:80px;">Nachrichten <% if(window.me.newmsgs>0) { %>(<%= window.me.newmsgs %>) <% } %></h5>
+						<p style="margin-left:80px;">Mitteilungen an und von Wissensanbieter</p>
+						<!-- <p class="ui-li-aside"><strong>6:24</strong>PM</p> -->
+					</a>
+				</li>
+			<% } %>			
+			
+			<% if (checkAppConfig("events")==true) { %>
+				<li>
+					<a href="#planer" style="padding-top:0px;padding-bottom:0px;">
+						<div style="float:left;position:relative;top:0px;left:0px;"><img style="margin:7px;height:60px;width:60px;" src="images/icon-calendar-002-resized-60.png" /></div>
+						<h5 style="padding-top:2px;padding-bottom:4px;margin-left:80px;">Meine Termine</h5>
+						<p style="margin-left:80px;">Veranstaltungstermine, -orte und -zeiten</p>
+						<!-- <p class="ui-li-aside"><strong>6:24</strong>PM</p> -->
+					</a>
+				</li>
+			<% } %>
+
+			<% if (checkRole("provider")==true) { %>
+				<li>
+					<a href="#admin/users" style="padding-top:0px;padding-bottom:0px;">
+						<div style="float:left;position:relative;top:0px;left:0px;"><img style="margin:7px;height:60px;width:60px;" src="images/icon-usergroup-60.png" /></div>
+						<h5 style="padding-top:2px;padding-bottom:4px;margin-left:80px;">Nutzerverwaltung</h5>
+						<p style="margin-left:80px;">Benutzer dieses Personal APPinaut&reg;</p>
+						<!-- <p class="ui-li-aside"><strong>6:24</strong>PM</p> -->
+					</a>
+				</li>
+			<% } %>
+			
+			<!--
+			<li>
+				<a href="#preferences" style="padding-top:0px;padding-bottom:0px;">
+					<div style="float:left;position:relative;top:0px;left:0px;"><img style="margin:7px;height:60px;width:60px;" src="images/icon-preferences-60.png" /></div>
+					<h5 style="padding-top:2px;padding-bottom:4px;margin-left:80px;">Einstellungen</h5>
+					<p style="margin-left:80px;">Benutzer-, Sicherheits- und Datenschutzeinstellungen</p>
+					<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+				</a>
+			</li>
+			-->
+		<ul>
+
 
 </div>

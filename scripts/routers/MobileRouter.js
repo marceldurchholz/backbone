@@ -1,6 +1,6 @@
-define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/template/TemplateView', 'views/login/LoginView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/template/TemplateView', 'views/noaccess/NoaccessView', 'views/login/LoginView', 'jqm'],
         
-    function(domReady, sidemenusCollection, testView, templateView, loginView) {
+    function(domReady, sidemenusCollection, testView, templateView, noaccessView, loginView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
@@ -34,7 +34,6 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
             routes: {
 				"": "startRouter",
 				"login": "loginRouter",
-				"noaccess": "noaccessRouter",
 				"*path": "initRouter"
 			},
 			startRouter: function() {
@@ -50,10 +49,6 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 				// console('doing templateRouter');
 				// $.mobile.jqmNavigator.pushView(new templateView().render());
 			},
-            noaccessRouter: function() {
-				alert('doing noaccessRouter');
-				// $.mobile.jqmNavigator.pushView(new noaccessView().render());
-            },
 
 			initRouter: function() {
 				_this = this;
@@ -81,7 +76,6 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					_this.routes[userfriendly] = userfriendly+'Router';
 				});
 				_this.routes[''] = "startRouter";
-				_this.routes['noaccess'] = 'noaccessRouter';
 				_this.routes['*path'] = 'initRouter';
 				
 			},
@@ -126,6 +120,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 					_this.collection = response;
 					console.log(_this.collection);
 					if (route!='' && route!='#') {
+						console.log(_this.routes);
 						var router = _this.routes[route.substring(1)];
 						if (router!=undefined) {
 							var checkroute = route.substring(1);
@@ -138,19 +133,21 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 							console.log(model);
 							if (!model) {
 								console.log('requested navmobile NOT existing');
-								_this.noaccessRouter();
+								// _this.noaccessRouter();
+								$.mobile.jqmNavigator.pushView(new noaccessView());
 								return(false);							
 							}
 							console.log('requested navmobile IS existing');
 							// console.log(model);
 							var show = checkRoles(model.get('roles'));
 							if (show==true) _this.execRouterByRoute(route,model);
-							else _this.noaccessRouter();
+							else $.mobile.jqmNavigator.pushView(new noaccessView()); // _this.noaccessRouter();
 						}
 						else {
 							// alert('router function not existing');
-							console.log('hash eventually not pulled via navmobile=true (router function not created/existing)');
-							_this.noaccessRouter();
+							console.log('router '+router+' is undefined / hash '+checkroute+' eventually not pulled via navmobile=true (router function not created/existing)');
+							// _this.noaccessRouter();
+							$.mobile.jqmNavigator.pushView(new noaccessView());
 							// _this.templateRouter();
 							return(false);
 						}
