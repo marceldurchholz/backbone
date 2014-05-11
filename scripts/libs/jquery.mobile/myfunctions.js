@@ -2599,8 +2599,14 @@ try {
 	}
 			
 	function sendLogin(e) {
-		var username = $.mobile.activePage.find('#username').val().toLowerCase();
-		var password = $.mobile.activePage.find('#password').val();
+		console.log(e);
+		if (e.currentTarget.id=="sendLoginBtn_panel_right") {
+			var username = $('#loginform_panel_right').find('#username').val().toLowerCase();
+			var password = $('#loginform_panel_right').find('#password').val();
+		} else {
+			var username = $.mobile.activePage.find('#username').val().toLowerCase();
+			var password = $.mobile.activePage.find('#password').val();
+		}
 		if (checkString(username)!=true || password=='') {
 			doAlert('Bitte überprüfen Sie die eingegebenen Daten.','Eingaben unvollständig oder nicht korrekt!');
 			return(false);
@@ -2820,6 +2826,10 @@ try {
 		});
 		
 		$(document).off( "click", "#sendLoginBtn").on( "click", "#sendLoginBtn", function( e ) {
+			e.preventDefault();
+			sendLogin(e);
+		});
+		$(document).off( "click", "#sendLoginBtn_panel_right").on( "click", "#sendLoginBtn_panel_right", function( e ) {
 			e.preventDefault();
 			sendLogin(e);
 		});
