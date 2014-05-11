@@ -14,32 +14,47 @@
 				<img src="images/appicon.png" style="max-width:40%;width:500px;">
 			</p>
 			
-			<h1>	
-				Inhalt-/Anbieter-Informationen<br>
-			</h1>
-			APPinaut <%= window.system.kdnr %><br>
-			<br>
+			<p>
+				<strong>Anbieter-Informationen</strong>
+			</p>
 			
 			<p>
-				
-			<strong>App-Informationen</strong><br>
-			<br>
-			APPinaut.com ist ein Projekt von <br>
-			DigitalVerve - Digital Solutions <br>
-			Wörenstieg 8, D-22415 Hamburg <br>
-			<br>
-			Entwickler: <br>
-			E-Mail: <a href="mailto:info@digitalverve.de" style="color:black;font-weight:normal;">info@digitalverve.de</a> <br>
-			Internet: <a href="http://www.digitalverve.de" class="external" rel="external" data-rel="external" target="_blank" style="color:black;font-weight:normal;">www.digitalverve.de</a> <br>
-			<br>
-			Support / Fragen zum APPinaut: <br>
-			E-Mail: <a href="mailto:info@appinaut.com" style="color:black;font-weight:normal;">info@appinaut.com</a> <br>
-			Internet: <a href="http://www.appinaut.com" class="external" style="color:black;font-weight:normal;">www.appinaut.com</a> <br>
-			<br>
-			Rechtliche Informationen: <br>
-			DigitalVerve - Digital Solutions <br>
-			Steuernummer: 09/410/67786 <br>
-			Finanzamt Hamburg-Nord <br>
+				<%= window.system.owner.fullname %><br>
+				<% if(window.system.owner.companyname!="") { %><%= window.system.owner.companyname %><br><% } %>
+				<%= window.system.owner.street %><br>
+				<%= window.system.owner.zip %> - <%= window.system.owner.city %><br>
+			</p>
+			<p>
+				<% if(window.system.owner.phone!="") { %>Telefon: <%= window.system.owner.phone %><br><% } %>
+				<% if(window.system.owner.cellphone!="") { %>Mobil: <%= window.system.owner.cellphone %><br><% } %>
+			</p>
+			<p>
+				<% if(window.system.owner.slogan!="") { %><%= window.system.owner.slogan %><br><% } %>
+				<% if(window.system.owner.stnr!="") { %>Stnr.: <%= window.system.owner.stnr %><br><% } %>
+			</p>
+			
+			<p>
+				<strong>App-Informationen</strong>
+			</p>
+
+			<p>
+				APPinaut.com ist ein Projekt von <br>
+				DigitalVerve - Digital Solutions <br>
+				Wörenstieg 8, D-22415 Hamburg <br>
+				<br>
+				Entwickler: <br>
+				E-Mail: <a href="mailto:info@digitalverve.de" style="color:black;font-weight:normal;">info@digitalverve.de</a> <br>
+				Internet: <a href="http://www.digitalverve.de" class="external" rel="external" data-rel="external" target="_blank" style="color:black;font-weight:normal;">www.digitalverve.de</a> <br>
+				<br>
+				Support / Fragen zum APPinaut: <br>
+				E-Mail: <a href="mailto:info@appinaut.com" style="color:black;font-weight:normal;">info@appinaut.com</a> <br>
+				Internet: <a href="http://www.appinaut.com" class="external" style="color:black;font-weight:normal;">www.appinaut.com</a> <br>
+				<br>
+				Rechtliche Informationen: <br>
+				DigitalVerve - Digital Solutions <br>
+				Steuernummer: 09/410/67786 <br>
+				Finanzamt Hamburg-Nord
+			</p>
 			
 		</div>
 		

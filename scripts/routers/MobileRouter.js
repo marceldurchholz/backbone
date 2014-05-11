@@ -61,7 +61,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 						new testView({collection:_this.collection});
 						// alert(queryRoute);
 						var queryRoute = window.location.hash;
-						if (queryRoute=='') queryRoute = '#login';
+						if (queryRoute=='') queryRoute = '#home';
 						_this.gotoRoute(queryRoute);
 					}
 				});
