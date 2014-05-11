@@ -1,7 +1,11 @@
 <div data-role="header" data-position="fixed">
     <a data-ajax="true" href="#panel_left" data-icon="grid" data-iconpos="left">Menü</a>
     <h1>Willkommen<% if(parseInt(window.me.username)>0) { } else { %><br><%= window.me.username %> <% } %><!--<%= page_vars.header_vars.title %>--></h1>
-    <a data-ajax="true" href="#panel_right" data-icon="gear" data-iconpos="notext">Prefs</a>
+    <% if(checkRole("user")==true) { %>
+		<a data-ajax="true" href="#panel_functions" data-icon="grid" data-iconpos="notext">Funktionen</a>
+	<% } else { %>
+		<a data-ajax="true" href="#panel_right" data-icon="gear" data-iconpos="notext">Login</a>
+	<% } %>
 </div>
 
 <div data-role="content">

@@ -2550,6 +2550,9 @@ try {
 	
 	function sendAnonymRegister(e) {
 		var randomId = getRandomID();
+		if (randomId<=0) {
+			return(false);
+		}
 		$.mobile.activePage.find('#username').val(randomId);
 		$.mobile.activePage.find('#password').val(randomId);
 		sendRegister(e);
@@ -2756,6 +2759,7 @@ try {
 		// console.log('document ready');
 		if ($( "#panel_left" )) $( "#panel_left" ).panel().panel( "close" );
 		if ($( "#panel_right" )) $( "#panel_right" ).panel().panel( "close" );
+		if ($( "#panel_functions" )) $( "#panel_functions" ).panel().panel( "close" );
 		
 		// EFFECTS INFOS:
 		// http://www.w3schools.com/jquerymobile/jquerymobile_transitions.asp
@@ -2778,30 +2782,17 @@ try {
 			$.mobile.defaultPageTransition = 'slidefade';
 			$( "#panel_left" ).panel().panel( "close" );
 			$( "#panel_right" ).panel().panel( "close" );
+			$( "#panel_functions" ).panel().panel( "close" );
 			scrollToTop($( ".ui-page-active > .ui-content" ));
-			// $.mobile.pageContainer.trigger("create");
-			// $( "#panel_left" ).panel().panel("close"); // .panel( "open" ).panel( "close" );
-			// $( "#panel_right" ).panel().panel("close"); // .panel( "open" ).panel( "close" );
-			// $( "#panel_left" ).panel( "close" );
-			
-			// $( "#panel_left" ).panel( "open" );
-			/*
-			if ( $.mobile.activePage.jqmData( "panel_left" ) == "open" ) {
-				// $( "#panel_left" ).panel( "close" );
-			}
-			// $( "#panel_right" ).panel( "close" );
-			console.log($('#container'));
-			console.log($.mobile.activePage.css("min-height"));
-			*/
-			// $.mobile.activePage.css("min-height","518px");
 		});
 
-		// $( "#panel_left" ).panel();
-		// $( "#panel_right" ).panel();
 		$(document).off( "swipeleft swiperight" ).on( "swipeleft swiperight", '.ui-page-active', function( e ) {
+			var panel_name = "";
+			if(checkRole("user")==false) panel_name = "#panel_right";
+			if(checkRole("user")!=false) panel_name = "#panel_functions";
 			if ( $.mobile.activePage.jqmData( "panel_left" ) !== "open" ) {
 				if ( e.type === "swipeleft"  ) {
-					$( "#panel_right" ).panel( "open" );
+					$( panel_name ).panel( "open" );
 				} else if ( e.type === "swiperight" ) {
 					$( "#panel_left" ).panel( "open" );
 				}
