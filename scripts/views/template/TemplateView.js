@@ -52,7 +52,8 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 						// alert(templateContent);
 						// _this.$el.html(_.template(homeTemplateContent,{page_vars:_this.options}));
 						var bla = _.template(templateContent,{page_vars:_this.options});
-						_this.$el.html(_.template(bla,{page_vars:_this.options}));
+						var foo = _.template(bla,{page_vars:_this.options});
+						_this.$el.html(foo);
 					});
 					// alert(mytemplate);
 					// var bla = _.template(hometemplate,{page_vars:_this.options});
@@ -60,7 +61,9 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 					// alert(_this.options.templateUrl);
 				}
 				else {
-					this.$el.html(_.template(standardTemplate,{page_vars:_this.options}));
+					var bla = _.template(standardTemplate,{page_vars:_this.options});
+					var foo = _.template(bla,{page_vars:_this.options});
+					_this.$el.html(foo);
 				}
 				this.trigger("create");
 				return this;
