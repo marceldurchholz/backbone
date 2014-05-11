@@ -1,7 +1,7 @@
 define(['underscore', 'Backbone', 'text!views/noaccess/NoaccessView.html'],
     function (_, Backbone, NoaccessViewTemplate) {
 
-        var NoaccessViewVar = Backbone.View.extend({
+        var NoaccessView = Backbone.View.extend({
 
 			events:{
                 'click a':global_a_clickHandler,
@@ -18,5 +18,5 @@ define(['underscore', 'Backbone', 'text!views/noaccess/NoaccessView.html'],
 
         });
 
-        return NoaccessViewVar;
+        return NoaccessView;
     });

@@ -47,7 +47,7 @@
 			-webkit-transform: translateZ(0px) !important;
 			b/ackground-color:#206090;
 		}
-		#container {
+		#container, #panel_right, #panel_functions {
 			o/verflow-y: scroll !important;
 			-webkit-overflow-scrolling: touch !important;
 			background: url(./images/quadbg001.jpg) no-repeat center center fixed; 
@@ -77,27 +77,8 @@
 </head>
 <body id="body">
 <div id="panel_left" data-role="panel" data-position-fixed="true" data-display="overlay" data-theme="b" style="height:100% !important;overflow-y:scroll !important;"></div>
-<div data-role="panel" data-position="right" data-position-fixed="true" data-display="overlay" data-theme="a" id="panel_right">
-	<form id="loginform_panel_right" class="userform">
-		<h2>Anmelden</h2>
-		<label for="name">E-Mail-Adresse / Benutzername:</label>
-		<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
-			<input type="text" value="" id="username" name="username" placeholder=""/>
-		</div>
-		<div style="height:10px;float:none;clear:both;"></div>
-		<label for="password">Passwort:</label>
-		<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
-			<input type="password" value="" id="password" name="password" placeholder=""/>
-		</div>
-		<div style="height:10px;float:none;clear:both;"></div>
-		<div class="ui-grid-a">
-			<div>
-				<a id="sendLoginBtn_panel_right" href="#" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-mini sendLoginBtn_panel_right">Mit diesen Daten anmelden</a>
-			</div>
-		</div>
-	</form>
-</div>
-<div data-role="panel" data-position="right" data-position-fixed="true" data-display="overlay" data-theme="b" id="panel_functions"></div>
+<div data-role="panel" data-position="right" data-position-fixed="true" data-display="overlay" data-theme="a" id="panel_right" style="padding:0px 10px;"></div>
+<div data-role="panel" data-position="right" data-position-fixed="true" data-display="overlay" data-theme="a" id="panel_functions" style="padding:0px 10px;"></div>
 
 <div id="container"></div>
 

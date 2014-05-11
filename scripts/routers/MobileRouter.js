@@ -1,6 +1,6 @@
-define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'views/template/TemplateView', 'views/noaccess/NoaccessView', 'views/login/LoginView', 'jqm'],
-        
-    function(domReady, sidemenusCollection, testView, templateView, noaccessView, loginView) {
+define(['domReady', 'collections/sidemenusCollection', 'views/panelright/PanelrightView', 'views/panelfunctions/PanelfunctionsView', 'views/test/TestView', 'views/template/TemplateView', 'views/noaccess/NoaccessView', 'views/login/LoginView', 'jqm'],
+
+    function(domReady, sidemenusCollection, panelrightView, panelfunctionsView, testView, templateView, noaccessView, loginView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
@@ -58,7 +58,9 @@ define(['domReady', 'collections/sidemenusCollection', 'views/test/TestView', 'v
 						_this.collection = response;
 						// _this.bindEvents();
 						// _this.recreateSidemenu();
-						new testView({collection:_this.collection});
+						var xbla = new panelrightView({me:window.system.me,collection:_this.collection});
+						var zbla = new panelfunctionsView({me:window.system.me,collection:_this.collection});
+						var ybla = new testView({me:window.system.me,collection:_this.collection});
 						// alert(queryRoute);
 						var queryRoute = window.location.hash;
 						if (queryRoute=='') queryRoute = '#home';

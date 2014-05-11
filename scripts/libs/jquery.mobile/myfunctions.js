@@ -2608,15 +2608,18 @@ try {
 			var password = $.mobile.activePage.find('#password').val();
 		}
 		if (checkString(username)!=true || password=='') {
+			$( "#panel_right" ).panel().panel( "close" );
 			doAlert('Bitte überprüfen Sie die eingegebenen Daten.','Eingaben unvollständig oder nicht korrekt!');
 			return(false);
 		}
 		showLoading();
 		dpd.users.login({username: username, password: password}, function(user, error) {
 			if (error) {
+				$( "#panel_right" ).panel().panel( "close" );
 				doAlert('Eine Anmeldung mit diesen Zugangsdaten konnte nicht durchgeführt werden. Zur Registrierung klicken Sie auf "Neuen Zugang anlegen".','Fehler bei der Anmeldung!');
 			} else {
 				if (user==null) { 
+					$( "#panel_right" ).panel().panel( "close" );
 					doAlert('Bitte versuchen Sie es erneut.','Fehler bei der Anmeldung!');
 					return(false);
 				}
@@ -2789,6 +2792,7 @@ try {
 			$( "#panel_left" ).panel().panel( "close" );
 			$( "#panel_right" ).panel().panel( "close" );
 			$( "#panel_functions" ).panel().panel( "close" );
+			$( "#panel_functions" ).trigger( "create" );
 			scrollToTop($( ".ui-page-active > .ui-content" ));
 		});
 
