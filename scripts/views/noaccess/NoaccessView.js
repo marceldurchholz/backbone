@@ -1,4 +1,4 @@
-define(['underscore', 'Backbone', 'text!views/template/NoaccessView.html'],
+define(['underscore', 'Backbone', 'text!views/noaccess/NoaccessView.html'],
     function (_, Backbone, NoaccessViewTemplate) {
 
         var NoaccessViewVar = Backbone.View.extend({

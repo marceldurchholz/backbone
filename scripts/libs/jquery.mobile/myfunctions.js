@@ -1529,12 +1529,6 @@ try {
 	}
 
 
-	/*
-	function scrollToTop(){
-		$(window).scrollTop(0); //window.scrollTo(0,0);
-	}
-	*/
-
 	function getURLParameter(name) {
 	  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
 	  var regexS = "[\\?&]"+name+"=([^&#]*)";
@@ -2678,7 +2672,7 @@ try {
 		onHashChange(e);
 	});
 	function onHashChange(e) {
-		alert('ATTENTION !!!! hashchanged to: '+window.location.hash);
+		// alert('ATTENTION !!!! hashchanged to: '+window.location.hash);
 		// window.myrouter.gotoRoute(window.location.hash);
 		window.myrouter.initRouter();
 		/*
@@ -2702,10 +2696,10 @@ try {
 	
 	$(document).off( "pageinit" ).on( "pageinit", function( event ) {
 		// alert('pageinit');
-		$('#container').find('.ui-page').last().each(function() {
+		// $('#container').find('.ui-page').last().each(function() {
 			// $(this).css("min-height",$(window).height()+"px");
 			// $.mobile.activePage.css("min-height")
-		});
+		// });
 		// alert($.mobile.activePage.css("min-height"));
 		/*
 			.ui-page{
@@ -2753,6 +2747,10 @@ try {
 		});
 	});
 	
+	function scrollToTop(obj) {
+		obj.scrollTop(0); // .scrollTop( 300 );
+	}
+
 	$(document).ready(function() {
 
 		// console.log('document ready');
@@ -2767,7 +2765,10 @@ try {
 		$(document).off( "pagehide" ).on( "pagehide", function( event ) {	
 		});
 		$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {
-			// alert('pagecreate');			
+			// alert('pagecreate');
+			// setTimeout(function() {
+				
+			// },1000);
 		});
 		$(document).off( "pageshow" ).on( "pageshow", function( event ) {
 			// alert('pageshow');
@@ -2777,6 +2778,7 @@ try {
 			$.mobile.defaultPageTransition = 'slidefade';
 			$( "#panel_left" ).panel().panel( "close" );
 			$( "#panel_right" ).panel().panel( "close" );
+			scrollToTop($( ".ui-page-active > .ui-content" ));
 			// $.mobile.pageContainer.trigger("create");
 			// $( "#panel_left" ).panel().panel("close"); // .panel( "open" ).panel( "close" );
 			// $( "#panel_right" ).panel().panel("close"); // .panel( "open" ).panel( "close" );
