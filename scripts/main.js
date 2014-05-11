@@ -39,6 +39,9 @@ require.config({
         underscore:{
             exports:'_'
         },
+		myfunctions:{
+			deps:['jqm']
+		},
         jqm:{
             deps:['jquery', 'jqmNavigator']
         },
@@ -80,6 +83,7 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
 				
 				// alert('loading router');
 				window.myrouter = new MobileRouter();
+				
 
 
 				// $.mobile.jqmNavigator.pushView(new LoginView);

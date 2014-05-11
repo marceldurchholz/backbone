@@ -79,11 +79,23 @@
                         if (!$.mobile.autoInitializePage) $.mobile.initializePage();
                     } else {
                         // Changing page
+						// view.$el.trigger("create");
+						// console.log(view.$el);
                         $.mobile.changePage(view.$el, $.extend({
                             role:'page',
                             changeHash:false,
                             pageContainer:containerViews.pageContainer
                         }, options));
+						// alert($.mobile.activePage.html());
+						// alert(bla);
+						// .trigger('create');
+						// setTimeout(function() {
+							// $('#container').trigger('create');
+							// alert($('#body').html());
+							// if ( $.mobile.activePage.trigger('create'));
+							// alert('now refreshed');
+						// },5000);
+
                     }
 					// $.mobile.activePage.css("min-height" ,  ($(window).height()-46)+"px" );
 					// alert(parseInt(view.$el.css('padding-top')));

@@ -2608,6 +2608,7 @@ try {
 			doAlert('Bitte überprüfen Sie die eingegebenen Daten.','Eingaben unvollständig oder nicht korrekt!');
 			return(false);
 		}
+		showLoading();
 		dpd.users.login({username: username, password: password}, function(user, error) {
 			if (error) {
 				doAlert('Eine Anmeldung mit diesen Zugangsdaten konnte nicht durchgeführt werden. Zur Registrierung klicken Sie auf "Neuen Zugang anlegen".','Fehler bei der Anmeldung!');
@@ -2734,6 +2735,24 @@ try {
 		// alert($.mobile.activePage.find('.ui-header').css("min-height"));
 	});
 	
+	function showLoading() {
+		$.mobile.loading('show', {
+			text: 'APPinaut lädt',
+			textVisible: true,
+			// html: "",
+			theme: 'a'
+		});
+	}
+	
+	$( document ).ajaxStart(function() {
+		$.mobile.loading('show', {
+			text: 'APPinaut lädt',
+			textVisible: true,
+			// html: "",
+			theme: 'a'
+		});
+	});
+	
 	$(document).ready(function() {
 
 		// console.log('document ready');
@@ -2746,18 +2765,19 @@ try {
 			$.mobile.loading('hide');
 		});
 		$(document).off( "pagehide" ).on( "pagehide", function( event ) {	
-		});0
+		});
 		$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {
-			setTimeout(function() {
-				$('#container').trigger('create');
-			},100);
 			// alert('pagecreate');			
+		});
+		$(document).off( "pageshow" ).on( "pageshow", function( event ) {
+			// alert('pageshow');
 		});
 		$(document).off( "pagechange" ).on( "pagechange", function( event ) {
 			// alert("pagechange");
 			$.mobile.defaultPageTransition = 'slidefade';
 			$( "#panel_left" ).panel().panel( "close" );
 			$( "#panel_right" ).panel().panel( "close" );
+			$.mobile.pageContainer.trigger("create");
 			// $( "#panel_left" ).panel().panel("close"); // .panel( "open" ).panel( "close" );
 			// $( "#panel_right" ).panel().panel("close"); // .panel( "open" ).panel( "close" );
 			// $( "#panel_left" ).panel( "close" );
@@ -2772,15 +2792,6 @@ try {
 			console.log($.mobile.activePage.css("min-height"));
 			*/
 			// $.mobile.activePage.css("min-height","518px");
-		});
-				
-		$( document ).ajaxStart(function() {
-			$.mobile.loading('show', {
-				text: 'APPinaut lädt',
-				textVisible: true,
-				// html: "",
-				theme: 'a'
-			});
 		});
 
 		// $( "#panel_left" ).panel();
