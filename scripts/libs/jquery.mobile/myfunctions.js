@@ -2750,7 +2750,7 @@ try {
 		$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {
 			setTimeout(function() {
 				$('#container').trigger('create');
-			},1);
+			},100);
 			// alert('pagecreate');			
 		});
 		$(document).off( "pagechange" ).on( "pagechange", function( event ) {
