@@ -32,6 +32,7 @@ define(['underscore', 'Backbone', 'views/test/TestViewLi', 'text!views/test/Test
 						'ulHTML':(new TestViewLi({collection:this.collection}).render().el).outerHTML
 					}
 				},{variable: 'item'});
+				// $el.attr('data-theme','d').listview().listview("refresh");
 				$el.append(this.template(contentObject));
 				return this;
 			}

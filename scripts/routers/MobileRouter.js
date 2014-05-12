@@ -163,7 +163,10 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 				var hash = route.substring(1); 
 				var viewName = hash+'View';
 				console.log('execRouterByRoute '+route);
+				// var data_depencies = new Array();
+				// data_depencies = ["videos"];
 				var pageObject = new Object({
+					// 'data_depencies':data_depencies,
 					'header_vars':new Object({title:model.get('userfriendly')}, {subtitle:model.get('slogan')}),
 					'footer_vars':new Object({copyright:model.get('companyname')}, {kdnr:model.get('kdnr')}),
 					'me':window.me,

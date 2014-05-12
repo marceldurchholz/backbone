@@ -17,7 +17,7 @@ define(['underscore', 'Backbone', 'text!views/panelright/PanelrightView.html'],
             render: function () {
 				var _this = this;
 				var $el = $(this.el);
-				$el.panel();
+				// $el.panel();
 				$el.html(this.template({}));
 				$el.trigger("create");
 				return this;

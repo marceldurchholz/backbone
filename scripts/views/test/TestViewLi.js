@@ -40,6 +40,7 @@ define(['underscore', 'Backbone', 'views/test/TestViewHref', 'text!views/test/Te
 					$el.append(contentObject.item.liHTML);
 				});
 				$el.prepend('<li data-mini="true" data-icon="arrow-l"><a data-ajax="true" class="ui-btn ui-btn-icon-left ui-icon-carat-l" href="#panel_left" data-rel="close">Menü schließen</a></li>');
+				// $el.attr('data-theme','d').listview().listview("refresh");
 				$el.attr('data-role','listview').listview().listview("refresh");
 				return this;
 			}
