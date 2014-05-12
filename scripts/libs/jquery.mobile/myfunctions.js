@@ -1,8 +1,16 @@
 try {
 
-	function global_a_clickHandler(event) {
+	function global_a_clickHandler(e) {
 		// console.log('global_a_clickHandler');
-		window.myrouter.checkLink(event);
+		if (e.preventDefault) e.preventDefault();
+		if ($( "#panel_left" )) $( "#panel_left" ).panel().panel( "close" );
+		if ($( "#panel_right" )) $( "#panel_right" ).panel().panel( "close" );
+		if ($( "#panel_functions" )) $( "#panel_functions" ).panel().panel( "close" );
+		window.setTimeout(function blay() {
+			// alert('resolve');
+			// _thisApp.dfd.resolve(true);
+			myrouter.checkLink(e);
+		}, 300);
 	}
 	function global_button_clickHandler(event) {
 		window.myrouter.checkLink(event);

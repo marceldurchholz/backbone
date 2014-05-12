@@ -98,17 +98,14 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 				var is_ajax = $(e.currentTarget).attr('data-ajax');
 				if (is_ajax=='true') {
 					console.log(href+' has >> data-ajax=true');
-					if (e.preventDefault) e.preventDefault();
 					return(false);
 				}
 				else if (href!='#' && href!='undefined' && href!='' && href!=undefined) {
 					// console.log(href+' has no >> data-ajax=true');
-					if (e.preventDefault) e.preventDefault();
 					_this.gotoRoute(href);
 					return(false);
 				}
 				else {
-					if (e.preventDefault) e.preventDefault();
 					// console.log('undefinierte aktion in MobileRouter.js: eventuell ein realler <a href="#bla">foo</a> link ?!?');
 					console.log('wahrscheinlich ein link, der durch eine globale function in myfunctions.js definiert sein sollte/ist...');
 					return(false);
