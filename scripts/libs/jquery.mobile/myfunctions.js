@@ -2794,7 +2794,7 @@ try {
 		});
 		$(document).off( "pagechange" ).on( "pagechange", function( event ) {
 			// alert("pagechange");
-			$.mobile.defaultPageTransition = 'slidefade';
+			$.mobile.defaultPageTransition = 'pop';
 			$( "#panel_left" ).panel().panel( "close" );
 			$( "#panel_right" ).panel().panel( "close" );
 			$( "#panel_functions" ).panel().panel( "close" );
