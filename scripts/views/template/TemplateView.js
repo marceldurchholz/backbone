@@ -21,7 +21,9 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 				/* streamdata getter part */
 				// _this.bla = "foo";
 				// window.me.id = "042cb1572ffbea5d";
-				if (_this.options.hash=='videos') _this.collectStreamData();
+				if (_this.options.hash=='videos') {
+					_this.collectStreamData();
+				}
 				
 			},
 			

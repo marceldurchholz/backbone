@@ -1,5 +1,5 @@
 <div data-theme="h" data-role="header" data-position="fixed">
-    <a data-ajax="true" href="#panel_left" data-icon="grid" data-iconpos="notext">Menü</a>
+    <a id="btnBack" href="#" data-icon="back" data-iconpos="notext">Zurück</a>
     <h1><%= page_vars.header_vars.title %></h1>
     <% if(checkRole("user")==true) { %>
 		<a data-ajax="true" href="#panel_functions" data-icon="grid" data-iconpos="notext">Funktionen</a>

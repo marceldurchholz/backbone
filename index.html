@@ -71,6 +71,24 @@
 			-o-user-select: none;
 			user-select: none;
 		}
+		
+		.ui-loader-background {
+			width:100%;
+			height:100%;
+			top:0;
+			margin: 0;
+			b/ackground: rgba(0, 0, 0, 0.1);
+			background: rgba(255, 255, 255, 0.2);
+			display:none;
+			position: fixed;
+			z-index:99999;
+		}
+
+		.ui-loading .ui-loader-background {
+			display:block;
+			z-index:9999999;
+		}
+		
     </style>
 	
     <!-- Sidr styles -->
@@ -80,11 +98,13 @@
 	
 </head>
 <body id="body">
-<div id="panel_left" data-role="panel" data-position-fixed="true" data-display="overlay" data-theme="b" style="b/ackground-color:#454545;height:100% !important;overflow-y:scroll !important;"></div>
-<div data-role="panel" data-position="right" data-position-fixed="true" data-display="overlay" data-theme="a" id="panel_right" style="padding:0px 10px;"></div>
-<div data-role="panel" data-position="right" data-position-fixed="true" data-display="overlay" data-theme="a" id="panel_functions" style="padding:0px 10px;"></div>
 
-<div id="container"></div>
+	<div id="panel_left" data-role="panel" data-position-fixed="true" data-display="overlay" data-theme="b" style="b/ackground-color:#454545;height:100% !important;overflow-y:scroll !important;"></div>
+	<div data-role="panel" data-position="right" data-position-fixed="true" data-display="overlay" data-theme="a" id="panel_right" style="padding:0px 10px;"></div>
+	<div data-role="panel" data-position="right" data-position-fixed="true" data-display="overlay" data-theme="a" id="panel_functions" style="padding:0px 10px;"></div>
+
+	<div id="container"></div>
+
 
 </body>
 </html>

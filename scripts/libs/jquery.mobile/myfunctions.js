@@ -1,16 +1,10 @@
 try {
 
 	function global_a_clickHandler(e) {
-		// console.log('global_a_clickHandler');
-		if (e.preventDefault) e.preventDefault();
 		if ($( "#panel_left" )) $( "#panel_left" ).panel().panel( "close" );
 		if ($( "#panel_right" )) $( "#panel_right" ).panel().panel( "close" );
 		if ($( "#panel_functions" )) $( "#panel_functions" ).panel().panel( "close" );
-		window.setTimeout(function blay() {
-			// alert('resolve');
-			// _thisApp.dfd.resolve(true);
-			myrouter.checkLink(e);
-		}, 300);
+		myrouter.checkLink(e);
 	}
 	function global_button_clickHandler(event) {
 		window.myrouter.checkLink(event);
@@ -2764,7 +2758,7 @@ try {
 		$.mobile.loading('show', {
 			text: 'APPinaut lädt',
 			textVisible: true,
-			// html: "",
+			html: "",
 			theme: 'a'
 		});
 	});
@@ -2775,6 +2769,8 @@ try {
 
 	$(document).ready(function() {
 
+		$('body').append("<div class='ui-loader-background'> </div>");
+	
 		// console.log('document ready');
 		if ($( "#panel_left" )) $( "#panel_left" ).panel().panel( "close" );
 		if ($( "#panel_right" )) $( "#panel_right" ).panel().panel( "close" );
