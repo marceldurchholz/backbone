@@ -63,7 +63,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 						var ybla = new testView({me:window.system.me,collection:_this.collection});
 						// alert(queryRoute);
 						var queryRoute = window.location.hash;
-						if (queryRoute=='') queryRoute = '#home';
+						if (queryRoute=='') queryRoute = '#login';
 						_this.gotoRoute(queryRoute);
 					}
 				});

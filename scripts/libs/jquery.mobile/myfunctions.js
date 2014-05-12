@@ -2625,7 +2625,9 @@ try {
 				}
 				else {
 					window.system.uid = user.uid;
-					dpd.users.me(function(me) {
+					var query = { id: user.uid };
+					dpd.users.get(query, function (me,err) {
+//					dpd.users.me(function(me) {
 						window.me = me;
 						if (window.me.logincount==undefined) logincount=0;
 						var logincount = window.me.logincount+1;

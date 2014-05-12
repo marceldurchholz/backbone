@@ -10,8 +10,6 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
     function ($, _, Backbone, standardTemplate, homeTemplate, blankTemplate, supportTemplate, dashboardTemplate) {
         var TemplateView = Backbone.View.extend({
 
-			// template: standardTemplate,
-			
 			events:{
                 'click a':global_a_clickHandler,
                 'click button':global_button_clickHandler,

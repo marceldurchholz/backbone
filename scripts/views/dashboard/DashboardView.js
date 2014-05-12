@@ -1,4 +1,4 @@
-define(['underscore', 'Backbone', 'text!views/dashboard/DashboardView.html'],
+define(['underscore', 'Backbone', 'text!views/template/DashboardView.html'],
     function (_, Backbone, DashboardViewTemplate) {
 
         var DashboardView = Backbone.View.extend({
@@ -6,30 +6,14 @@ define(['underscore', 'Backbone', 'text!views/dashboard/DashboardView.html'],
 			template: _.template(DashboardViewTemplate),
 			
             events:{
-                'click a':'a_clickHandler'
+                'click a':global_a_clickHandler,
+                'click button':global_button_clickHandler,
             },
-            a_clickHandler:function (event) {
-				window.myrouter.checkLink(event);
-            },
-			initialize: function() {
-				this.fetch();
-			},
-			fetch: function() {
-				console.log('fetching');
-			},
             render:function () {
 				console.log('rendering');
 				this.$el.html(this.template(this.options));
 				return this;
             }
-
-            /*
-			btnBack_clickHandler:function (event) {
-				event.preventDefault();
-                $.mobile.jqmNavigator.popView();
-				return(false);
-            }
-			*/
 
         });
 
