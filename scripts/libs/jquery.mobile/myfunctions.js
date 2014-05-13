@@ -2798,7 +2798,7 @@ try {
 			$( "#panel_left" ).panel().panel( "close" );
 			$( "#panel_right" ).panel().panel( "close" );
 			$( "#panel_functions" ).panel().panel( "close" );
-			$( "#panel_functions" ).trigger( "create" );
+			// $( "#panel_functions" ).trigger( "create" );
 			scrollToTop($( ".ui-page-active > .ui-content" ));
 		});
 

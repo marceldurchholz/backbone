@@ -20,18 +20,9 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 				
 				/* streamdata getter part */
 				// _this.bla = "foo";
+				_this.streamData = new Array();
+				_this.uploaderArray = new Array();
 				// window.me.id = "042cb1572ffbea5d";
-				if (_this.options.hash=='videos') {
-					_this.collectStreamData();
-				}
-				
-			},
-			
-			collectStreamData: function() {
-				var _this = this;
-				var streamData = new Array();
-				_this.streamData = streamData;
-				
 				$.ajax({
 					url: "http://dominik-lohmann.de:5000/users/"+window.me.id,
 					async: false
@@ -41,6 +32,43 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 					if (window.me.interests == undefined) window.me.interests = new Array();
 				});
 				
+				if (_this.options.hash=='learningstream') {
+					_this.collectStreamData();
+				}
+				else if (_this.options.hash=='videos') {
+					_this.collectVideosData();
+				}
+				
+				if (_this.streamData.length==0) {
+					var value = new Object();
+					value.ccat = 'plan';
+					value.icon = 'images/avatar.jpg';
+					value.href = '#myprofile';
+					value.title = 'Noch keine Inhalte!';
+					value.topic = 'Bitte Interessen auswählen...';
+					value.description = ' Klicken Sie hier um auf Ihre Profileinstellungen zu gelangen...';
+					value.uploaderdata = new Array();
+					_this.streamData.push(value);
+				}
+				// Sort multidimensional arrays with oobjects by value 
+				// http://www.javascriptkit.com/javatutors/arraysort2.shtml
+				_this.streamData.sort(function(a, b){
+					return b.cdate-a.cdate
+				});
+				_this.options.stream_data = _this.streamData;
+				// _this.render();
+
+				
+			},
+			
+			collectStreamData: function() {
+				_this.collectVideosData();
+				_this.collectCardData();			
+			},
+			
+			collectVideosData: function() {
+				var _this = this;
+
 				var requestUrl = "http://dominik-lohmann.de:5000/videos?active=true&deleted=false";
 				if (window.system.master!=true) requestUrl = requestUrl + "&uploader="+window.system.aoid;
 				$.ajax({
@@ -97,7 +125,11 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 						
 					});
 				});
-				
+			},
+
+			collectCardData: function() {
+				var _this = this;
+								
 				var requestUrl = "http://dominik-lohmann.de:5000/cards?active=true&deleted=false";
 				if (window.system.master!=true) requestUrl = requestUrl + "&uploader="+window.system.aoid;
 				$.ajax({
@@ -155,24 +187,6 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 						}
 					});
 				});
-				if (_this.streamData.length==0) {
-					var value = new Object();
-					value.ccat = 'plan';
-					value.icon = 'images/avatar.jpg';
-					value.href = '#myprofile';
-					value.title = 'Noch keine Inhalte!';
-					value.topic = 'Bitte Interessen auswählen...';
-					value.description = ' Klicken Sie hier um auf Ihre Profileinstellungen zu gelangen...';
-					value.uploaderdata = new Array();
-					_this.streamData.push(value);
-				}
-				// Sort multidimensional arrays with oobjects by value 
-				// http://www.javascriptkit.com/javatutors/arraysort2.shtml
-				_this.streamData.sort(function(a, b){
-					return b.cdate-a.cdate
-				});
-				_this.options.stream_data = _this.streamData;
-				// _this.render();
 			},
 			
             render:function () {
