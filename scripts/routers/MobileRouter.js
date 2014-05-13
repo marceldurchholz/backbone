@@ -19,40 +19,63 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 			initialize: function() {
 				var _this = this;
 				window.myrouter = _this;
+				_this.query_vars = new Object();
 				_this.ghostView = new Object();
 				_this.bindEvents();
 				// console.log(_this.ghostView);
 				// console('initializing...');
 				// _this.initRouter();
+				// _this.route("", "", _this.startRouter);
+				_this.route("*path", "vars", _this.initRouter);
+				_this.route("videos/details/view/:id", "id", _this.videodetailsRouter);
+				
 				Backbone.history.start({
 					// silent:true,
-					pushState: false,
-					hashChange: false
+					// pushState: true,
+					// hashChange: true
 				});
+				// window.location.hash="home";
 			},
 
-            routes: {
-				"": "startRouter",
-				"login": "loginRouter",
-				"*path": "initRouter"
-			},
+			/*
 			startRouter: function() {
 				_this = this;
 				// alert('silence is golden...');
 				_this.initRouter();
 			},
-            loginRouter: function() {
-				// console('doing loginRouter');
-				$.mobile.jqmNavigator.pushView(new loginView());
-            },
 			templateRouter: function() {
 				// console('doing templateRouter');
 				// $.mobile.jqmNavigator.pushView(new templateView().render());
 			},
+			*/
 
+			videodetailsRouter: function(id) {
+				_this = this;
+				// alert('doing.... '+id);
+				_this.query_vars = new Object();
+				_this.query_vars.urloffline_route = '#videodetails';
+				_this.query_vars.id = id;
+				_this.initRouter();
+			},
+			
 			initRouter: function() {
 				_this = this;
-				// alert('innniting...');
+				// alert('dynamic page getter...');
+				console.log(_this.query_vars);
+				if (_this.query_vars.urloffline_route) _this.query_vars.open_route = _this.query_vars.urloffline_route;
+				else _this.query_vars.open_route = window.location.hash;
+				
+				// Backbone.history.navigate(_this.query_vars.open_route.substring(1), {trigger: false, replace:true});
+				
+
+				/*
+				if (_this.query_vars!=undefined && (_this.query_vars.open_route=='' || _this.query_vars.open_route==undefined || _this.query_vars.open_route=='undefined')) _this.query_vars.open_route = _this.query_vars.query_vars.open_route;
+				else _this.query_vars.open_route = window.location.hash;
+				if (_this.query_vars.open_route=='') _this.query_vars.open_route='#login';
+				alert(_this.query_vars.open_route);
+				*/
+				
+				// alert(_this.query_vars.open_route);
 				this.collection.fetch({ 
 					success: function(response){
 						_this.collection = response;
@@ -61,24 +84,37 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 						var xbla = new panelrightView({me:window.system.me,collection:_this.collection});
 						var zbla = new panelfunctionsView({me:window.system.me,collection:_this.collection});
 						var ybla = new testView({me:window.system.me,collection:_this.collection});
-						// alert(queryRoute);
-						var queryRoute = window.location.hash;
-						if (queryRoute=='') queryRoute = '#login';
-						_this.gotoRoute(queryRoute);
+						// alert(window.location.hash);
+						// if (window.location.hash=='') window.location.hash='#login';
+						if (_this.query_vars.open_route=='') _this.query_vars.open_route='#login';
+						// alert('going to route: '+_this.query_vars.open_route);
+						_this.gotoRoute(_this.query_vars.open_route);
 					}
 				});
+			},
+            routes: {
 			},
 			recreateSidemenu: function(e,a) {
 				console.log('recreateSidemenu');
 				var _this = this;
 				_this.routes = [];
-				this.collection.each(function(row) {
+				_this.route("*path", "vars", _this.initRouter);
+				_this.collection.each(function(row) {
 					var _row = row;
 					var userfriendly = _row.get('urloffline');
 					_this.routes[userfriendly] = userfriendly+'Router';
 				});
-				_this.routes[''] = "startRouter";
-				_this.routes['*path'] = 'initRouter';
+				
+				_this.route("videos/details/view/:id", "id", _this.videodetailsRouter);
+				
+				// _this.route("", "", _this.startRouter);
+				// _this.route("videos/details/view/:id", "id", _this.videodetailsRouter);
+				// _this.route("*path", "vars", _this.initRouter);
+				
+				// _this.routes[''] = "startRouter";
+				// _this.routes['videos/details/view/:id'] = 'videodetailsRouter';
+				// _this.routes['*path'] = 'initRouter';
+				
 				
 			},
 			bindEvents: function() {
@@ -102,19 +138,12 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 					return(false);
 				}
 				else if (href!='#' && href!='undefined' && href!='' && href!=undefined) {
-					// console.log(href+' has no >> data-ajax=true');
 					if (e.preventDefault) e.preventDefault();
-					// if ($( "#panel_left" )) $( "#panel_left" ).panel().panel( "close" );
-					// if ($( "#panel_right" )) $( "#panel_right" ).panel().panel( "close" );
-					// if ($( "#panel_functions" )) $( "#panel_functions" ).panel().panel( "close" );
-					// window.setTimeout(function blay() {
-						_this.gotoRoute(href);
-					// }, 300);
+					_this.gotoRoute(href);
 					return(false);
 				}
 				else {
 					if (e.preventDefault) e.preventDefault();
-					// console.log('undefinierte aktion in MobileRouter.js: eventuell ein realler <a href="#bla">foo</a> link ?!?');
 					console.log('wahrscheinlich ein link, der durch eine globale function in myfunctions.js definiert sein sollte/ist...');
 					return(false);
 				}
@@ -122,6 +151,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 			gotoRoute: function(route) {
 				var _this = this;				
 				console.log('gotoRoute: '+route);
+				Backbone.history.navigate('', {trigger: false, replace:true});
 				_this.collection.fetch({ 
 					success: function(response){
 					_this.collection = response;
@@ -151,11 +181,8 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 							else $.mobile.jqmNavigator.pushView(new noaccessView()); // _this.noaccessRouter();
 						}
 						else {
-							// alert('router function not existing');
 							console.log('router '+router+' is undefined / hash '+checkroute+' eventually not pulled via navmobile=true (router function not created/existing)');
-							// _this.noaccessRouter();
 							$.mobile.jqmNavigator.pushView(new noaccessView());
-							// _this.templateRouter();
 							return(false);
 						}
 					}
@@ -172,6 +199,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 				// data_depencies = ["videos"];
 				var pageObject = new Object({
 					// 'data_depencies':data_depencies,
+					'query_vars':_this.query_vars,
 					'header_vars':new Object({title:model.get('userfriendly')}, {subtitle:model.get('slogan')}),
 					'footer_vars':new Object({copyright:model.get('companyname')}, {kdnr:model.get('kdnr')}),
 					'me':window.me,

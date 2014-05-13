@@ -82,9 +82,10 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
 				// new MobileRouter();
 				
 				// alert('loading router');
-				window.myrouter = new MobileRouter();
-				
+				_this = this;
 
+				window.MobileRouter = MobileRouter;
+				window.myrouter = new window.MobileRouter();
 
 				// $.mobile.jqmNavigator.pushView(new LoginView);
 

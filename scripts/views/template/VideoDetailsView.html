@@ -1,0 +1,17 @@
+<div data-theme="h" data-role="header" data-position="fixed">
+    <a id="btnBack" href="#" data-icon="back" data-iconpos="notext">Zurück</a>
+    <h1><%= page_vars.header_vars.title %></h1>
+    <% if(checkRole("user")==true) { %>
+		<a data-ajax="true" href="#panel_functions" data-icon="gear" data-iconpos="notext">Funktionen</a>
+	<% } else { %>
+		<a data-ajax="true" href="#panel_right" data-icon="gear" data-iconpos="notext">Login</a>
+	<% } %>
+</div>
+
+<div data-role="content">
+
+	<% console.log(page_vars) %>
+	
+	this is the video details page
+	
+</div>

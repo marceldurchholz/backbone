@@ -6,8 +6,8 @@
  * Time: 9:53 AM
  */
 
-define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.html', 'text!views/template/HomeView.html', 'text!views/template/BlankView.html', 'text!views/template/SupportView.html', 'text!views/template/DashboardView.html', 'text!views/template/VideosView.html'],
-    function ($, _, Backbone, standardTemplate, homeTemplate, blankTemplate, supportTemplate, dashboardTemplate, videosTemplate) {
+define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.html', 'text!views/template/VideoDetailsView.html', 'text!views/template/BlueTemplateView.html', 'text!views/template/HomeView.html', 'text!views/template/BlankView.html', 'text!views/template/SupportView.html', 'text!views/template/DashboardView.html', 'text!views/template/VideosView.html'],
+    function ($, _, Backbone, standardTemplate, videodetailsTemplate, bluestandardTemplate, homeTemplate, blankTemplate, supportTemplate, dashboardTemplate, videosTemplate) {
         var TemplateView = Backbone.View.extend({
 
 			events:{
@@ -32,12 +32,20 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 					if (window.me.interests == undefined) window.me.interests = new Array();
 				});
 				
+				
 				if (_this.options.hash=='learningstream') {
 					_this.collectStreamData();
 				}
 				else if (_this.options.hash=='videos') {
 					_this.collectVideosData();
 				}
+				else if (_this.options.hash=='videodetails') {
+					_this.collectVideoDetailsData();
+				}
+				else {
+					// alert(_this.options.hash);
+				}
+				
 				
 				if (_this.streamData.length==0) {
 					var value = new Object();
@@ -64,6 +72,10 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 			collectStreamData: function() {
 				_this.collectVideosData();
 				_this.collectCardData();			
+			},
+			
+			collectVideoDetailsData: function() {
+				var _this = this;
 			},
 			
 			collectVideosData: function() {

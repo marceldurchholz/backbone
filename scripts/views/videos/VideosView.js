@@ -21,9 +21,6 @@ define(['underscore', 'Backbone', 'text!views/template/VideosView.html'],
 			},
 			bindEvents: function() {
 				var _this = this;
-				this.$el.off('click','.showVideoDetailsLink').on('click','.showVideoDetailsLink',function(event){
-					event.preventDefault();
-				});
 				
 				_this.$el.off( "swipeleft", ".swipetodeletetd").on( "swipeleft", ".swipetodeletetd", function( e ) {
 					e.preventDefault();

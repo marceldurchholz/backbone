@@ -2684,32 +2684,6 @@ try {
 	});
 	*/
 
-	$(window).off( "hashchange" ).on( "hashchange", function( e ) {	
-		onHashChange(e);
-	});
-	function onHashChange(e) {
-		// alert('ATTENTION !!!! hashchanged to: '+window.location.hash);
-		// window.myrouter.gotoRoute(window.location.hash);
-		window.myrouter.initRouter();
-		/*
-		if(this.cancelNavigate) { // cancel out if just reverting the URL
-			e.stopImmediatePropagation();
-			this.cancelNavigate = false;
-			return;
-		}
-		if(this.view && this.view.dirty) {
-			var dialog = confirm("You have unsaved changes. To stay on the page, press cancel. To discard changes and leave the page, press OK");
-			if(dialog == true)
-				return;
-			else {
-				e.stopImmediatePropagation();
-				this.cancelNavigate = true;
-				window.location.href = e.originalEvent.oldURL;
-			}
-		}
-		*/
-	}
-	
 	$(document).off( "pageinit" ).on( "pageinit", function( event ) {
 		// alert('pageinit');
 		// $('#container').find('.ui-page').last().each(function() {
@@ -2779,26 +2753,22 @@ try {
 		// EFFECTS INFOS:
 		// http://www.w3schools.com/jquerymobile/jquerymobile_transitions.asp
 		$(document).off( "pagebeforehide" ).on( "pagebeforehide", function( event ) {	
-			$.mobile.loading('hide');
+			// $.mobile.loading('hide');
 		});
 		$(document).off( "pagehide" ).on( "pagehide", function( event ) {	
 		});
 		$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {
-			// alert('pagecreate');
-			// setTimeout(function() {
-				
-			// },1000);
 		});
 		$(document).off( "pageshow" ).on( "pageshow", function( event ) {
 			// alert('pageshow');
 		});
 		$(document).off( "pagechange" ).on( "pagechange", function( event ) {
 			// alert("pagechange");
+			// $('#container').trigger('create');
 			$.mobile.defaultPageTransition = 'pop';
 			$( "#panel_left" ).panel().panel( "close" );
 			$( "#panel_right" ).panel().panel( "close" );
 			$( "#panel_functions" ).panel().panel( "close" );
-			// $( "#panel_functions" ).trigger( "create" );
 			scrollToTop($( ".ui-page-active > .ui-content" ));
 		});
 
@@ -2818,6 +2788,16 @@ try {
 		$(document).off( "click", "#btnBack").on( "click", "#btnBack", function( e ) {
 			e.preventDefault();
 			$.mobile.jqmNavigator.popView();
+		});
+		
+		$(document).off('click','.showVideoDetailsLink').on('click','.showVideoDetailsLink',function(event){
+			event.preventDefault();
+			console.log(event);
+			// alert('clicked');
+			var link = event.currentTarget.getAttribute('data-href');
+			Backbone.history.navigate(link, {trigger: true, replace:true});
+			// Backbone.history.navigate('videos/details/view/1234567890', {trigger:true});
+			// return(false);
 		});
 		
 		$(document).off( "click", "#btnNextView").on( "click", "#btnNextView", function( e ) {
