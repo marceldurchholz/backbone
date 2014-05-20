@@ -55,6 +55,19 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
         domReady(function () {
 
             function onDeviceReady(desktop) {
+				// Native loading spinner
+				if (window.spinnerplugin) {
+					$.extend($.mobile, {
+						loading: function() {
+							// Show/hide spinner
+							var arg = arguments ? arguments[0] : '';
+							if (arg == 'show') spinnerplugin.show({'overlay':true});
+							else if (arg == 'hide') spinnerplugin.hide();
+							// Compatibility with jQM 1.4
+							return { loader: function() { } }
+						}
+					}); 
+				}
                 if (desktop !== true) {
 					// Hiding splash screen when app is loaded
                     cordova.exec(null, null, 'SplashScreen', 'hide', []);
@@ -71,7 +84,6 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
                 // Setting jQM pageContainer to #container div, this solves some jQM flickers & jumps
                 // I covered it here: http://outof.me/fixing-flickers-jumps-of-jquery-mobile-transitions-in-phonegap-apps/
                 $.mobile.pageContainer = $('#container');
-
                 // Setting default transition to slide
                 // $.mobile.defaultPageTransition = 'slide';
 				$.mobile.defaultPageTransition = "none"

@@ -2717,21 +2717,27 @@ try {
 	});
 	
 	function showLoading() {
+		$.mobile.loading('show');
+		/*
 		$.mobile.loading('show', {
 			text: 'APPinaut lädt',
 			textVisible: true,
 			// html: "",
 			theme: 'a'
 		});
+		*/
 	}
 	
 	$( document ).ajaxStart(function() {
+		showLoading();
+		/*
 		$.mobile.loading('show', {
 			text: 'APPinaut lädt',
 			textVisible: true,
 			html: "",
 			theme: 'a'
 		});
+		*/
 	});
 	
 	function scrollToTop(obj) {
