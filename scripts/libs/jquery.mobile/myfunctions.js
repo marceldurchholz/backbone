@@ -2684,37 +2684,13 @@ try {
 	});
 	*/
 
-	$(document).off( "pageinit" ).on( "pageinit", function( event ) {
-		// alert('pageinit');
-		// $('#container').find('.ui-page').last().each(function() {
-			// $(this).css("min-height",$(window).height()+"px");
-			// $.mobile.activePage.css("min-height")
-		// });
-		// alert($.mobile.activePage.css("min-height"));
-		/*
-			.ui-page{
-				min-height: 502px !important;
-			}
-		*/
-	});
-
-	$(document).off( "pagebeforeshow" ).on( "pagebeforeshow", function( event ) {
-		// alert('pagebeforeshow');
-		// alert($('#ui-header').height());
-		// alert($.mobile.activePage.css("min-height"));
-		
-		// alert($.mobile.activePage.find('#ui-header').height()); // .css("height" ,  $(window).height()+"px" );
-		/*
-		$('#container').find('.ui-page').last().each(function() {
-			$(this).css("min-height",$(window).height()+"px");
-			// $.mobile.activePage.css("min-height")
-		});
-		*/
-	});
-
 	$(document).off( "pagebeforecreate" ).on( "pagebeforecreate", function( event ) {
 		handleGhostViews();
 	});
+	
+	function hideLoading() {
+		$.mobile.loading( 'hide' );
+	}
 	
 	function showLoading() {
 		$.mobile.loading('show');
@@ -2755,10 +2731,39 @@ try {
 		
 		// EFFECTS INFOS:
 		// http://www.w3schools.com/jquerymobile/jquerymobile_transitions.asp
+		$(document).off( "pageinit" ).on( "pageinit", function( event ) {
+			// alert('pageinit');
+			// $('#container').find('.ui-page').last().each(function() {
+				// $(this).css("min-height",$(window).height()+"px");
+				// $.mobile.activePage.css("min-height")
+			// });
+			// alert($.mobile.activePage.css("min-height"));
+			/*
+				.ui-page{
+					min-height: 502px !important;
+				}
+			*/
+		});
+		$(document).off( "pagebeforeshow" ).on( "pagebeforeshow", function( event ) {
+			// alert('pagebeforeshow');
+			// alert($('#ui-header').height());
+			// alert($.mobile.activePage.css("min-height"));
+			
+			// alert($.mobile.activePage.find('#ui-header').height()); // .css("height" ,  $(window).height()+"px" );
+			/*
+			$('#container').find('.ui-page').last().each(function() {
+				$(this).css("min-height",$(window).height()+"px");
+				// $.mobile.activePage.css("min-height")
+			});
+			*/
+		});
 		$(document).off( "pagebeforehide" ).on( "pagebeforehide", function( event ) {	
 			// $.mobile.loading('hide');
 		});
 		$(document).off( "pagehide" ).on( "pagehide", function( event ) {	
+			// spinnerplugin.hide();
+			// $.mobile.loading( 'hide' );
+			hideLoading();
 		});
 		$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {
 		});

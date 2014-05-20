@@ -73,9 +73,9 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
                     cordova.exec(null, null, 'SplashScreen', 'hide', []);
 					if (navigator.userAgent.match(/(iPad|iPhone)/)) {
 						// StatusBar.show();
-						window.plugin.statusbarOverlay.show();
-						// document.body.style.marginTop = "0px";
-						// $("#body").css('top', "0px");
+						window.plugin.statusbarOverlay.hide();
+						document.body.style.marginTop = "0px";
+						$("#body").css('top', "0px");
 						// alert('FastClick.attach');
 						// console.log(document.body.innerHTML);
 						// FastClick.attach(document.body);
