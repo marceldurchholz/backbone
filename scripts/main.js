@@ -61,7 +61,7 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
 						loading: function() {
 							// Show/hide spinner
 							var arg = arguments ? arguments[0] : '';
-							if (arg == 'show') spinnerplugin.show({'overlay':true});
+							if (arg == 'show') spinnerplugin.show({'overlay':false,'timeout':10,'fullscreen':true});
 							else if (arg == 'hide') spinnerplugin.hide();
 							// Compatibility with jQM 1.4
 							return { loader: function() { } }
