@@ -2713,10 +2713,7 @@ try {
 	});
 
 	$(document).off( "pagebeforecreate" ).on( "pagebeforecreate", function( event ) {
-		// $.mobile.defaultPageTransition = 'slidefade';
 		handleGhostViews();
-		// alert($.mobile.activePage.css("min-height"));
-		// alert($.mobile.activePage.find('.ui-header').css("min-height"));
 	});
 	
 	function showLoading() {
@@ -2765,7 +2762,7 @@ try {
 		$(document).off( "pagechange" ).on( "pagechange", function( event ) {
 			// alert("pagechange");
 			// $('#container').trigger('create');
-			$.mobile.defaultPageTransition = 'pop';
+			// $.mobile.defaultPageTransition = 'pop';
 			$( "#panel_left" ).panel().panel( "close" );
 			$( "#panel_right" ).panel().panel( "close" );
 			$( "#panel_functions" ).panel().panel( "close" );
