@@ -61,7 +61,7 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
 						loading: function() {
 							// Show/hide spinner
 							var arg = arguments ? arguments[0] : '';
-							if (arg == 'show') spinnerplugin.show({'overlay':false,'timeout':10,'fullscreen':true});
+							if (arg == 'show') spinnerplugin.show({'overlay':true,'timeout':10,'fullscreen':true});
 							else if (arg == 'hide') spinnerplugin.hide();
 							// Compatibility with jQM 1.4
 							return { loader: function() { } }
@@ -72,9 +72,10 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
 					// Hiding splash screen when app is loaded
                     cordova.exec(null, null, 'SplashScreen', 'hide', []);
 					if (navigator.userAgent.match(/(iPad|iPhone)/)) {
-						StatusBar.hide();
-						document.body.style.marginTop = "0px";
-						$("#body").css('top', "0px");
+						// StatusBar.show();
+						window.plugin.statusbarOverlay.show();
+						// document.body.style.marginTop = "0px";
+						// $("#body").css('top', "0px");
 						// alert('FastClick.attach');
 						// console.log(document.body.innerHTML);
 						// FastClick.attach(document.body);

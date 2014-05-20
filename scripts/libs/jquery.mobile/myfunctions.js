@@ -2614,7 +2614,7 @@ try {
 			doAlert('Bitte überprüfen Sie die eingegebenen Daten.','Eingaben unvollständig oder nicht korrekt!');
 			return(false);
 		}
-		// showLoading();
+		showLoading();
 		dpd.users.login({username: username, password: password}, function(user, error) {
 			if (error) {
 				$( "#panel_right" ).panel().panel( "close" );
@@ -2717,7 +2717,7 @@ try {
 	});
 	
 	function showLoading() {
-		// $.mobile.loading('show');
+		$.mobile.loading('show');
 		/*
 		$.mobile.loading('show', {
 			text: 'APPinaut lädt',
@@ -2729,7 +2729,7 @@ try {
 	}
 	
 	$( document ).ajaxStart(function() {
-		// showLoading();
+		showLoading();
 		/*
 		$.mobile.loading('show', {
 			text: 'APPinaut lädt',
