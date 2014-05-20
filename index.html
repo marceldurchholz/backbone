@@ -9,9 +9,7 @@
 	<base href="">
 	<title>Backbone</title>
 	<meta name="description" content="Backbone" />
-	<!-- <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"> -->
-	<meta name="viewport" content="user-scalable=no, width=device-width">
-	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">	
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 	<link rel="apple-touch-icon" href="icon.png" />
@@ -27,7 +25,6 @@
 	</script>
 	
 	<script type="text/javascript" src="provider.js"></script>
-
     <script type="text/javascript" src="cordova-loader.js"></script>
 	
     <!-- jQuery Mobile styles -->
@@ -89,6 +86,10 @@
 		.ui-loading .ui-loader-background {
 			display:block;
 			z-index:9999999;
+		}
+		
+		.ui-page { 
+			-webkit-backface-visibility: hidden; 
 		}
 		
     </style>
