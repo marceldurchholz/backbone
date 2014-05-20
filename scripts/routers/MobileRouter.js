@@ -151,7 +151,7 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 			gotoRoute: function(route) {
 				var _this = this;				
 				console.log('gotoRoute: '+route);
-				Backbone.history.navigate('', {trigger: false, replace:true});
+				// Backbone.history.navigate('', {trigger: false, replace:true});
 				_this.collection.fetch({ 
 					success: function(response){
 					_this.collection = response;

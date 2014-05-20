@@ -22,7 +22,7 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 				// _this.bla = "foo";
 				_this.streamData = new Array();
 				_this.uploaderArray = new Array();
-				// window.me.id = "042cb1572ffbea5d";
+				window.me.id = "042cb1572ffbea5d";
 				$.ajax({
 					url: "http://dominik-lohmann.de:5000/users/"+window.me.id,
 					async: false
@@ -76,6 +76,74 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 			
 			collectVideoDetailsData: function() {
 				var _this = this;
+				alert('collectVideoDetailsData');
+				
+				var requestUrl = "http://dominik-lohmann.de:5000/videos?deleted=false&id="+_this.options.query_vars.id;
+				// if (window.system.master!=true) requestUrl = requestUrl + "&uploader="+window.system.aoid;
+				if (window.system.master!=true) requestUrl = requestUrl + "&uploader="+window.system.aoid;
+				alert(requestUrl);
+				// else requestUrl = requestUrl + "&public=true";
+				$.ajax({
+					url: requestUrl,
+					async: false
+				}).done(function(result) {
+					console.log(result);
+					var videoData = new Object();
+					videoData.mydata = result;
+					_this.uploaderArray = new Array();
+					_.each(videoData, function(value, index, list) {
+						// var exists = $.inArray( value.topic, window.me.interests );
+						// if (window.me.interests == undefined) exists=1;
+						// else if (window.me.interests.length==0) exists=1;
+						alert(value.userfriendly);
+						var exists = 1;
+						if (value.public!=true && value.uploader != window.me.id) exists=-1;
+						if (exists>-1 || value.uploader == window.me.id) {
+							alert('adding');
+							value.ccat = 'video';
+							value.icon = 'images/icon-multimedia-60.png';
+							value.href = '#videos/details/view/'+value.id;
+							var uploader = value.uploader;
+							// console.log(uploader);
+							// console.log(_this.uploaderArray[uploader]);
+							// if (_this.uploaderArray[uploader]==undefined) {
+								$.ajax({
+									url: 'http://dominik-lohmann.de:5000/users/?id='+uploader,
+									async: false,
+									success: function(data, textStatus, XMLHttpRequest) {
+										console.log(data);
+										value.uploaderdata = data;
+										_this.uploaderArray[data.id]==data;
+										console.log(_this.uploaderArray[data.id]);
+										// _this.streamData.push(value);
+										// _this.rowContent = _this.rowContent + _this.insertData(value);
+									},
+									error:function (xhr, ajaxOptions, thrownError) {
+										console.log(xhr.responseText);
+										/*
+										if (xhr.responseText=='{"message":"not found","statusCode":404,"status":404}') {
+											dpd.videos.put(model.attributes.id, {"active":false}, function(result, err) {
+											  if(err) return console.log(err);
+											});
+										}
+										*/
+									}
+								});
+							// }
+							//else {
+							//	value.uploaderdata = _this.uploaderArray[uploader];
+							// }
+							
+							// if ((window.system.master==true && value.public==true) || (window.system.master==false && window.system.aoid==value.uploader)) { 
+								console.log(value);
+								_this.streamData.push(value);
+							// }
+						}
+					});
+				});
+				// _this.render();				
+
+				
 			},
 			
 			collectVideosData: function() {
