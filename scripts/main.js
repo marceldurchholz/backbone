@@ -73,7 +73,11 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
                 $.mobile.pageContainer = $('#container');
 
                 // Setting default transition to slide
-                $.mobile.defaultPageTransition = 'slide';
+                // $.mobile.defaultPageTransition = 'slide';
+				$.mobile.defaultPageTransition = "none"
+				$.mobile.defaultDialogTransition = 'none';
+				$.mobile.useFastClick = true; 
+				$.mobile.touchOverflowEnabled = true;
 
                 // Pushing MainView
                 // $.mobile.jqmNavigator.pushView(new HomeView());
