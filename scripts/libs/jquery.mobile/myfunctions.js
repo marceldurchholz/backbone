@@ -2717,6 +2717,10 @@ try {
 	});
 	
 	function scrollToTop(obj) {
+		// alternative:
+		// http://flesler.blogspot.de/2009/05/jqueryscrollto-142-released.html
+		// demo: http://demos.flesler.com/jquery/scrollTo/
+		// info from: http://dcarrith.github.io/jquery.mobile.smooth.scrollTo/
 		obj.scrollTop(0); // .scrollTop( 300 );
 	}
 
@@ -2769,11 +2773,11 @@ try {
 		$(document).off( "pageshow" ).on( "pageshow", function( event ) {
 			hideLoading();
 			// alert('pageshow');
+			$.mobile.defaultPageTransition = 'slide';
 		});
 		$(document).off( "pagechange" ).on( "pagechange", function( event ) {
 			// alert("pagechange");
 			// $('#container').trigger('create');
-			// $.mobile.defaultPageTransition = 'pop';
 			$( "#panel_left" ).panel().panel( "close" );
 			$( "#panel_right" ).panel().panel( "close" );
 			$( "#panel_functions" ).panel().panel( "close" );
