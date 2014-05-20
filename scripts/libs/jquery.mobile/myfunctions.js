@@ -2763,11 +2763,11 @@ try {
 		$(document).off( "pagehide" ).on( "pagehide", function( event ) {	
 			// spinnerplugin.hide();
 			// $.mobile.loading( 'hide' );
-			hideLoading();
 		});
 		$(document).off( "pagecreate" ).on( "pagecreate", function( event ) {
 		});
 		$(document).off( "pageshow" ).on( "pageshow", function( event ) {
+			hideLoading();
 			// alert('pageshow');
 		});
 		$(document).off( "pagechange" ).on( "pagechange", function( event ) {

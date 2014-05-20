@@ -87,8 +87,8 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
                 $.mobile.pageContainer = $('#container');
                 // Setting default transition to slide
                 // $.mobile.defaultPageTransition = 'slide';
-				$.mobile.defaultPageTransition = "none"
-				$.mobile.defaultDialogTransition = 'none';
+				$.mobile.defaultPageTransition = "slide"
+				$.mobile.defaultDialogTransition = 'pop';
 				$.mobile.useFastClick = true; 
 				$.mobile.touchOverflowEnabled = true;
 
