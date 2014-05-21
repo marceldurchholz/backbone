@@ -22,7 +22,7 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 				// _this.bla = "foo";
 				_this.streamData = new Array();
 				_this.uploaderArray = new Array();
-				window.me.id = "042cb1572ffbea5d";
+				// window.me.id = "042cb1572ffbea5d";
 				$.ajax({
 					url: "http://dominik-lohmann.de:5000/users/"+window.me.id,
 					async: false
