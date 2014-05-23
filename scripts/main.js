@@ -109,7 +109,9 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
 
             }
 
-            if (navigator.userAgent.match(/(iPad|iPhone|Android)/)) {
+            // if (navigator.userAgent.match(/(iPad|iPhone|Android)/)) {
+			alert(navigator.userAgent);
+			if (navigator.userAgent.match(/(iPad|iPhone)/)) {
                 // This is running on a device so waiting for deviceready event
                 document.addEventListener('deviceready', onDeviceReady, false);
 				alert('waiting for mobile device ready');
