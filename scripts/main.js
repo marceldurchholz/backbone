@@ -55,6 +55,7 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
         domReady(function () {
 
             function onDeviceReady(desktop) {
+				alert('device ready sent');
 				// Native loading spinner
 				if (window.spinnerplugin) {
 					$.extend($.mobile, {
@@ -111,9 +112,11 @@ define(['domReady', 'routers/MobileRouter', 'jqm'],
             if (navigator.userAgent.match(/(iPad|iPhone|Android)/)) {
                 // This is running on a device so waiting for deviceready event
                 document.addEventListener('deviceready', onDeviceReady, false);
+				alert('waiting for mobile device ready');
             } else {
                 // On desktop don't have to wait for anything
-                onDeviceReady(true);
+                alert('doing for desktop ready');
+				onDeviceReady(true);
             }
 
         });
