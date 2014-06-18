@@ -7,7 +7,7 @@ define(["jquery", "underscore", "Backbone"],
 		}
 	});
 	var SidemenusCollection = Backbone.Collection.extend({
-		url: 'http://dominik-lohmann.de:5000/sidemenu/?{"navmobile":"true","$sort":"seq"}',
+		url: 'http://s299455960.online.de:5000/sidemenu/?{"navmobile":true,"$sort":"seq"}',
 		model: SidemenuModel,			
 		initialize: function() {
 			// console.log('initializing sidemenuCollection');

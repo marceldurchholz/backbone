@@ -7,7 +7,7 @@ define(["jquery", "underscore", "Backbone"],
 		}
 	});
 	var streamdataCollection = Backbone.Collection.extend({
-		url: 'http://dominik-lohmann.de:5000/videos/',
+		url: 'http://s299455960.online.de:5000/videos/',
 		model: streamdataModel,			
 		initialize: function() {
 			// console.log('initializing sidemenuCollection');
@@ -21,7 +21,7 @@ define(["jquery", "underscore", "Backbone"],
 			window.me.id = "042cb1572ffbea5d";
 			
 			$.ajax({
-				url: "http://dominik-lohmann.de:5000/users/"+window.me.id,
+				url: "http://s299455960.online.de:5000/users/"+window.me.id,
 				async: false
 			}).done(function(me) {
 				// alert(me.id);
@@ -29,7 +29,7 @@ define(["jquery", "underscore", "Backbone"],
 				if (window.me.interests == undefined) window.me.interests = new Array();
 			});
 			
-			var requestUrl = "http://dominik-lohmann.de:5000/videos?active=true&deleted=false";
+			var requestUrl = "http://s299455960.online.de:5000/videos?active=true&deleted=false";
 			if (window.system.master!=true) requestUrl = requestUrl + "&uploader="+window.system.aoid;
 			$.ajax({
 				url: requestUrl,
@@ -63,7 +63,7 @@ define(["jquery", "underscore", "Backbone"],
 						var uploader = value.uploader;
 						if (_this.uploaderArray[uploader]==undefined) {
 							$.ajax({
-								url: 'http://dominik-lohmann.de:5000/users/?id='+uploader,
+								url: 'http://s299455960.online.de:5000/users/?id='+uploader,
 								async: false,
 								success: function(data, textStatus, XMLHttpRequest) {
 									value.uploaderdata = data;
@@ -86,7 +86,7 @@ define(["jquery", "underscore", "Backbone"],
 				});
 			});
 			
-			var requestUrl = "http://dominik-lohmann.de:5000/cards?active=true&deleted=false";
+			var requestUrl = "http://s299455960.online.de:5000/cards?active=true&deleted=false";
 			if (window.system.master!=true) requestUrl = requestUrl + "&uploader="+window.system.aoid;
 			$.ajax({
 				url: requestUrl,
@@ -121,7 +121,7 @@ define(["jquery", "underscore", "Backbone"],
 						var uploader = value.uploader;
 						if (_this.uploaderArray[uploader]==undefined) {
 							$.ajax({
-								url: 'http://dominik-lohmann.de:5000/users/?id='+uploader,
+								url: 'http://s299455960.online.de:5000/users/?id='+uploader,
 								async: false,
 								success: function(data, textStatus, XMLHttpRequest) {
 									value.uploaderdata = data;
