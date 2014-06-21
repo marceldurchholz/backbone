@@ -57,7 +57,7 @@ try {
 try {
 	var root = this; // used by pdfbrowser and childbrowser
 	var rootURL = "";
-	var dpd_server = "http://s299455960.online.de:5000/";
+	var dpd_server = "http://s15944029.onlinehome-server.info:5000/";
 	var deviceSDID;
 	var cordovaIsLoaded = false;
 	var deviceSDID = "???";
@@ -2574,7 +2574,7 @@ try {
 				giftcode = giftcode.replace('-','').toLowerCase();
 				if (giftcode!='') {
 					$.ajax({
-						url: 'http://s299455960.online.de:5000/users/?kdnr='+giftcode,
+						url: 'http://s15944029.onlinehome-server.info:5000/users/?kdnr='+giftcode,
 						async: false,
 						success: function(sponsorObject, textStatus, XMLHttpRequest){
 							sponsor = sponsorObject.id;

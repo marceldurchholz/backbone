@@ -24,7 +24,7 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 				_this.uploaderArray = new Array();
 				// window.me.id = "042cb1572ffbea5d";
 				$.ajax({
-					url: "http://s299455960.online.de:5000/users/"+window.me.id,
+					url: "http://s15944029.onlinehome-server.info:5000/users/"+window.me.id,
 					async: false
 				}).done(function(me) {
 					// alert(me.id);
@@ -78,7 +78,7 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 				var _this = this;
 				alert('collectVideoDetailsData');
 				
-				var requestUrl = "http://s299455960.online.de:5000/videos?deleted=false&id="+_this.options.query_vars.id;
+				var requestUrl = "http://s15944029.onlinehome-server.info:5000/videos?deleted=false&id="+_this.options.query_vars.id;
 				// if (window.system.master!=true) requestUrl = requestUrl + "&uploader="+window.system.aoid;
 				if (window.system.master!=true) requestUrl = requestUrl + "&uploader="+window.system.aoid;
 				alert(requestUrl);
@@ -108,7 +108,7 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 							// console.log(_this.uploaderArray[uploader]);
 							// if (_this.uploaderArray[uploader]==undefined) {
 								$.ajax({
-									url: 'http://s299455960.online.de:5000/users/?id='+uploader,
+									url: 'http://s15944029.onlinehome-server.info:5000/users/?id='+uploader,
 									async: false,
 									success: function(data, textStatus, XMLHttpRequest) {
 										console.log(data);
@@ -149,7 +149,7 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 			collectVideosData: function() {
 				var _this = this;
 
-				var requestUrl = "http://s299455960.online.de:5000/videos?active=true&deleted=false";
+				var requestUrl = "http://s15944029.onlinehome-server.info:5000/videos?active=true&deleted=false";
 				if (window.system.master!=true) requestUrl = requestUrl + "&uploader="+window.system.aoid;
 				$.ajax({
 					url: requestUrl,
@@ -183,7 +183,7 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 							var uploader = value.uploader;
 							if (_this.uploaderArray[uploader]==undefined) {
 								$.ajax({
-									url: 'http://s299455960.online.de:5000/users/?id='+uploader,
+									url: 'http://s15944029.onlinehome-server.info:5000/users/?id='+uploader,
 									async: false,
 									success: function(data, textStatus, XMLHttpRequest) {
 										value.uploaderdata = data;
@@ -210,7 +210,7 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 			collectCardData: function() {
 				var _this = this;
 								
-				var requestUrl = "http://s299455960.online.de:5000/cards?active=true&deleted=false";
+				var requestUrl = "http://s15944029.onlinehome-server.info:5000/cards?active=true&deleted=false";
 				if (window.system.master!=true) requestUrl = requestUrl + "&uploader="+window.system.aoid;
 				$.ajax({
 					url: requestUrl,
@@ -245,7 +245,7 @@ define(['jquery', 'underscore', 'Backbone', 'text!views/template/TemplateView.ht
 							var uploader = value.uploader;
 							if (_this.uploaderArray[uploader]==undefined) {
 								$.ajax({
-									url: 'http://s299455960.online.de:5000/users/?id='+uploader,
+									url: 'http://s15944029.onlinehome-server.info:5000/users/?id='+uploader,
 									async: false,
 									success: function(data, textStatus, XMLHttpRequest) {
 										value.uploaderdata = data;
