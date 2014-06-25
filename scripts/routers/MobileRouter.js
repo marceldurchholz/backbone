@@ -1,6 +1,6 @@
-define(['domReady', 'collections/sidemenusCollection', 'views/panelright/PanelrightView', 'views/panelfunctions/PanelfunctionsView', 'views/test/TestView', 'views/template/TemplateView', 'views/noaccess/NoaccessView', 'views/login/LoginView', 'jqm'],
+define(['domReady', 'collections/sidemenusCollection', 'views/panelright/PanelrightView', 'views/panelfunctions/PanelfunctionsView', 'views/test/TestView', 'views/template/TemplateView', 'views/noaccess/NoaccessView', 'views/login/LoginView', 'views/users/UsersView', 'jqm'],
 
-    function(domReady, sidemenusCollection, panelrightView, panelfunctionsView, testView, templateView, noaccessView, loginView) {
+    function(domReady, sidemenusCollection, panelrightView, panelfunctionsView, testView, templateView, noaccessView, loginView, usersView) {
 
 		var MobileRouter = Backbone.Router.extend({
 
@@ -15,8 +15,11 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 			//      jQuery Element Animations / Transformable scroll elements
 			
 			collection: new sidemenusCollection(),
+			// usersCollection: new usersCollection(),
 			
 			initialize: function() {
+				// alert('router');
+				// console.log(sidemenusCollection);
 				var _this = this;
 				window.myrouter = _this;
 				_this.query_vars = new Object();
@@ -28,6 +31,8 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 				// _this.route("", "", _this.startRouter);
 				_this.route("*path", "vars", _this.initRouter);
 				_this.route("videos/details/view/:id", "id", _this.videodetailsRouter);
+				_this.route("userdetails/:id", "id", _this.userdetailsRouter);
+				_this.route("userinterests/:id", "id", _this.userinterestsRouter);
 				
 				Backbone.history.start({
 					// silent:true,
@@ -54,6 +59,22 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 				// alert('doing.... '+id);
 				_this.query_vars = new Object();
 				_this.query_vars.urloffline_route = '#videodetails';
+				_this.query_vars.id = id;
+				_this.initRouter();
+			},
+			userdetailsRouter: function(id) {
+				_this = this;
+				// alert('doing.... '+id);
+				_this.query_vars = new Object();
+				_this.query_vars.urloffline_route = '#userdetails';
+				_this.query_vars.id = id;
+				// alert(_this.query_vars.id);
+				_this.initRouter();
+			},
+			userinterestsRouter: function(id) {
+				_this = this;
+				_this.query_vars = new Object();
+				_this.query_vars.urloffline_route = '#userinterests';
 				_this.query_vars.id = id;
 				_this.initRouter();
 			},
@@ -106,6 +127,8 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 				});
 				
 				_this.route("videos/details/view/:id", "id", _this.videodetailsRouter);
+				_this.route("userdetails/:id", "id", _this.userdetailsRouter);
+				_this.route("userinterests/:id", "id", _this.userinterestsRouter);
 				
 				// _this.route("", "", _this.startRouter);
 				// _this.route("videos/details/view/:id", "id", _this.videodetailsRouter);
@@ -149,9 +172,19 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 				}
 			},
 			gotoRoute: function(route) {
-				var _this = this;				
-				console.log('gotoRoute: '+route);
+				var _this = this;
+				// alert('gotoRoute: '+route);
 				// Backbone.history.navigate('', {trigger: false, replace:true});
+				var checkroute = route.substring(1);
+				var queryPointer = checkroute.indexOf('?');
+				// alert(queryPointer);
+				if (queryPointer>-1) {
+					var checkroute = checkroute.slice(0, queryPointer);
+					route = '#'+checkroute;
+				}
+				// alert(checkroute);
+				// alert(route);
+
 				_this.collection.fetch({ 
 					success: function(response){
 					_this.collection = response;
@@ -160,7 +193,6 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 						console.log(_this.routes);
 						var router = _this.routes[route.substring(1)];
 						if (router!=undefined) {
-							var checkroute = route.substring(1);
 							console.log(route);
 							var model = _this.collection.find(
 								function(model) {
@@ -210,17 +242,17 @@ define(['domReady', 'collections/sidemenusCollection', 'views/panelright/Panelri
 					'hash':hash
 				}, {variable:'page_vars'});
 				try {
-					console.log('KEIN FEHLER');
+					console.log('KEIN FEHLER: opening file: /scripts/views/template/'+viewName);
 					console.log(viewName);
 					console.log(pageObject);
 					// return(false);
-					_this.newView = (new (eval(viewName))(pageObject)).render(); // wothout render() ??????
+					_this.newView = (new (eval(viewName))(pageObject)).render(); // without render() ??????
 					$.mobile.jqmNavigator.pushView(_this.newView);
 					// console.log(_this.newView);
 				} catch (e) {
 					console.log('folgend wird hier ein fehler gemeldet der mit absicht durch ein try() debugged wird');
 					console.log(e);
-					console.log('switching to templateView (error on function call for '+viewName+')');
+					console.log('switching to templateView.js (error on function call for '+viewName+')');
 					_this.newView = (new templateView(pageObject));
 					$.mobile.jqmNavigator.pushView(_this.newView);
 				} finally {
